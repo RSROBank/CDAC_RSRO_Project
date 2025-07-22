@@ -1,23 +1,23 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { NavLink } from "react-router-dom";
 
 const HeaderComponent = () => {
   return (
     <>
       <header>
-        <nav className='navbar navbar-dark bg-dark navbar-expand-lg'>
-          <a className='navbar-brand' href='www.developers.com'>
-            Category n Product Management
+        <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
+          <a className="navbar-brand" href="www.developers.com">
+            RSRO Bank
           </a>
-          <div className='collapse navbar-collapse' id='myNavBar'>
-            <ul className='navbar-nav'>
-              <li className='nav-item'>
-                <NavLink className='nav-link' to='/categories'>
+          <div className="collapse navbar-collapse" id="myNavBar">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/categories">
                   Categories
                 </NavLink>
               </li>
-              <li className='nav-item'>
-                <NavLink className='nav-link' to='/products'>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/products">
                   Products
                 </NavLink>
               </li>

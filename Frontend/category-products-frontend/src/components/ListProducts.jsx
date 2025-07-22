@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { deleteProductById, getAllProducts } from '../services/ProductService';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { deleteProductById, getAllProducts } from "../services/ProductService";
+import { useNavigate } from "react-router-dom";
 const ListProducts = () => {
   const [Products, setProducts] = useState([]);
   const navigate = useNavigate();
@@ -20,11 +20,11 @@ const ListProducts = () => {
   }
   //function to navigate user to add new cateory component
   function addNewProduct() {
-    navigate('/add-Product');
+    navigate("/add-Product");
   }
   //function for update btn click handler
   function handleUpdateProduct(ProductId) {
-    console.log('in update ' + ProductId);
+    console.log("in update " + ProductId);
     //navigate to SaveOrUpdateUpdateProduct
     navigate(`/edit-Product/${ProductId}`);
   }
@@ -39,14 +39,14 @@ const ListProducts = () => {
       .catch((err) => console.error(err));
   }
   return (
-    <div className='container'>
-      <button className='btn btn-primary mb-2 mt-2' onClick={addNewProduct}>
+    <div className="container">
+      <button className="btn btn-primary mb-2 mt-2" onClick={addNewProduct}>
         Add New Product
       </button>
       {Products && (
         <div>
           <h3>Product List</h3>
-          <table className='table table-striped table-bordered'>
+          <table className="table table-striped table-bordered">
             <thead>
               <tr>
                 <td>Product ID</td>
@@ -68,7 +68,7 @@ const ListProducts = () => {
                   <td>{product.updatedOn}</td>
                   <td>
                     <button
-                      className='btn btn-info'
+                      className="btn btn-info"
                       onClick={() => handleUpdateProduct(product.id)}
                     >
                       Update
@@ -76,7 +76,7 @@ const ListProducts = () => {
                   </td>
                   <td>
                     <button
-                      className='btn btn-danger'
+                      className="btn btn-danger"
                       onClick={() => handleDeleteProduct(product.id)}
                     >
                       Delete
