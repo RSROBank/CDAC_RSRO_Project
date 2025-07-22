@@ -7,6 +7,9 @@ import ListProducts from './components/ListProducts';
 import SaveOrUpdateProductComponent from './components/SaveOrUpdateProductComponent';
 //import ListEmployees from './components/ListEmployees';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Signup from './components/Signup';
+import HomePage from './components/Home';
+import TestComponent from './components/TestComponent';
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
       <BrowserRouter>
         <HeaderComponent />
         <Routes>
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/home' element={<HomePage/>} />
+           <Route path='/test' element={<TestComponent/>} />
           {/* http://localhost:3000 */}
           <Route path='/' element={<ListCategories />} />
           {/* http://localhost:3000/categories */}
