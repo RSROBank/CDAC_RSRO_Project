@@ -1,12 +1,15 @@
-import './App.css';
-import SaveOrUpdateCategoryComponent from './components/SaveOrUpdateCategoryComponent';
-import FooterComponent from './components/FooterComponent';
-import HeaderComponent from './components/HeaderComponent';
-import ListCategories from './components/ListCategories';
-import ListProducts from './components/ListProducts';
-import SaveOrUpdateProductComponent from './components/SaveOrUpdateProductComponent';
+import "./App.css";
+import SaveOrUpdateCategoryComponent from "./components/SaveOrUpdateCategoryComponent";
+import FooterComponent from "./components/FooterComponent";
+import HeaderComponent from "./components/HeaderComponent";
+import ListCategories from "./components/ListCategories";
+import ListProducts from "./components/ListProducts";
+import SaveOrUpdateProductComponent from "./components/SaveOrUpdateProductComponent";
 //import ListEmployees from './components/ListEmployees';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import HomePage from "./components/Home";
+import LoginPage from "./components/Login";
 
 function App() {
   return (
@@ -15,29 +18,32 @@ function App() {
         <HeaderComponent />
         <Routes>
           {/* http://localhost:3000 */}
-          <Route path='/' element={<ListCategories />} />
+          <Route path="/" element={<HomePage />} />
+
+          <Route path="/login" element={<LoginPage />} />
+
           {/* http://localhost:3000/categories */}
-          <Route path='/categories' element={<ListCategories />} />
+          <Route path="/categories" element={<ListCategories />} />
           {/* http://localhost:3000/add-category */}
           <Route
-            path='/add-category'
+            path="/add-category"
             element={<SaveOrUpdateCategoryComponent />}
           />
           {/* http://localhost:3000/edit-category/categoryId */}
           <Route
-            path='/edit-category/:categoryId'
+            path="/edit-category/:categoryId"
             element={<SaveOrUpdateCategoryComponent />}
           />
           {/* http://localhost:3000/products */}
-          <Route path='/products' element={<ListProducts />} />
+          <Route path="/products" element={<ListProducts />} />
           {/* http://localhost:3000/add-product */}
           <Route
-            path='/add-product'
+            path="/add-product"
             element={<SaveOrUpdateProductComponent />}
           />
           {/* http://localhost:3000/edit-product/productId */}
           <Route
-            path='/edit-product/:productId'
+            path="/edit-product/:productId"
             element={<SaveOrUpdateProductComponent />}
           />
         </Routes>
