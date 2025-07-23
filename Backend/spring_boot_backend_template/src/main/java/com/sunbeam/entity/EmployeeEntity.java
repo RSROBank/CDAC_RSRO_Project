@@ -27,8 +27,8 @@ public class EmployeeEntity {
 	    @Id
 	    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq")
 	    @SequenceGenerator(name = "employee_seq", sequenceName = "employee_sequence", initialValue = 1000, allocationSize = 1)
-	    @Column(name = "emp_id")
-	    private Integer empId;
+	    @Column(name = "employee_id")
+	    private Long employeeId;
 
 	    @Column(length = 100, unique = true)
 	    private String email;
@@ -39,7 +39,7 @@ public class EmployeeEntity {
 	    @Column(length = 50, name = "last_name")
 	    private String lastName;
 
-	    @Column(name = "phone_No", length = 15)
+	    @Column(name = "phone_no", length = 15)
 	    private String phoneNo;
 
 
@@ -56,9 +56,6 @@ public class EmployeeEntity {
 
 	    @Column(length = 100)
 	    private String password;
-	    
-	    @Transient
-	    private String confirmPassword;
 
 	    @Column(name = "created_at")
 	    private LocalDateTime createdAt;
@@ -71,7 +68,7 @@ public class EmployeeEntity {
 
 	    
 		public EmployeeEntity(String email, String firstName, String lastName, String phoneNo, LocalDate dob,
-				String gender, String govtId, String photoId, String password, String confirmPassword,
+				String gender, String govtId, String photoId, String password,
 				LocalDateTime createdAt, LocalDateTime modifiedAt, String status) {
 			super();
 			this.email = email;
@@ -83,7 +80,7 @@ public class EmployeeEntity {
 			this.govtId = govtId;
 			this.photoId = photoId;
 			this.password = password;
-			this.confirmPassword = confirmPassword;
+			
 			this.createdAt = createdAt;
 			this.modifiedAt = modifiedAt;
 			this.status = status;
