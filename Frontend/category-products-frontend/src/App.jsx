@@ -29,7 +29,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             {/* http://localhost:3000 */}
             <Route path="/" element={<HomePage />} />
-            <Route path="dashboard" element={<CustomerDashboard/>}/>
+            <Route path="/dashboard" element={<CustomerDashboard/>}/>
 
             
 

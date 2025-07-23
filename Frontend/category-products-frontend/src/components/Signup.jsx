@@ -42,9 +42,7 @@ function Signup() {
   };
 
   const handleSignUp = async (e) => {
-    alert("handleSignUp called");
     e.preventDefault();
-    alert("Submitted");
     console.log('Sign up attempted with:', formData);
     if (formData.fullName.trim().length === 0) {
       toast.warn('Please enter full name');
@@ -115,7 +113,6 @@ function Signup() {
   };
 
   const handleCancel = () => {
-    toast.error("rerrodfs");
     setFormData({
       fullName: '',
       dateOfBirth: '',
