@@ -14,8 +14,6 @@ const LoginPage = () => {
   };
 
   return (
-    <>
-    <Navbar/>
     <div style={styles.container}>
       <h2 style={styles.heading}>Login</h2>
       <form onSubmit={handleLogin} style={styles.form}>
@@ -40,7 +38,6 @@ const LoginPage = () => {
         </button>
       </form>
     </div>
-    </>
   );
 };
 

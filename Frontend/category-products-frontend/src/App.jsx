@@ -6,7 +6,7 @@ import ListCategories from "./components/ListCategories";
 import ListProducts from "./components/ListProducts";
 import SaveOrUpdateProductComponent from "./components/SaveOrUpdateProductComponent";
 //import ListEmployees from './components/ListEmployees';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import Login from "./components/Login";
 import HomePage from "./components/Home";
 import LoginPage from "./components/Login";
@@ -20,17 +20,16 @@ import CustomerDashboard from "./components/Dashboard/Dashbord";
 function App() {
   return (
     <>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen bg-richblack-900 flex flex-col overflow-y-hidden">
           {/* <HeaderComponent /> */}
+          <Navbar/>
           
           <Routes>
             <Route path='/signup' element={<Signup />} />
             <Route path="/login" element={<LoginPage />} />
             {/* http://localhost:3000 */}
-            <Route path="/" element={<HomePage />} >
-              <Route path="/home" element={<Herosection/>}/>
-              <Route path="/dashboard" element={<CustomerDashboard/>}/>
-            </Route>
+            <Route path="/" element={<HomePage />} />
+            <Route path="dashboard" element={<CustomerDashboard/>}/>
 
             
 
@@ -60,7 +59,7 @@ function App() {
             />
           </Routes>
           {/* <FooterComponent /> */}
-
+          <Footer/>
       </div>
       <ToastContainer/>
     </>

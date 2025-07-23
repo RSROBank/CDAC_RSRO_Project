@@ -143,12 +143,10 @@ function Signup() {
   }
 
   return (
-    <>
-    <Navbar/>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-10 px-4 text-gray-800 font-sans">
       <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl border border-blue-200 px-10 py-12">
         <h1 className="text-3xl font-bold text-center text-blue-700 mb-10">Sign Up</h1>
-        <form onSubmit={handleSignUp} className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <form className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Full Name */}
           <div>
             <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
@@ -363,7 +361,8 @@ function Signup() {
           </div>
           <div className="col-span-full flex flex-col sm:flex-row gap-4 pt-6">
             <button
-              type="submit"
+              type="button"
+              onClick={handleSignUp}
               className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
             >
               Sign Up
@@ -379,7 +378,6 @@ function Signup() {
         </form>
       </div>
     </div>
-    </>
   );
 }
 
