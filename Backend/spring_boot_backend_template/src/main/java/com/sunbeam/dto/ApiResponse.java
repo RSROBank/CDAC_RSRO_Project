@@ -8,7 +8,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
 public class ApiResponse {
 	private LocalDateTime timeStamp;
 	private String message;
