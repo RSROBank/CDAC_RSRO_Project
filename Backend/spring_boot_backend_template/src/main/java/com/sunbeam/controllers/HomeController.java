@@ -1,5 +1,5 @@
 package com.sunbeam.controllers;
 
-public class HelloController {
+public class HomeController {
 
 }
