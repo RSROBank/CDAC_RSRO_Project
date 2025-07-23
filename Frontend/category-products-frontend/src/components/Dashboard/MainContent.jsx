@@ -2,6 +2,9 @@
 import React from 'react';
 import DashboardHome from './DashboardHome';
 import Statements from './Statements';
+import FDLoanSearchComponent from '../FD/FDsearchAndApply';
+import CardComponent from '../Cardcomponant/carddetails';
+import FDSearchFilterComponent from '../CardDeposit/fdsearchfiltercomponent.jsx';
 
 const MainContent = ({ selected }) => {
   return (
@@ -9,6 +12,11 @@ const MainContent = ({ selected }) => {
       {selected === 'Dashboard' && <DashboardHome />}
       {/* Add: `else if` for other options like Loan, Statements etc later */}
       {selected === 'Statements' && <Statements />}
+      {selected === 'Apply for Loan/FD' && <FDLoanSearchComponent />}
+      {selected === 'Manage Cards' && <CardComponent />}
+      {selected === 'Deposit' && <FDSearchFilterComponent />}
+      
+
     </div>
   );
 };
