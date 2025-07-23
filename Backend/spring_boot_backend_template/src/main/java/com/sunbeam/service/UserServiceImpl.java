@@ -1,6 +1,9 @@
 package com.sunbeam.service;
 
+import java.io.IOException;
+
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,9 +32,21 @@ public class UserServiceImpl  implements UserService{
 	}
 
 	@Override
-	public ApiResponse signUp(RegisterDTO dto) {
+	public ApiResponse signUp(RegisterDTO dto)  {
 		// TODO Auto-generated method stub
-		return null;
+
+		User user = modelMapper.map(dto, User.class);
+		if (dto.getPhoto() != null && !dto.getPhoto().isEmpty()) {
+            try {
+				user.setPhoto(dto.getPhoto().getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		userDao.save(user);
+		return new ApiResponse("Successfully save.");
 	}
 	
 }
