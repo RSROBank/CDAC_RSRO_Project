@@ -4,6 +4,9 @@ import DashboardHome from './DashboardHome';
 import Statements from './Statements';
 import MoneyTransfer from '../SendMoney/MoneyTransfer';
 import LoanSearch from '../SendMoney/Loan';
+import FDLoanSearchComponent from '../FD/FDsearchAndApply';
+import CardComponent from '../Cardcomponant/carddetails';
+import FDSearchFilterComponent from '../CardDeposit/fdsearchfiltercomponent.jsx';
 
 const MainContent = ({ selected }) => {
   return (
@@ -13,6 +16,9 @@ const MainContent = ({ selected }) => {
       {selected === 'Statements' && <Statements />}
       {selected === 'Send Money' && <MoneyTransfer />}
       {selected === 'Loan' && <LoanSearch />}
+      {selected === 'Apply for Loan/FD' && <FDLoanSearchComponent />}
+      {selected === 'Manage Cards' && <CardComponent />}
+      {selected === 'Deposit' && <FDSearchFilterComponent />}
     </div>
   );
 };
