@@ -1,0 +1,13 @@
+// src/components/Footer.js
+import React from 'react';
+
+const Footer = () => {
+  return (
+    <footer className="bg-gray-200 text-gray-700 text-sm text-center py-4 mt-10">
+      <p>© {new Date().getFullYear()} e-Banking. All rights reserved.</p>
+      <p>For help, contact support@ebanking.com</p>
+    </footer>
+  );
+};
+
+export default Footer;

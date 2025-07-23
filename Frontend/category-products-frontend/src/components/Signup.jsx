@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import {
   User, Calendar, Users, Flag, Image, MapPin, Phone, Mail, Lock, Shield, RotateCcw
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import Navbar from './Navbar';
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -20,7 +23,7 @@ function Signup() {
   });
 
   const [captchaValue] = useState(Math.random().toString(36).substring(2, 8).toUpperCase());
-
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
     setFormData(prev => ({
@@ -38,13 +41,81 @@ function Signup() {
     }
   };
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
+    alert("handleSignUp called");
     e.preventDefault();
+    alert("Submitted");
     console.log('Sign up attempted with:', formData);
-    alert('Sign up functionality would be implemented here!');
+    if (formData.fullName.trim().length === 0) {
+      toast.warn('Please enter full name');
+    } else if (formData.dateOfBirth.trim().length === 0) {
+      toast.warn('Please enter date of birth');
+    } else if (formData.gender.trim().length === 0) {
+      toast.warn('Please select gender');
+    } else if (formData.nationality.trim().length === 0) {
+      toast.warn('Please enter nationality');
+    } else if (!formData.photoId) {
+      toast.warn('Please upload photo ID');
+    } else if (formData.address.trim().length === 0) {
+      toast.warn('Please enter address');
+    } else if (formData.mobileNo.trim().length === 0) {
+      toast.warn('Please enter mobile number');
+    } else if (formData.emailId.trim().length === 0) {
+      toast.warn('Please enter email ID');
+    } else if (formData.password.trim().length === 0) {
+      toast.warn('Please enter password');
+    } else if (formData.confirmPassword.trim().length === 0) {
+      toast.warn('Please confirm password');
+    } else if (formData.password !== formData.confirmPassword) {
+      toast.warn('Passwords do not match');
+    } else if (!formData.termsAccepted) {
+      toast.warn('Please accept the terms and conditions');
+    } else if (formData.captcha.trim().length === 0) {
+      toast.warn('Please enter captcha');
+    } else if(formData.captcha != captchaValue){
+      toast.warn('captcha do not mathc')
+    }else {
+      const {
+        fullName,
+        dateOfBirth,
+        gender,
+        nationality,
+        photoId,
+        address,
+        mobileNo,
+        emailId,
+        password
+      } = formData;
+
+      // Call the registerUser function
+      const result = await registerUser(
+        fullName,
+        dateOfBirth,
+        gender,
+        nationality,
+        photoId,
+        address,
+        mobileNo,
+        emailId,
+        password
+      );
+      if (!result) {
+        toast.error('Error while registering the user')
+      } else {
+        // check if result is "success" or "error"
+        if (result['status'] == 'success') {
+          toast.success('successfully registered a user')
+          // go back
+          navigate('login')
+        } else {
+          toast.error('Error while registering the user')
+        }
+      }
+    }
   };
 
   const handleCancel = () => {
+    toast.error("rerrodfs");
     setFormData({
       fullName: '',
       dateOfBirth: '',
@@ -65,7 +136,15 @@ function Signup() {
     window.location.reload(); // mock for now
   };
 
+  const onBack = () => {
+    // use back stack (which is implemented by browser)
+    // -1: previous screen
+    navigate('/login');
+  }
+
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-10 px-4 text-gray-800 font-sans">
       <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl border border-blue-200 px-10 py-12">
         <h1 className="text-3xl font-bold text-center text-blue-700 mb-10">Sign Up</h1>
@@ -273,6 +352,15 @@ function Signup() {
           </div>
 
           {/* Buttons */}
+          <div className='flex'>
+            Already have an account?{' '}
+            <button
+              onClick={onBack}
+              className='btn btn-link'
+            >
+              Login here
+            </button>
+          </div>
           <div className="col-span-full flex flex-col sm:flex-row gap-4 pt-6">
             <button
               type="submit"
@@ -291,6 +379,7 @@ function Signup() {
         </form>
       </div>
     </div>
+    </>
   );
 }
 
