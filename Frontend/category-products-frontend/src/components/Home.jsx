@@ -9,14 +9,11 @@ const HomePage = () => {
 
   return (
     <>
-      <Navbar />
       <div
         className="h-screen"
       >
-        {/* <Herosection/> */}
-        <Outlet />
+        <Herosection/>
       </div>
-      <Footer/>
     </>
   );
 };
