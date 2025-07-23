@@ -21,8 +21,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegisterDTO {
-	@NotBlank(message = "Full name cannot be blank")
-	private String fullName;
+	
+	@NotBlank(message = "First name cannot be blank")
+	private String firstName;
+	
+	@NotBlank(message = "Last name cannot be blank")
+	private String lastName;
+	
 	@NotNull(message = "Date of birth is required")
 	@Past(message = "Date of birth must be in the past")
     private LocalDate dateOfBirth;
