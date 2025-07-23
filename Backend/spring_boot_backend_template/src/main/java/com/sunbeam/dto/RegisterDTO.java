@@ -2,6 +2,8 @@ package com.sunbeam.dto;
 
 import java.time.LocalDate;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,6 +31,8 @@ public class RegisterDTO {
     private String gender;
 	@NotBlank(message = "Nationality cannot be blank")
     private String nationality;
+	@NotNull(message = "Photo is required")
+    private MultipartFile photo;
 	@NotNull(message = "Photo ID is required")
     private String photoId; // For file upload
 	@NotBlank(message = "Address cannot be blank")
@@ -37,7 +41,7 @@ public class RegisterDTO {
     private String mobileNo;
 	@NotBlank(message = "Email is required")
 	@Email(message = "Email must be valid (e.g., user@example.com)")
-    private String emailId;
+    private String email;
 	@NotBlank(message = "Password is required")
     private String password;
 }

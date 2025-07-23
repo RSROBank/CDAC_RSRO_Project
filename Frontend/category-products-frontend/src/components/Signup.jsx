@@ -5,6 +5,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Navbar from './Navbar';
+import { addNewUser } from '../services/userService';
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -12,10 +13,11 @@ function Signup() {
     dateOfBirth: '',
     gender: '',
     nationality: '',
-    photoId: null,
+    photo: null,
+    photoId: '',
     address: '',
     mobileNo: '',
-    emailId: '',
+    email: '',
     password: '',
     confirmPassword: '',
     termsAccepted: false,
@@ -36,15 +38,13 @@ function Signup() {
     if (e.target.files && e.target.files[0]) {
       setFormData(prev => ({
         ...prev,
-        photoId: e.target.files[0]
+        photo: e.target.files[0]
       }));
     }
   };
 
   const handleSignUp = async (e) => {
-    alert("handleSignUp called");
     e.preventDefault();
-    alert("Submitted");
     console.log('Sign up attempted with:', formData);
     if (formData.fullName.trim().length === 0) {
       toast.warn('Please enter full name');
@@ -54,13 +54,15 @@ function Signup() {
       toast.warn('Please select gender');
     } else if (formData.nationality.trim().length === 0) {
       toast.warn('Please enter nationality');
-    } else if (!formData.photoId) {
+    }else if (!formData.photo) {
       toast.warn('Please upload photo ID');
+    }else if (!formData.photoId.trim().length === 0) {
+      toast.warn('Please enter photo ID');
     } else if (formData.address.trim().length === 0) {
       toast.warn('Please enter address');
     } else if (formData.mobileNo.trim().length === 0) {
       toast.warn('Please enter mobile number');
-    } else if (formData.emailId.trim().length === 0) {
+    } else if (formData.email.trim().length === 0) {
       toast.warn('Please enter email ID');
     } else if (formData.password.trim().length === 0) {
       toast.warn('Please enter password');
@@ -80,38 +82,37 @@ function Signup() {
         dateOfBirth,
         gender,
         nationality,
+        photo,
         photoId,
         address,
         mobileNo,
-        emailId,
+        email,
         password
       } = formData;
 
+      // Create FormData object
+      const userdb = new FormData();
+
+      userdb.append('fullName', fullName);
+      userdb.append('dateOfBirth', dateOfBirth);
+      userdb.append('gender', gender);
+      userdb.append('nationality', nationality);
+      userdb.append('photo', photo); // file input
+      userdb.append('photoId', photoId);
+      userdb.append('address', address);
+      userdb.append('mobileNo', mobileNo);
+      userdb.append('email', email);
+      userdb.append('password', password);
       // Call the registerUser function
-      const result = await registerUser(
-        fullName,
-        dateOfBirth,
-        gender,
-        nationality,
-        photoId,
-        address,
-        mobileNo,
-        emailId,
-        password
-      );
-      if (!result) {
-        toast.error('Error while registering the user')
+      const result = await addNewUser(userdb);
+      console.log(result);
+      if (result.data && result.data.message === 'Successfully save.') {
+        toast.success('Successfully registered a user');
+        navigate('/login');
       } else {
-        // check if result is "success" or "error"
-        if (result['status'] == 'success') {
-          toast.success('successfully registered a user')
-          // go back
-          navigate('login')
-        } else {
-          toast.error('Error while registering the user')
-        }
+        toast.error('Error while registering the user');
       }
-    }
+      }
   };
 
   const handleCancel = () => {
@@ -121,10 +122,11 @@ function Signup() {
       dateOfBirth: '',
       gender: '',
       nationality: '',
-      photoId: null,
+      photo: null,
+      photoId: '',
       address: '',
       mobileNo: '',
-      emailId: '',
+      email: '',
       password: '',
       confirmPassword: '',
       termsAccepted: false,
@@ -211,17 +213,32 @@ function Signup() {
             />
           </div>
 
-          {/* Photo ID */}
+          {/* govtid Photo  */}
           <div>
             <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
-              <Image className="w-4 h-4" /> Photo ID
+              <Image className="w-4 h-4" /> Photo
             </label>
             <input
               type="file"
-              name="photoId"
+              name="photo"
               onChange={handleFileChange}
               accept="image/*"
               className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white"
+              required
+            />
+          </div>
+
+          {/* PhotoId */}
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+               PhotoId
+            </label>
+            <input
+              type="text"
+              name="photoId"
+              value={formData.photoId}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -263,7 +280,7 @@ function Signup() {
             </label>
             <input
               type="email"
-              name="emailId"
+              name="email"
               value={formData.emailId}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
