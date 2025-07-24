@@ -1,16 +1,41 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import {
+  User,
+  Calendar,
+  Users,
+  Flag,
+  Image,
+  MapPin,
+  Phone,
+  Mail,
+  Lock,
+  Shield,
+  RotateCcw,
+} from "lucide-react";
+import { loginUser } from "../services/userService";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log("Logging in with:", { email, password });
-    alert(`Logged in as ${email}`);
+    try {
+      const response = await loginUser(email, password);
+
+      if (response.success) {
+        alert(`Logged in as ${email}`);
+        console.log("Login successful:", response);
+        // Navigate to dashboard or store token here
+      } else {
+        alert("Message : " + response.message);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("An error occurred while logging in.");
+    }
   };
 
   return (
@@ -33,6 +58,7 @@ const LoginPage = () => {
           required
           style={styles.input}
         />
+
         <button type="submit" style={styles.button}>
           Login
         </button>

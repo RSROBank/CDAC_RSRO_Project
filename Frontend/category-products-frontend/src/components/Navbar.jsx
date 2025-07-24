@@ -1,5 +1,5 @@
 // src/components/Navbar.js
-import React from 'react';
+import React from "react";
 
 const Navbar = () => {
   return (
@@ -8,8 +8,25 @@ const Navbar = () => {
         <span className="text-white">RSRO Bank</span>
       </div>
       <div className="space-x-4 text-sm">
-        <a href="/" className="hover:underline text-white">Home</a>
-        <a href="/login" className="hover:underline text-white">Login</a>
+        <a href="/" className="hover:underline text-white">
+          Home
+        </a>
+        <a href="/login" className="hover:underline text-white">
+          Login
+        </a>
+        <a href="/signup" className="hover:underline text-white">
+          Sign Up
+        </a>
+        <a href="/dashboard" className="hover:underline text-white">
+          Dashboard
+        </a>
+
+        <a href="/employeedashboard" className="hover:underline text-white">
+          Employee Dashboard
+        </a>
+        <a href="/admindashboard" className="hover:underline text-white">
+          Admin Dashboard
+        </a>
       </div>
     </nav>
   );
