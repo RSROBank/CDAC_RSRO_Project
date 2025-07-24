@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 import CustomerDashboard from "./components/Dashboard/Dashbord";
+import EmployeeDashboard from "./components/EmployeeDashBoard/Dashbord";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           {/* http://localhost:3000 */}
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard" element={<CustomerDashboard />} />
+          <Route path="/employeedashboard" element={<EmployeeDashboard/>} />
         </Routes>
         {/* <FooterComponent /> */}
         <Footer />

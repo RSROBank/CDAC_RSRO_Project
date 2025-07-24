@@ -2,13 +2,11 @@
 import React from 'react';
 
 const options = [
-  'Dashboard',
-  'Statements',
-  'Send Money',
-  'Apply for Loan/FD',
-  'Loan',
-  'Manage Cards',
-  'Deposit'
+  'Customer Management',
+  'Approval of Accounts, FD, Loans',
+  'Transaction Management',
+  'Loan EMI Management',
+  'Support and Maintenance',
 ];
 
 const Sidebar = ({ selected, setSelected }) => {
