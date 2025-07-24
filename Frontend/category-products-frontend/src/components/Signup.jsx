@@ -104,14 +104,18 @@ function Signup() {
       userdb.append('email', email);
       userdb.append('password', password);
       // Call the registerUser function
-      const result = await addNewUser(userdb);
-      console.log(result);
-      if (result.data && result.data.message === 'Successfully save.') {
-        toast.success('Successfully registered a user');
-        navigate('/login');
-      } else {
-        toast.error('Error while registering the user');
-      }
+      try{
+        const result = await addNewUser(userdb);
+        console.log(result);
+        if (result.data && result.data.message === 'Successfully save.') {
+          toast.success('Successfully registered a user');
+          navigate('/login');
+        } else {
+          toast.error('Error while registering the user');
+        }
+      }catch(error){
+        console.log("error occured during signup!!")
+        toast.error("error occured during signup")
       }
   };
 
@@ -396,6 +400,7 @@ function Signup() {
       </div>
     </div>
   );
+}
 }
 
 export default Signup;
