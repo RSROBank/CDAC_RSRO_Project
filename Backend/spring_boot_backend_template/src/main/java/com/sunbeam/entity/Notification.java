@@ -39,5 +39,18 @@ public class Notification {
 		@CreationTimestamp
 		@Column(name="created_at")
 	    private LocalDateTime createdAt;
+		public Notification(String email, String title, String message, String notificationType,
+				LocalDateTime expiresAt, boolean isRead, LocalDateTime createdAt) {
+			super();
+			this.email = email;
+			this.title = title;
+			this.message = message;
+			this.notificationType = notificationType;
+			this.expiresAt = expiresAt;
+			this.isRead = isRead;
+			this.createdAt = createdAt;
+		}
+		
+		
 }
 
