@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 
 import CustomerDashboard from "./components/Dashboard/Dashbord";
 import EmployeeDashboard from "./components/EmployeeDashBoard/Dashbord";
+import AdminDashboard from "./components/AdminDashboard/Dashbord";
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
           {/* http://localhost:3000 */}
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard" element={<CustomerDashboard />} />
-          <Route path="/employeedashboard" element={<EmployeeDashboard/>} />
+          <Route path="/employeedashboard" element={<EmployeeDashboard />} />
+          <Route path="/admindashboard" element={<AdminDashboard />} />
         </Routes>
         {/* <FooterComponent /> */}
         <Footer />

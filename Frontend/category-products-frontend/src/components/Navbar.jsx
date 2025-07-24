@@ -20,6 +20,13 @@ const Navbar = () => {
         <a href="/dashboard" className="hover:underline text-white">
           Dashboard
         </a>
+
+        <a href="/employeedashboard" className="hover:underline text-white">
+          Employee Dashboard
+        </a>
+        <a href="/admindashboard" className="hover:underline text-white">
+          Admin Dashboard
+        </a>
       </div>
     </nav>
   );
