@@ -28,7 +28,7 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<?> userLogin(@RequestBody LoginDTO dto)
 	{
-		System.out.println("in sign in "+dto);
+		System.out.println("in Login in "+dto);
 		return ResponseEntity.ok(
 				userService.signIn(dto));
 	}
