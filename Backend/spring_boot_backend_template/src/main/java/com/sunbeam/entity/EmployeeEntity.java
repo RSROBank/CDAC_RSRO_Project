@@ -28,7 +28,7 @@ public class EmployeeEntity {
 	    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq")
 	    @SequenceGenerator(name = "employee_seq", sequenceName = "employee_sequence", initialValue = 1000, allocationSize = 1)
 	    @Column(name = "employee_id")
-	    private Long employeeId;
+	    private Long id;
 
 	    @Column(length = 100, unique = true)
 	    private String email;

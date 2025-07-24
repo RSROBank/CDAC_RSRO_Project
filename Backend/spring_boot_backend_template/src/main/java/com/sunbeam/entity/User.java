@@ -26,9 +26,8 @@ import lombok.Setter;
 @Table(name = "users")
 public class User {
 	@Id
-    @Column(name = "customer_id", length = 50)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    private Long customerId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "first_name", length = 50)
     private String firstName;
@@ -49,13 +48,13 @@ public class User {
     private String photoId;
 
     @Column(name = "acc_reference_id")
-    private Integer accReferenceId = null;
+    private Long accReferenceId = null;
 
     @Column(name = "address", columnDefinition = "TEXT")
     private String address;
 
-    @Column(name = "mobile_no", length = 15)
-    private String mobileNo;
+    @Column(name = "phone_number")
+    private Long phoneNumber;
 
     @Column(length = 100)
     private String email;
@@ -72,11 +71,34 @@ public class User {
     private LocalDateTime modifiedAt;
 
     @Enumerated(EnumType.STRING)
-
     private Status status = Status.PENDING;
     
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] photo;
+
+	public User(String firstName, String lastName, LocalDate dateOfBirth, String gender, String nationality,
+			String photoId, Long accReferenceId, String address, Long mobileNo, String email, String password,
+			LocalDateTime createdAt, LocalDateTime modifiedAt, Status status, byte[] photo) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+		this.nationality = nationality;
+		this.photoId = photoId;
+		this.accReferenceId = accReferenceId;
+		this.address = address;
+		this.phoneNumber = mobileNo;
+		this.email = email;
+		this.password = password;
+		this.createdAt = createdAt;
+		this.modifiedAt = modifiedAt;
+		this.status = status;
+		this.photo = photo;
+	}
+    
+    
+    
 
 }

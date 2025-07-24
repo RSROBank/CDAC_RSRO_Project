@@ -12,5 +12,5 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
-	private CustomerDao customerDao;
+	private final CustomerDao customerDao;
 }
