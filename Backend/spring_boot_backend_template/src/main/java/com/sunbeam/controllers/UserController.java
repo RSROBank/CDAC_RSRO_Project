@@ -29,8 +29,15 @@ public class UserController {
 	public ResponseEntity<?> userLogin(@RequestBody LoginDTO dto)
 	{
 		System.out.println("in Login in "+dto);
-		return ResponseEntity.ok(
-				userService.signIn(dto));
+		 User user = userService.signIn(dto); // Authenticated user object
+
+		    if (user != null) {
+		        session.setAttribute("user", user); // Save user to session
+		        return ResponseEntity.ok(Map.of("message", "Login successful", "user", user));
+		    } else {
+		        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+		                .body(Map.of("message", "Invalid credentials"));
+		    }
 	}
 	
 	@PostMapping("/signup")
