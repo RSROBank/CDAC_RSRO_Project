@@ -17,7 +17,7 @@ const LoginPage = () => {
         console.log("Login successful:", response);
         // Navigate to dashboard or store token here
       } else {
-        alert("Login failed: " + response.message);
+        alert("Message : " + response.message);
       }
     } catch (error) {
       console.error("Login error:", error);
