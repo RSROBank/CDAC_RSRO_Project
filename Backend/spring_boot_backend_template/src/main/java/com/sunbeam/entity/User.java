@@ -26,9 +26,8 @@ import lombok.Setter;
 @Table(name = "users")
 public class User {
 	@Id
-    @Column(name = "customer_id", length = 50)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    private Long customerId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "first_name", length = 50)
     private String firstName;
@@ -72,11 +71,34 @@ public class User {
     private LocalDateTime modifiedAt;
 
     @Enumerated(EnumType.STRING)
-
     private Status status = Status.PENDING;
     
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] photo;
+
+	public User(String firstName, String lastName, LocalDate dateOfBirth, String gender, String nationality,
+			String photoId, Integer accReferenceId, String address, String mobileNo, String email, String password,
+			LocalDateTime createdAt, LocalDateTime modifiedAt, Status status, byte[] photo) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+		this.nationality = nationality;
+		this.photoId = photoId;
+		this.accReferenceId = accReferenceId;
+		this.address = address;
+		this.mobileNo = mobileNo;
+		this.email = email;
+		this.password = password;
+		this.createdAt = createdAt;
+		this.modifiedAt = modifiedAt;
+		this.status = status;
+		this.photo = photo;
+	}
+    
+    
+    
 
 }
