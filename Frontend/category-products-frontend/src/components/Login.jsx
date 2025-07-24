@@ -1,16 +1,28 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { loginUser } from "../services/userService";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log("Logging in with:", { email, password });
-    alert(`Logged in as ${email}`);
+    try {
+      const response = await loginUser(email, password);
+
+      if (response.success) {
+        alert(`Logged in as ${email}`);
+        console.log("Login successful:", response);
+        // Navigate to dashboard or store token here
+      } else {
+        alert("Login failed: " + response.message);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("An error occurred while logging in.");
+    }
   };
 
   return (
