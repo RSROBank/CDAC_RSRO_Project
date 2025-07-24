@@ -4,7 +4,7 @@ import Sidebar from './Sidebar';
 import MainContent from './MainContent';
 
 const EmployeeDashboard = () => {
-  const [selectedOption, setSelectedOption] = useState('Dashboard');
+  const [selectedOption, setSelectedOption] = useState('Customer Management');
 
   return (
     <div className="flex min-h-screen">

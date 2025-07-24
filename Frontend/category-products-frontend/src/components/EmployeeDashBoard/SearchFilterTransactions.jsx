@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const SearchFilterTransactions = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [filters, setFilters] = useState({ id: '', status: '', type: '' });
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [summaryReport, setSummaryReport] = useState('');
   const [failedAction, setFailedAction] = useState('');
@@ -12,57 +12,131 @@ const SearchFilterTransactions = () => {
     { id: 3, type: 'Real-time', amount: 150, status: 'Success', date: '2025-07-23 06:30 PM' },
   ];
 
-  const filteredTransactions = transactions.filter(transaction =>
-    transaction.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    transaction.date.includes(searchTerm)
+  const filteredTransactions = transactions.filter(t =>
+    t.id.toString().includes(filters.id) &&
+    t.status.toLowerCase().includes(filters.status.toLowerCase()) &&
+    t.type.toLowerCase().includes(filters.type.toLowerCase())
   );
-
-  const handleSearch = (e) => setSearchTerm(e.target.value);
-
-  const handleView = (transaction) => setSelectedTransaction(transaction);
 
   const generateSummary = () => {
     const total = transactions.reduce((sum, t) => sum + t.amount, 0);
     setSummaryReport(`Total Transactions: ${transactions.length}, Total Amount: $${total}`);
   };
 
-  const manageFailed = (transaction) => {
-    if (transaction.status === 'Failed') {
-      setFailedAction(`Managed failed transaction ${transaction.id} - Retrying or logging...`);
+  const manageFailed = (t) => {
+    if (t.status === 'Failed') {
+      setFailedAction(` Managing failed transaction #${t.id} - Retry initiated or logged.`);
     } else {
-      setFailedAction('No failed transaction selected.');
+      setFailedAction(' Selected transaction is not failed.');
     }
   };
 
   return (
-    <div className="p-5 font-sans">
-      <h2 className="text-2xl font-bold mb-4">Search / Filter Transactions</h2>
-      <input
-        type="text"
-        placeholder="Search transactions..."
-        value={searchTerm}
-        onChange={handleSearch}
-        className="p-2 mb-4 w-64 border rounded"
-      />
-      <ul className="list-none p-0">
-        {filteredTransactions.map(transaction => (
-          <li key={transaction.id} className="mb-2">
-            {transaction.type} - ${transaction.amount} ({transaction.date}, {transaction.status})
-            <button onClick={() => handleView(transaction)} className="ml-4 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">View</button>
-          </li>
-        ))}
-      </ul>
-      {selectedTransaction && (
-        <div className="mt-4 p-4 border border-gray-300 rounded">
-          <h3 className="text-xl font-semibold">Details for Transaction {selectedTransaction.id}</h3>
-          <p className="mt-2">Type: {selectedTransaction.type}, Amount: ${selectedTransaction.amount}, Date: {selectedTransaction.date}, Status: {selectedTransaction.status}</p>
-          <button onClick={generateSummary} className="mr-2 mt-2 px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">Generate Summary Report</button>
-          <button onClick={() => manageFailed(selectedTransaction)} className="ml-2 mt-2 px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">Manage Failed</button>
-          <button onClick={() => setSelectedTransaction(null)} className="ml-2 mt-2 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">Close</button>
-          {summaryReport && <p className="mt-2">{summaryReport}</p>}
-          {failedAction && <p className="mt-2">{failedAction}</p>}
+    <div className="bg-blue-50 min-h-screen p-6 font-sans">
+      <div className="max-w-3xl mx-auto bg-white border rounded-xl shadow p-6">
+        <h2 className="text-xl font-semibold text-center text-blue-800 border-b pb-2 mb-4">
+          Search / Filter Transactions
+        </h2>
+
+        {/* Filters */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+          <input
+            type="text"
+            placeholder="Filter by ID"
+            value={filters.id}
+            onChange={(e) => setFilters({ ...filters, id: e.target.value })}
+            className="p-2 border border-blue-300 rounded"
+          />
+          <input
+            type="text"
+            placeholder="Filter by Status"
+            value={filters.status}
+            onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+            className="p-2 border border-blue-300 rounded"
+          />
+          <input
+            type="text"
+            placeholder="Filter by Type"
+            value={filters.type}
+            onChange={(e) => setFilters({ ...filters, type: e.target.value })}
+            className="p-2 border border-blue-300 rounded"
+          />
         </div>
-      )}
+
+        {/* Transaction List */}
+        <div className="space-y-3">
+          {filteredTransactions.length > 0 ? (
+            filteredTransactions.map((t) => (
+              <div
+                key={t.id}
+                className="bg-blue-100 rounded-xl p-4 flex justify-between items-center"
+              >
+                <div className="text-blue-800">
+                  <p className="font-semibold">#{t.id} - {t.type}</p>
+                  <p className="text-sm text-gray-700">${t.amount} | {t.date} | {t.status}</p>
+                </div>
+                <button
+                  onClick={() => setSelectedTransaction(t)}
+                  className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700"
+                >
+                  View
+                </button>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-500 text-center">No matching transactions found.</p>
+          )}
+        </div>
+
+        {/* Transaction Detail */}
+        {selectedTransaction && (
+          <div className="mt-6 p-4 border border-blue-300 rounded-lg bg-white shadow">
+            <h3 className="text-lg font-semibold text-blue-800 mb-2">
+              Transaction #{selectedTransaction.id}
+            </h3>
+            <ul className="list-disc list-inside text-blue-900 mb-3">
+              <li>Type: {selectedTransaction.type}</li>
+              <li>Amount: ${selectedTransaction.amount}</li>
+              <li>Date: {selectedTransaction.date}</li>
+              <li>Status: {selectedTransaction.status}</li>
+            </ul>
+
+            {/* Actions */}
+            <div className="flex flex-wrap gap-3 mb-2">
+              <button
+                onClick={generateSummary}
+                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              >
+                Generate Summary
+              </button>
+              <button
+                onClick={() => manageFailed(selectedTransaction)}
+                className="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700"
+              >
+                Manage Failed
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedTransaction(null);
+                  setSummaryReport('');
+                  setFailedAction('');
+                }}
+                className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+              >
+                Close
+              </button>
+            </div>
+
+            {/* Messages */}
+            {summaryReport && (
+              <p className="text-green-700 font-medium mt-2">{summaryReport}</p>
+            )}
+            {failedAction && (
+              <p className="text-yellow-700 font-medium mt-2">{failedAction}</p>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
