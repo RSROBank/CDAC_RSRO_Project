@@ -1,11 +1,10 @@
 import "./App.css";
 
 //import ListEmployees from './components/ListEmployees';
-import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
+import {Routes, Route } from "react-router-dom";
 
 import HomePage from "./components/Home";
 import LoginPage from "./components/Login";
-import Signup from "./components/Signup";
 import { ToastContainer } from "react-toastify";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -13,6 +12,7 @@ import Footer from "./components/Footer";
 import CustomerDashboard from "./components/Dashboard/Dashbord";
 import EmployeeDashboard from "./components/EmployeeDashBoard/Dashbord";
 import AdminDashboard from "./components/AdminDashboard/Dashbord";
+import Signup from "./components/Signup";
 
 function App() {
   return (
