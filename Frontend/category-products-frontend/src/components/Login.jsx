@@ -1,6 +1,19 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import {
+  User,
+  Calendar,
+  Users,
+  Flag,
+  Image,
+  MapPin,
+  Phone,
+  Mail,
+  Lock,
+  Shield,
+  RotateCcw,
+} from "lucide-react";
 import { loginUser } from "../services/userService";
 
 const LoginPage = () => {
@@ -45,6 +58,7 @@ const LoginPage = () => {
           required
           style={styles.input}
         />
+
         <button type="submit" style={styles.button}>
           Login
         </button>
