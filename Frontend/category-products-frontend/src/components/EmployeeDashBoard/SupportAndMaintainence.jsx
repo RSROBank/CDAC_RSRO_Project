@@ -3,74 +3,121 @@ import React, { useState } from 'react';
 const SupportMaintenanceLoans = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLoan, setSelectedLoan] = useState(null);
-  const [response, setResponse] = useState('');
-  const [notifications, setNotifications] = useState(['New ticket from John Doe', 'Audit log updated']);
+  const [responseText, setResponseText] = useState('');
+  const [notifications] = useState([
+    'New ticket from John Doe',
+    'Loan ID 101 marked for review',
+    'Audit log: Jane Smith updated loan status',
+  ]);
 
-  const loans = [
-    { id: 1, customer: 'John Doe', amount: 5000, status: 'Active' },
-    { id: 2, customer: 'Jane Smith', amount: 7500, status: 'Active' },
+  const loanTickets = [
+    { id: 101, customer: 'John Doe', amount: 5000, status: 'Active', query: 'Need EMI date change' },
+    { id: 102, customer: 'Jane Smith', amount: 7500, status: 'Pending', query: 'EMI auto-debit failed' },
   ];
 
-  const filteredLoans = loans.filter(loan =>
+  const filtered = loanTickets.filter((loan) =>
     loan.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
     loan.id.toString().includes(searchTerm)
   );
 
-  const handleSearch = (e) => setSearchTerm(e.target.value);
-
-  const handleView = (loan) => setSelectedLoan(loan);
-
-  const handleRespond = (loan) => {
-    if (response) {
-      alert(`Responded to ${loan.customer} with: ${response}`);
-      setResponse('');
-      setSelectedLoan(null);
-    } else {
-      alert('Please enter a response before submitting.');
+  const handleRespond = () => {
+    if (!responseText) {
+      alert('Please write a response before submitting.');
+      return;
     }
+    alert(`Response submitted for ${selectedLoan.customer}: ${responseText}`);
+    setSelectedLoan(null);
+    setResponseText('');
   };
 
   return (
-    <div className="p-5 font-sans">
-      <h2 className="text-2xl font-bold mb-4">Search / Filter Loans</h2>
-      <input
-        type="text"
-        placeholder="Search loans..."
-        value={searchTerm}
-        onChange={handleSearch}
-        className="p-2 mb-4 w-64 border rounded"
-      />
-      <ul className="list-none p-0">
-        {filteredLoans.map(loan => (
-          <li key={loan.id} className="mb-2">
-            {loan.customer} - ${loan.amount} ({loan.status})
-            <button onClick={() => handleView(loan)} className="ml-4 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">View</button>
-          </li>
+    <div className="min-h-screen bg-blue-50 p-6 font-sans">
+      <h2 className="text-2xl font-bold text-blue-800 mb-4 text-center">
+        Search / Filter Loans - Support & Maintenance
+      </h2>
+
+      {/* Search Input */}
+      <div className="mb-6 flex justify-center">
+        <input
+          type="text"
+          placeholder="Search by name or loan ID..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full max-w-md p-2 border border-gray-300 rounded"
+        />
+      </div>
+
+      {/* Loan List */}
+      <div className="space-y-4">
+        {filtered.map((loan) => (
+          <div
+            key={loan.id}
+            className="bg-white p-4 rounded-lg shadow flex justify-between items-center"
+          >
+            <div>
+              <p><strong>Loan ID:</strong> {loan.id}</p>
+              <p><strong>Customer:</strong> {loan.customer}</p>
+              <p><strong>Status:</strong> {loan.status}</p>
+            </div>
+            <button
+              onClick={() => setSelectedLoan(loan)}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Respond
+            </button>
+          </div>
         ))}
-      </ul>
+        {filtered.length === 0 && (
+          <p className="text-center text-gray-500">No tickets found.</p>
+        )}
+      </div>
+
+      {/* Response Modal */}
       {selectedLoan && (
-        <div className="mt-4 p-4 border border-gray-300 rounded">
-          <h3 className="text-xl font-semibold">Support for {selectedLoan.customer}</h3>
-          <div className="mt-2">
-            <textarea
-              value={response}
-              onChange={(e) => setResponse(e.target.value)}
-              placeholder="Respond to customer query/ticket..."
-              className="mt-2 p-2 w-full border rounded"
-            />
-            <button onClick={() => handleRespond(selectedLoan)} className="mt-2 px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">Submit Response</button>
+        <div className="mt-6 bg-white p-6 rounded-lg shadow">
+          <h3 className="text-xl font-semibold text-blue-700 mb-3">
+            Respond to Query - {selectedLoan.customer}
+          </h3>
+          <p className="mb-2"><strong>Loan ID:</strong> {selectedLoan.id}</p>
+          <p className="mb-2"><strong>Query:</strong> {selectedLoan.query}</p>
+          <textarea
+            className="w-full mt-3 p-2 border border-gray-300 rounded"
+            rows={3}
+            placeholder="Type your response here..."
+            value={responseText}
+            onChange={(e) => setResponseText(e.target.value)}
+          ></textarea>
+          <div className="flex gap-4 mt-4">
+            <button
+              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              onClick={handleRespond}
+            >
+              Submit Response
+            </button>
+            <button
+              className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+              onClick={() => {
+                setSelectedLoan(null);
+                setResponseText('');
+              }}
+            >
+              Cancel
+            </button>
           </div>
-          <div className="mt-4">
-            <h4 className="text-lg font-medium">Notifications & Audit Log</h4>
-            <ul className="list-disc pl-5 mt-2">
-              {notifications.map((note, index) => (
-                <li key={index} className="mt-1">{note}</li>
-              ))}
-            </ul>
-          </div>
-          <button onClick={() => { setSelectedLoan(null); setResponse(''); }} className="mt-2 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">Close</button>
         </div>
       )}
+
+      {/* Notification Panel */}
+      <div className="mt-8 bg-white p-4 rounded-lg shadow">
+        <h4 className="text-lg font-semibold text-blue-700 mb-2">
+          Notifications & Audit Logs
+        </h4>
+        <ul className="list-disc list-inside text-sm text-blue-800 space-y-1">
+          {notifications.map((note, idx) => (
+            <li key={idx}>{note}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
