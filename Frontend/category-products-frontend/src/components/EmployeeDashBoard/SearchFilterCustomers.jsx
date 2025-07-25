@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const CustomersManagement = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchCustomerId, setSearchCustomerId] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
   const customers = [
-    { id: "1", name: 'John Doe', accounts: { cards: 2, loans: 1, fds: 1 } },
-    { id: "2", name: 'Jane Smith', accounts: { cards: 1, loans: 0, fds: 2 } },
+    { id: "1", name: "Rahul Verma", accounts: { cards: 2, loans: 1, fds: 1 } },
+    { id: "2", name: "Verma Rahul", accounts: { cards: 1, loans: 0, fds: 2 } },
   ];
 
-  const filteredCustomers = customers.filter((customer) =>{
-    const customername =  customer.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchescustId = customer.id.toLowerCase().includes(searchCustomerId.toLowerCase());
-    return customername && matchescustId;  
+  const filteredCustomers = customers.filter((customer) => {
+    const customername = customer.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchescustId = customer.id
+      .toLowerCase()
+      .includes(searchCustomerId.toLowerCase());
+    return customername && matchescustId;
   });
 
   return (
@@ -25,22 +29,21 @@ const CustomersManagement = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <input
-          type="text"
-          placeholder="Search by FD ID"
-          value={searchCustomerId}
-          onChange={(e) => setSearchCustomerId(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+            type="text"
+            placeholder="Search by FD ID"
+            value={searchCustomerId}
+            onChange={(e) => setSearchCustomerId(e.target.value)}
+            className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
 
-        <input
-          type="text"
-          placeholder="Search customers..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+          <input
+            type="text"
+            placeholder="Search customers..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
         </div>
-        
 
         <div className="space-y-4">
           {filteredCustomers.length > 0 ? (

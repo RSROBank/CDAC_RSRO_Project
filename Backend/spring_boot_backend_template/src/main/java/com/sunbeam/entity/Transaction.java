@@ -27,34 +27,36 @@ public class Transaction {
 	@Id
 	@Column(name = "transaction_id", length = 100)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long transactionId;
+	private Long id;
 	
-	@Column(name = "user_Id",length = 100)
-	private String userId;
+	@Column(name = "user_id")
+	private Long userId;
 	
-	@Column(name = "to_Account",length = 50)
+	@Column(name = "to_account",length = 50)
 	private Long toAccount;
 	
-	@Column(name="amount")
+	
 	private Float amount;
 	
 	@Enumerated(EnumType.STRING)
-	private TransacMode transacMode;
+	@Column(name = "transaction_mode")
+	private TransacMode transactionMode;
 	
 	@Enumerated(EnumType.STRING)
-	private TransacType transacType;
+	@Column(name = "transaction_type")
+	private TransacType transactionType;
 	
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
-	@Column(length = 150)
+	@Column(length = 300)
 	private String description;
 	
-	@Column(name="created_At")
+	@Column(name="created_at")
 	@CreationTimestamp
 	private LocalDateTime createdAt;
 	
-	@Column(name="modified_At")
+	@Column(name="modified_at")
 	@UpdateTimestamp
 	private LocalDateTime modifiedAt;
 	
@@ -66,8 +68,8 @@ public class Transaction {
 	@Column(name="loan_id")
 	private Long loanId;
 
-	public Transaction(String userId, Long toAccount, Float amount, Status status, String description,
-			TransacMode transacMode, TransacType transacType, LocalDateTime createdAt, LocalDateTime modifiedAt, Long fdId,
+	public Transaction(Long userId, Long toAccount, Float amount, Status status, String description,
+			TransacMode transactionMode, TransacType transactionType, LocalDateTime createdAt, LocalDateTime modifiedAt, Long fdId,
 			Long loanId) {
 		super();
 		this.userId = userId;
@@ -75,8 +77,8 @@ public class Transaction {
 		this.amount = amount;
 		this.status = status;
 		this.description = description;
-		this.transacMode = transacMode;
-		this.transacType = transacType;
+		this.transactionMode = transactionMode;
+		this.transactionType = transactionType;
 		this.createdAt = createdAt;
 		this.modifiedAt = modifiedAt;
 		this.fdId = fdId;

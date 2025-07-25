@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const UserDataManagement = () => {
-  const [filters, setFilters] = useState({ name: '', userId: '', status: '' });
+  const [filters, setFilters] = useState({ name: "", userId: "", status: "" });
   const [selectedUser, setSelectedUser] = useState(null);
   const [auditLogs, setAuditLogs] = useState([]);
-  const [interestUpdate, setInterestUpdate] = useState('');
+  const [interestUpdate, setInterestUpdate] = useState("");
 
   const users = [
     {
-      id: 'U001',
-      name: 'Rahul Verma',
-      status: 'Active',
-      email: 'rahul@example.com',
-      account: { balance: 12000, accountNo: 'ACC1234' },
-      loan: { amount: 50000, interest: '9.5%', tenure: '12 months' },
-      fd: { amount: 20000, interest: '6.8%', tenure: '6 months' },
-      card: { type: 'Debit', limit: 5000 },
+      id: "U001",
+      name: "Rahul Verma",
+      status: "Active",
+      email: "rahul@gmail.com",
+      account: { balance: 12000, accountNo: "ACC1234" },
+      loan: { amount: 50000, interest: "9.5%", tenure: "12 months" },
+      fd: { amount: 20000, interest: "6.8%", tenure: "6 months" },
+      card: { type: "Debit", limit: 5000 },
     },
     {
-      id: 'U002',
-      name: 'Anjali Singh',
-      status: 'Deactivated',
-      email: 'anjali@example.com',
-      account: { balance: 8000, accountNo: 'ACC5678' },
-      loan: { amount: 30000, interest: '10%', tenure: '24 months' },
-      fd: { amount: 15000, interest: '6.5%', tenure: '9 months' },
-      card: { type: 'Credit', limit: 20000 },
+      id: "U002",
+      name: "Verma Rahul",
+      status: "Deactivated",
+      email: "verma@gmail.com",
+      account: { balance: 8000, accountNo: "ACC5678" },
+      loan: { amount: 30000, interest: "10%", tenure: "24 months" },
+      fd: { amount: 15000, interest: "6.5%", tenure: "9 months" },
+      card: { type: "Credit", limit: 20000 },
     },
   ];
 
@@ -38,7 +38,7 @@ const UserDataManagement = () => {
 
   const handleUpdateInterest = () => {
     alert(`Interest/Tenure updated: ${interestUpdate}`);
-    setInterestUpdate('');
+    setInterestUpdate("");
   };
 
   const handleSoftDelete = (id) => {
@@ -51,8 +51,8 @@ const UserDataManagement = () => {
 
   const handleViewLogs = () => {
     setAuditLogs([
-      'User Rahul updated FD interest on 2025-07-23',
-      'Loan tenure changed for U002',
+      "User Rahul updated FD interest on 2025-07-23",
+      "Loan tenure changed for U002",
     ]);
   };
 
@@ -121,14 +121,30 @@ const UserDataManagement = () => {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-blue-900">
               <div>
-                <p><strong>Email:</strong> {selectedUser.email}</p>
-                <p><strong>Status:</strong> {selectedUser.status}</p>
-                <p><strong>Account:</strong> ₹{selectedUser.account.balance} (No: {selectedUser.account.accountNo})</p>
+                <p>
+                  <strong>Email:</strong> {selectedUser.email}
+                </p>
+                <p>
+                  <strong>Status:</strong> {selectedUser.status}
+                </p>
+                <p>
+                  <strong>Account:</strong> ₹{selectedUser.account.balance} (No:{" "}
+                  {selectedUser.account.accountNo})
+                </p>
               </div>
               <div>
-                <p><strong>Card:</strong> {selectedUser.card.type}, Limit: ₹{selectedUser.card.limit}</p>
-                <p><strong>Loan:</strong> ₹{selectedUser.loan.amount}, {selectedUser.loan.interest}, {selectedUser.loan.tenure}</p>
-                <p><strong>FD:</strong> ₹{selectedUser.fd.amount}, {selectedUser.fd.interest}, {selectedUser.fd.tenure}</p>
+                <p>
+                  <strong>Card:</strong> {selectedUser.card.type}, Limit: ₹
+                  {selectedUser.card.limit}
+                </p>
+                <p>
+                  <strong>Loan:</strong> ₹{selectedUser.loan.amount},{" "}
+                  {selectedUser.loan.interest}, {selectedUser.loan.tenure}
+                </p>
+                <p>
+                  <strong>FD:</strong> ₹{selectedUser.fd.amount},{" "}
+                  {selectedUser.fd.interest}, {selectedUser.fd.tenure}
+                </p>
               </div>
             </div>
 
@@ -174,7 +190,9 @@ const UserDataManagement = () => {
             {/* Audit Logs */}
             {auditLogs.length > 0 && (
               <div className="mt-4">
-                <h4 className="text-md font-semibold text-blue-800 mb-1">Audit Logs:</h4>
+                <h4 className="text-md font-semibold text-blue-800 mb-1">
+                  Audit Logs:
+                </h4>
                 <ul className="list-disc pl-5 text-blue-900">
                   {auditLogs.map((log, index) => (
                     <li key={index}>{log}</li>

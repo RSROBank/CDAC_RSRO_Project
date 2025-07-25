@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const CustomersManagement = () => {
-  const [searchName, setSearchName] = useState('');
-  const [searchId, setSearchId] = useState('');
+  const [searchName, setSearchName] = useState("");
+  const [searchId, setSearchId] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState(null);
-  const [notificationMsg, setNotificationMsg] = useState('');
+  const [notificationMsg, setNotificationMsg] = useState("");
 
   const customers = [
     {
-      id: '1',
-      name: 'John Doe',
-      email: 'john@example.com',
-      phone: '1234567890',
-      documents: ['Aadhar.pdf', 'PanCard.pdf'],
+      id: "1",
+      name: "Rahul Verma",
+      email: "rahul@gmail.com",
+      phone: "1234567890",
+      documents: ["Aadhar.pdf", "PanCard.pdf"],
       accounts: { cards: 2, loans: 1, fds: 1 },
     },
     {
-      id: '2',
-      name: 'Jane Smith',
-      email: 'jane@example.com',
-      phone: '9876543210',
-      documents: ['Aadhar.pdf'],
+      id: "2",
+      name: "Verma Rahul",
+      email: "verma@example.com",
+      phone: "9876543210",
+      documents: ["Aadhar.pdf"],
       accounts: { cards: 1, loans: 0, fds: 2 },
     },
   ];
@@ -41,7 +41,7 @@ const CustomersManagement = () => {
 
   const handleSendNotification = () => {
     alert(`Notification sent: "${notificationMsg}"`);
-    setNotificationMsg('');
+    setNotificationMsg("");
   };
 
   return (
@@ -89,63 +89,66 @@ const CustomersManagement = () => {
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-500">No matching customers found.</p>
+          <p className="text-center text-gray-500">
+            No matching customers found.
+          </p>
         )}
 
         {selectedCustomer && (
-            <div className="mt-6 p-4 bg-white border border-blue-300 rounded-lg shadow space-y-4">
-                <h3 className="text-lg font-semibold text-blue-800 mb-2">
-                Full Profile for {selectedCustomer.name}
-                </h3>
+          <div className="mt-6 p-4 bg-white border border-blue-300 rounded-lg shadow space-y-4">
+            <h3 className="text-lg font-semibold text-blue-800 mb-2">
+              Full Profile for {selectedCustomer.name}
+            </h3>
 
-                <ul className="list-disc pl-5 text-blue-900 space-y-1">
-                <li>Cards Linked: {selectedCustomer.accounts.cards}</li>
-                <li>Loans: {selectedCustomer.accounts.loans}</li>
-                <li>FDs: {selectedCustomer.accounts.fds}</li>
-                <li>Email: johndoe@example.com</li>
-                <li>Phone: +91-9876543210</li>
-                </ul>
+            <ul className="list-disc pl-5 text-blue-900 space-y-1">
+              <li>Cards Linked: {selectedCustomer.accounts.cards}</li>
+              <li>Loans: {selectedCustomer.accounts.loans}</li>
+              <li>FDs: {selectedCustomer.accounts.fds}</li>
+              <li>Email: johndoe@example.com</li>
+              <li>Phone: +91-9876543210</li>
+            </ul>
 
-                {/* Document Photo Preview */}
-                <div className="mt-4">
-                <h4 className="text-md font-semibold mb-1">Uploaded Document Preview</h4>
-                <img
-                    src="src\assets\Images\Cardsampleimage.png"
-                    alt="Document Preview"
-                    className="w-60 border rounded-lg shadow-md"
-                />
-                </div>
-
-                {/* Admin Actions */}
-                <div className="mt-4 flex flex-wrap gap-3">
-                <button
-                    onClick={handleUpdate}
-                    className="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700"
-                >
-                    Update
-                </button>
-                <button
-                    onClick={handleDelete}
-                    className="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700"
-                >
-                    Delete
-                </button>
-                <button
-                    onClick={handleSendNotification}
-                    className="bg-purple-600 text-white px-4 py-1 rounded hover:bg-purple-700"
-                >
-                    Notify
-                </button>
-                <button
-                    onClick={() => setSelectedCustomer(null)}
-                    className="bg-gray-500 text-white px-4 py-1 rounded hover:bg-gray-600"
-                >
-                    Close
-                </button>
-                </div>
+            {/* Document Photo Preview */}
+            <div className="mt-4">
+              <h4 className="text-md font-semibold mb-1">
+                Uploaded Document Preview
+              </h4>
+              <img
+                src="src\assets\Images\Cardsampleimage.png"
+                alt="Document Preview"
+                className="w-60 border rounded-lg shadow-md"
+              />
             </div>
-        )}
 
+            {/* Admin Actions */}
+            <div className="mt-4 flex flex-wrap gap-3">
+              <button
+                onClick={handleUpdate}
+                className="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700"
+              >
+                Update
+              </button>
+              <button
+                onClick={handleDelete}
+                className="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700"
+              >
+                Delete
+              </button>
+              <button
+                onClick={handleSendNotification}
+                className="bg-purple-600 text-white px-4 py-1 rounded hover:bg-purple-700"
+              >
+                Notify
+              </button>
+              <button
+                onClick={() => setSelectedCustomer(null)}
+                className="bg-gray-500 text-white px-4 py-1 rounded hover:bg-gray-600"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
