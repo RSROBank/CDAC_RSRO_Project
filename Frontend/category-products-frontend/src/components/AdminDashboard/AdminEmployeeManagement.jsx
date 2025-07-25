@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const EmployeeManagement = () => {
-  const [searchName, setSearchName] = useState('');
-  const [searchId, setSearchId] = useState('');
+  const [searchName, setSearchName] = useState("");
+  const [searchId, setSearchId] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [performanceData] = useState({
-    '1': { processedFDs: 3, processedLoans: 2, rating: 'A' },
-    '2': { processedFDs: 1, processedLoans: 5, rating: 'B+' },
+    1: { processedFDs: 3, processedLoans: 2, rating: "A" },
+    2: { processedFDs: 1, processedLoans: 5, rating: "B+" },
   });
 
   const employees = [
     {
-      id: '1',
-      name: 'John Doe',
-      email: 'john@example.com',
-      phone: '1234567890',
-      documents: ['Aadhar.pdf', 'PanCard.pdf'],
+      id: "1",
+      name: "Omkar Telang",
+      email: "omkar@example.com",
+      phone: "1234567890",
+      documents: ["Aadhar.pdf", "PanCard.pdf"],
     },
     {
-      id: '2',
-      name: 'Jane Smith',
-      email: 'jane@example.com',
-      phone: '9876543210',
-      documents: ['Aadhar.pdf'],
+      id: "2",
+      name: "Ravi Ranjan",
+      email: "ravi@example.com",
+      phone: "9876543210",
+      documents: ["Aadhar.pdf"],
     },
   ];
 
@@ -79,7 +79,9 @@ const EmployeeManagement = () => {
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-500">No matching employees found.</p>
+          <p className="text-center text-gray-500">
+            No matching employees found.
+          </p>
         )}
 
         {selectedEmployee && (
@@ -91,7 +93,7 @@ const EmployeeManagement = () => {
               <li>Email: {selectedEmployee.email}</li>
               <li>Phone: {selectedEmployee.phone}</li>
               <li>
-                Documents:{' '}
+                Documents:{" "}
                 {selectedEmployee.documents.map((doc, idx) => (
                   <span key={idx} className="text-blue-700 underline mr-2">
                     {doc}
@@ -105,13 +107,16 @@ const EmployeeManagement = () => {
                 Processed FD/Loan Summary
               </h4>
               <p className="text-sm text-gray-800">
-                Processed FDs: {performanceData[selectedEmployee.id]?.processedFDs || 0}
+                Processed FDs:{" "}
+                {performanceData[selectedEmployee.id]?.processedFDs || 0}
               </p>
               <p className="text-sm text-gray-800">
-                Processed Loans: {performanceData[selectedEmployee.id]?.processedLoans || 0}
+                Processed Loans:{" "}
+                {performanceData[selectedEmployee.id]?.processedLoans || 0}
               </p>
               <p className="text-sm text-gray-800">
-                Performance Rating: {performanceData[selectedEmployee.id]?.rating || 'N/A'}
+                Performance Rating:{" "}
+                {performanceData[selectedEmployee.id]?.rating || "N/A"}
               </p>
             </div>
 

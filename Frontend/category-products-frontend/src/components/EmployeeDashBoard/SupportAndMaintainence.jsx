@@ -1,33 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const SupportMaintenanceLoans = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedLoan, setSelectedLoan] = useState(null);
-  const [responseText, setResponseText] = useState('');
+  const [responseText, setResponseText] = useState("");
   const [notifications] = useState([
-    'New ticket from John Doe',
-    'Loan ID 101 marked for review',
-    'Audit log: Jane Smith updated loan status',
+    "New ticket from Rahul Verma",
+    "Loan ID 101 marked for review",
+    "Audit log: Verma Rahul updated loan status",
   ]);
 
   const loanTickets = [
-    { id: 101, customer: 'John Doe', amount: 5000, status: 'Active', query: 'Need EMI date change' },
-    { id: 102, customer: 'Jane Smith', amount: 7500, status: 'Pending', query: 'EMI auto-debit failed' },
+    {
+      id: 101,
+      customer: "Rahul Verma",
+      amount: 5000,
+      status: "Active",
+      query: "Need EMI date change",
+    },
+    {
+      id: 102,
+      customer: "Verma Rahul",
+      amount: 7500,
+      status: "Pending",
+      query: "EMI auto-debit failed",
+    },
   ];
 
-  const filtered = loanTickets.filter((loan) =>
-    loan.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    loan.id.toString().includes(searchTerm)
+  const filtered = loanTickets.filter(
+    (loan) =>
+      loan.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      loan.id.toString().includes(searchTerm)
   );
 
   const handleRespond = () => {
     if (!responseText) {
-      alert('Please write a response before submitting.');
+      alert("Please write a response before submitting.");
       return;
     }
     alert(`Response submitted for ${selectedLoan.customer}: ${responseText}`);
     setSelectedLoan(null);
-    setResponseText('');
+    setResponseText("");
   };
 
   return (
@@ -55,9 +68,15 @@ const SupportMaintenanceLoans = () => {
             className="bg-white p-4 rounded-lg shadow flex justify-between items-center"
           >
             <div>
-              <p><strong>Loan ID:</strong> {loan.id}</p>
-              <p><strong>Customer:</strong> {loan.customer}</p>
-              <p><strong>Status:</strong> {loan.status}</p>
+              <p>
+                <strong>Loan ID:</strong> {loan.id}
+              </p>
+              <p>
+                <strong>Customer:</strong> {loan.customer}
+              </p>
+              <p>
+                <strong>Status:</strong> {loan.status}
+              </p>
             </div>
             <button
               onClick={() => setSelectedLoan(loan)}
@@ -78,8 +97,12 @@ const SupportMaintenanceLoans = () => {
           <h3 className="text-xl font-semibold text-blue-700 mb-3">
             Respond to Query - {selectedLoan.customer}
           </h3>
-          <p className="mb-2"><strong>Loan ID:</strong> {selectedLoan.id}</p>
-          <p className="mb-2"><strong>Query:</strong> {selectedLoan.query}</p>
+          <p className="mb-2">
+            <strong>Loan ID:</strong> {selectedLoan.id}
+          </p>
+          <p className="mb-2">
+            <strong>Query:</strong> {selectedLoan.query}
+          </p>
           <textarea
             className="w-full mt-3 p-2 border border-gray-300 rounded"
             rows={3}
@@ -98,7 +121,7 @@ const SupportMaintenanceLoans = () => {
               className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
               onClick={() => {
                 setSelectedLoan(null);
-                setResponseText('');
+                setResponseText("");
               }}
             >
               Cancel

@@ -27,7 +27,7 @@ public class TransactionDTO {
 	
 	@NotNull
 	@NotBlank
-	private long transacId;
+	private long id;
 	
 	@NotNull
 	@NotBlank
@@ -49,11 +49,11 @@ public class TransactionDTO {
 	
 	@NotBlank
 	@NotNull
-	private String transacMode;
+	private String transactionMode;
 	
 	@NotBlank
 	@NotNull
-	private String transacType;
+	private String transactionType;
 	
 	@NotBlank
 	@NotNull
