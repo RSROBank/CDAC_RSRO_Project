@@ -1,11 +1,23 @@
 // src/components/Navbar.js
 import React from "react";
+import RSROBank from "../assets/Images/RSROBank.png";
 
 const Navbar = () => {
   return (
     <nav className="bg-blue-700 text-white px-6 py-3 shadow-md flex items-center justify-between">
       <div className="text-xl font-bold tracking-wide">
-        <span className="text-white">RSRO Bank</span>
+        <div className="text-white d-flex">
+          <img
+            src={RSROBank}
+            alt="paji"
+            style={{
+              width: "7%",
+              borderRadius: "50%",
+              height: "5%",
+            }}
+          />
+          <span style={{ padding: "5px" }}> RSRO Bank</span>
+        </div>
       </div>
       <div className="space-x-4 text-sm">
         <a href="/" className="hover:underline text-white">
