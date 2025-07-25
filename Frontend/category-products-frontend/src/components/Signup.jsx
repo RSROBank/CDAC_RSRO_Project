@@ -25,18 +25,14 @@ function Signup() {
   });
 
   const [captchaValue] = useState(Math.random().toString(36).substring(2, 8).toUpperCase());
-   const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const navigate = useNavigate();
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === 'photo') {
+    if (name === 'photo' && files && files[0]) {
       const file = files[0];
       setFormData({ ...formData, photo: file });
-
-      // Set image preview
-      if (file) {
-        setImagePreview(URL.createObjectURL(file));
-      }
+      setImagePreview(URL.createObjectURL(file));
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -258,18 +254,15 @@ function Signup() {
               className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white"
               required
             />
-          </div>
-
-          {imagePreview && (
-          <div className="mt-2">
-            <p className="text-sm text-gray-700">Image Preview:</p>
-            <img
-              src={imagePreview}
-              alt="Uploaded Preview"
-              className="w-32 h-32 object-cover border rounded"
-            />
-          </div>
-        )}
+            {imagePreview && (
+              <img
+                src={imagePreview}
+                alt="Uploaded Preview"
+                className="w-32 h-32 object-cover border rounded"
+              />
+            )}
+            </div>
+        
 
           {/* PhotoId */}
           <div>

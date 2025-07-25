@@ -13,6 +13,9 @@ import CustomerDashboard from "./components/Dashboard/Dashbord";
 import EmployeeDashboard from "./components/EmployeeDashBoard/Dashbord";
 import AdminDashboard from "./components/AdminDashboard/Dashbord";
 import Signup from "./components/Signup";
+import CustomerProfile from "./components/Profilepages/CustomerProfile";
+import CustomerEditProfile from "./components/Profilepages/CustomerEditProfile";
+import UpdateCustomerProfile from "./components/Profilepages/CustomerEditProfile";
 
 function App() {
   return (
@@ -24,6 +27,8 @@ function App() {
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/customerprofile" element={<CustomerProfile />} />
+          <Route path="/customereditprofile" element={<UpdateCustomerProfile />} />
           {/* http://localhost:3000 */}
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard" element={<CustomerDashboard />} />
