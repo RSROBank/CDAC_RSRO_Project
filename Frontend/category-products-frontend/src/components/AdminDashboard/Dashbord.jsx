@@ -5,7 +5,7 @@ import MainContent from "./MainContent";
 import Sidebar from "./Sidebar";
 
 const AdminDashboard = () => {
-  const [selectedOption, setSelectedOption] = useState("Dashboard");
+  const [selectedOption, setSelectedOption] = useState("Transaction Status & Management");
 
   return (
     <div className="flex min-h-screen">

@@ -281,6 +281,7 @@ function Signup() {
               />
             </div>
           )}
+          </div>
 
           {/* PhotoId */}
           <div>

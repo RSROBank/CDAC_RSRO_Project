@@ -56,7 +56,7 @@ const UpdateCustomerProfile = () => {
     }
 
     // Simulated API call
-    toast.success('Profile updated successfully!');
+    toast.success('Profile updaterequest submited!');
   };
 
   return (

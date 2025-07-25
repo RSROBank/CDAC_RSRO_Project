@@ -2,29 +2,29 @@
 import React from "react";
 import ProfileDropdown from "./UI/ProfileDown";
 import RSROBank from "../assets/Images/RSROBank.png";
+import { Link } from "react-router-dom";
 
 
 const Navbar = () => {
   return (
     <nav className="bg-blue-700 text-white px-6 py-3 shadow-md flex items-center justify-between">
       <div className="text-xl font-bold tracking-wide">
-        <div className="text-white d-flex">
-          <img
-            src={RSROBank}
-            alt="paji"
-            style={{
-              width: "7%",
-              borderRadius: "50%",
-              height: "5%",
-            }}
-          />
-          <span style={{ padding: "5px" }}> RSRO Bank</span>
-        </div>
+        <Link to="/">
+          <div className="text-white d-flex">
+            <img
+              src={RSROBank}
+              alt="paji"
+              style={{
+                width: "7%",
+                borderRadius: "50%",
+                height: "5%",
+              }}
+            />
+            <span style={{ padding: "5px" }}> RSRO Bank</span>
+          </div>
+        </Link>
       </div>
       <div className="space-x-4 text-sm">
-        <a href="/" className="hover:underline text-white">
-          Home
-        </a>
         <a href="/login" className="hover:underline text-white">
           Login
         </a>
