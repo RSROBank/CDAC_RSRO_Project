@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 @Service
 @Transactional
 @AllArgsConstructor
-public class EmployeeServiceImpl {
+public class EmployeeServiceImpl implements EmployeeService {
 
 	private CustomerDao customerDao;
 }
