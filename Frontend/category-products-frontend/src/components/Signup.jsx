@@ -4,12 +4,12 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Navbar from './Navbar';
 import { addNewUser } from '../services/userService';
 
 function Signup() {
   const [formData, setFormData] = useState({
-    fullName: '',
+    firstName: '',
+    lastName: '',
     dateOfBirth: '',
     gender: '',
     nationality: '',
@@ -25,13 +25,21 @@ function Signup() {
   });
 
   const [captchaValue] = useState(Math.random().toString(36).substring(2, 8).toUpperCase());
+   const [imagePreview, setImagePreview] = useState(null);
   const navigate = useNavigate();
   const handleInputChange = (e) => {
-    const { name, value, type } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? e.target.checked : value
-    }));
+    const { name, value, files } = e.target;
+    if (name === 'photo') {
+      const file = files[0];
+      setFormData({ ...formData, photo: file });
+
+      // Set image preview
+      if (file) {
+        setImagePreview(URL.createObjectURL(file));
+      }
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleFileChange = (e) => {
@@ -46,9 +54,11 @@ function Signup() {
   const handleSignUp = async (e) => {
     e.preventDefault();
     console.log('Sign up attempted with:', formData);
-    if (formData.fullName.trim().length === 0) {
+    if (formData.firstName.trim().length === 0) {
       toast.warn('Please enter full name');
-    } else if (formData.dateOfBirth.trim().length === 0) {
+    }if (formData.lastName.trim().length === 0) {
+      toast.warn('Please enter full name');
+    }else if (formData.dateOfBirth.trim().length === 0) {
       toast.warn('Please enter date of birth');
     } else if (formData.gender.trim().length === 0) {
       toast.warn('Please select gender');
@@ -78,7 +88,8 @@ function Signup() {
       toast.warn('captcha do not mathc')
     }else {
       const {
-        fullName,
+        firstName,
+        lastName,
         dateOfBirth,
         gender,
         nationality,
@@ -93,7 +104,8 @@ function Signup() {
       // Create FormData object
       const userdb = new FormData();
 
-      userdb.append('fullName', fullName);
+      userdb.append('firstName', firstName);
+      userdb.append('lastName', lastName);
       userdb.append('dateOfBirth', dateOfBirth);
       userdb.append('gender', gender);
       userdb.append('nationality', nationality);
@@ -104,16 +116,21 @@ function Signup() {
       userdb.append('email', email);
       userdb.append('password', password);
       // Call the registerUser function
-      const result = await addNewUser(userdb);
-      console.log(result);
-      if (result.data && result.data.message === 'Successfully save.') {
-        toast.success('Successfully registered a user');
-        navigate('/login');
-      } else {
-        toast.error('Error while registering the user');
+      try{
+        const result = await addNewUser(userdb);
+        console.log(result);
+        if (result.data && result.data.message === 'Successfully save.') {
+          toast.success('Successfully registered a user');
+          navigate('/login');
+        } else {
+          toast.error('Error while registering the user');
+        }
+      }catch(error){
+        console.log("error occured during signup!!")
+        toast.error("error occured during signup")
       }
-      }
-  };
+  }
+  }
 
   const handleCancel = () => {
     toast.error("rerrodfs");
@@ -149,15 +166,30 @@ function Signup() {
       <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl border border-blue-200 px-10 py-12">
         <h1 className="text-3xl font-bold text-center text-blue-700 mb-10">Sign Up</h1>
         <form className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Full Name */}
+          {/* First Name */}
           <div>
             <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
-              <User className="w-4 h-4" /> Full Name
+              <User className="w-4 h-4" /> First Name
             </label>
             <input
               type="text"
-              name="fullName"
-              value={formData.fullName}
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          {/* Last Name */}
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+              <User className="w-4 h-4" /> Last Name
+            </label>
+            <input
+              type="text"
+              name="lastName"
+              value={formData.lastName}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
@@ -227,6 +259,17 @@ function Signup() {
               required
             />
           </div>
+
+          {imagePreview && (
+          <div className="mt-2">
+            <p className="text-sm text-gray-700">Image Preview:</p>
+            <img
+              src={imagePreview}
+              alt="Uploaded Preview"
+              className="w-32 h-32 object-cover border rounded"
+            />
+          </div>
+        )}
 
           {/* PhotoId */}
           <div>
