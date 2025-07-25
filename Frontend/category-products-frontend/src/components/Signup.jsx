@@ -1,35 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
-  User, Calendar, Users, Flag, Image, MapPin, Phone, Mail, Lock, Shield, RotateCcw
-} from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { addNewUser } from '../services/userService';
+  User,
+  Calendar,
+  Users,
+  Flag,
+  Image,
+  MapPin,
+  Phone,
+  Mail,
+  Lock,
+  Shield,
+  RotateCcw,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { addNewUser } from "../services/userService";
 
 function Signup() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    dateOfBirth: '',
-    gender: '',
-    nationality: '',
+    firstName: "",
+    lastName: "",
+    dateOfBirth: "",
+    gender: "",
+    nationality: "",
     photo: null,
-    photoId: '',
-    address: '',
-    mobileNo: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    photoId: "",
+    address: "",
+    mobileNo: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
     termsAccepted: false,
-    captcha: ''
+    captcha: "",
   });
 
-  const [captchaValue] = useState(Math.random().toString(36).substring(2, 8).toUpperCase());
-   const [imagePreview, setImagePreview] = useState(null);
+  const generateCaptcha = () =>
+    Math.random().toString(36).substring(2, 8).toUpperCase();
+
+  const [captchaValue, setCaptchaValue] = useState(generateCaptcha());
+
+  const [imagePreview, setImagePreview] = useState(null);
   const navigate = useNavigate();
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === 'photo') {
+    if (name === "photo") {
       const file = files[0];
       setFormData({ ...formData, photo: file });
 
@@ -44,49 +58,50 @@ function Signup() {
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        photo: e.target.files[0]
+        photo: e.target.files[0],
       }));
     }
   };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    console.log('Sign up attempted with:', formData);
+    console.log("Sign up attempted with:", formData);
     if (formData.firstName.trim().length === 0) {
-      toast.warn('Please enter full name');
-    }if (formData.lastName.trim().length === 0) {
-      toast.warn('Please enter full name');
-    }else if (formData.dateOfBirth.trim().length === 0) {
-      toast.warn('Please enter date of birth');
+      toast.warn("Please enter full name");
+    }
+    if (formData.lastName.trim().length === 0) {
+      toast.warn("Please enter full name");
+    } else if (formData.dateOfBirth.trim().length === 0) {
+      toast.warn("Please enter date of birth");
     } else if (formData.gender.trim().length === 0) {
-      toast.warn('Please select gender');
+      toast.warn("Please select gender");
     } else if (formData.nationality.trim().length === 0) {
-      toast.warn('Please enter nationality');
-    }else if (!formData.photo) {
-      toast.warn('Please upload photo ID');
-    }else if (!formData.photoId.trim().length === 0) {
-      toast.warn('Please enter photo ID');
+      toast.warn("Please enter nationality");
+    } else if (!formData.photo) {
+      toast.warn("Please upload photo ID");
+    } else if (!formData.photoId.trim().length === 0) {
+      toast.warn("Please enter photo ID");
     } else if (formData.address.trim().length === 0) {
-      toast.warn('Please enter address');
+      toast.warn("Please enter address");
     } else if (formData.mobileNo.trim().length === 0) {
-      toast.warn('Please enter mobile number');
+      toast.warn("Please enter mobile number");
     } else if (formData.email.trim().length === 0) {
-      toast.warn('Please enter email ID');
+      toast.warn("Please enter email ID");
     } else if (formData.password.trim().length === 0) {
-      toast.warn('Please enter password');
+      toast.warn("Please enter password");
     } else if (formData.confirmPassword.trim().length === 0) {
-      toast.warn('Please confirm password');
+      toast.warn("Please confirm password");
     } else if (formData.password !== formData.confirmPassword) {
-      toast.warn('Passwords do not match');
+      toast.warn("Passwords do not match");
     } else if (!formData.termsAccepted) {
-      toast.warn('Please accept the terms and conditions');
+      toast.warn("Please accept the terms and conditions");
     } else if (formData.captcha.trim().length === 0) {
-      toast.warn('Please enter captcha');
-    } else if(formData.captcha != captchaValue){
-      toast.warn('captcha do not mathc')
-    }else {
+      toast.warn("Please enter captcha");
+    } else if (formData.captcha != captchaValue) {
+      toast.warn("captcha do not mathc");
+    } else {
       const {
         firstName,
         lastName,
@@ -98,73 +113,75 @@ function Signup() {
         address,
         mobileNo,
         email,
-        password
+        password,
       } = formData;
 
       // Create FormData object
       const userdb = new FormData();
 
-      userdb.append('firstName', firstName);
-      userdb.append('lastName', lastName);
-      userdb.append('dateOfBirth', dateOfBirth);
-      userdb.append('gender', gender);
-      userdb.append('nationality', nationality);
-      userdb.append('photo', photo); // file input
-      userdb.append('photoId', photoId);
-      userdb.append('address', address);
-      userdb.append('mobileNo', mobileNo);
-      userdb.append('email', email);
-      userdb.append('password', password);
+      userdb.append("firstName", firstName);
+      userdb.append("lastName", lastName);
+      userdb.append("dateOfBirth", dateOfBirth);
+      userdb.append("gender", gender);
+      userdb.append("nationality", nationality);
+      userdb.append("photo", photo); // file input
+      userdb.append("photoId", photoId);
+      userdb.append("address", address);
+      userdb.append("mobileNo", mobileNo);
+      userdb.append("email", email);
+      userdb.append("password", password);
       // Call the registerUser function
-      try{
+      try {
         const result = await addNewUser(userdb);
         console.log(result);
-        if (result.data && result.data.message === 'Successfully save.') {
-          toast.success('Successfully registered a user');
-          navigate('/login');
+        if (result.data && result.data.message === "Successfully save.") {
+          toast.success("Successfully registered a user");
+          navigate("/login");
         } else {
-          toast.error('Error while registering the user');
+          toast.error("Error while registering the user");
         }
-      }catch(error){
-        console.log("error occured during signup!!")
-        toast.error("error occured during signup")
+      } catch (error) {
+        console.log("error occured during signup!!");
+        toast.error("error occured during signup");
       }
-  }
-  }
+    }
+  };
 
   const handleCancel = () => {
     toast.error("rerrodfs");
     setFormData({
-      fullName: '',
-      dateOfBirth: '',
-      gender: '',
-      nationality: '',
+      fullName: "",
+      dateOfBirth: "",
+      gender: "",
+      nationality: "",
       photo: null,
-      photoId: '',
-      address: '',
-      mobileNo: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      photoId: "",
+      address: "",
+      mobileNo: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
       termsAccepted: false,
-      captcha: ''
+      captcha: "",
     });
   };
 
   const generateNewCaptcha = () => {
-    window.location.reload(); // mock for now
+    setCaptchaValue(generateCaptcha());
   };
 
   const onBack = () => {
     // use back stack (which is implemented by browser)
     // -1: previous screen
-    navigate('/login');
-  }
+    navigate("/login");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-10 px-4 text-gray-800 font-sans">
       <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl border border-blue-200 px-10 py-12">
-        <h1 className="text-3xl font-bold text-center text-blue-700 mb-10">Sign Up</h1>
+        <h1 className="text-3xl font-bold text-center text-blue-700 mb-10">
+          Sign Up
+        </h1>
         <form className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* First Name */}
           <div>
@@ -261,20 +278,20 @@ function Signup() {
           </div>
 
           {imagePreview && (
-          <div className="mt-2">
-            <p className="text-sm text-gray-700">Image Preview:</p>
-            <img
-              src={imagePreview}
-              alt="Uploaded Preview"
-              className="w-32 h-32 object-cover border rounded"
-            />
-          </div>
-        )}
+            <div className="mt-2">
+              <p className="text-sm text-gray-700">Image Preview:</p>
+              <img
+                src={imagePreview}
+                alt="Uploaded Preview"
+                className="w-32 h-32 object-cover border rounded"
+              />
+            </div>
+          )}
 
           {/* PhotoId */}
           <div>
             <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
-               PhotoId
+              PhotoId
             </label>
             <input
               type="text"
@@ -372,7 +389,7 @@ function Signup() {
               required
             />
             <label className="text-sm text-gray-700">
-              I agree to the{' '}
+              I agree to the{" "}
               <span className="text-blue-600 underline cursor-pointer hover:text-blue-800">
                 Terms & Conditions
               </span>
@@ -410,12 +427,9 @@ function Signup() {
           </div>
 
           {/* Buttons */}
-          <div className='flex'>
-            Already have an account?{' '}
-            <button
-              onClick={onBack}
-              className='btn btn-link'
-            >
+          <div className="flex">
+            Already have an account?{" "}
+            <button onClick={onBack} className="btn btn-link">
               Login here
             </button>
           </div>

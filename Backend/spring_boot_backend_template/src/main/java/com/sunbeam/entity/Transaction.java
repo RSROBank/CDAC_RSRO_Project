@@ -60,8 +60,7 @@ public class Transaction {
 	@UpdateTimestamp
 	private LocalDateTime modifiedAt;
 	
-	
-	
+
 	@Column(name="fd_id")
 	private Long fdId;
 	
