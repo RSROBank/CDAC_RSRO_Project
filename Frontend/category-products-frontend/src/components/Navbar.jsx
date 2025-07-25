@@ -1,6 +1,8 @@
 // src/components/Navbar.js
 import React from "react";
+import ProfileDropdown from "./UI/ProfileDown";
 import RSROBank from "../assets/Images/RSROBank.png";
+
 
 const Navbar = () => {
   return (
@@ -39,6 +41,7 @@ const Navbar = () => {
         <a href="/admindashboard" className="hover:underline text-white">
           Admin Dashboard
         </a>
+          <ProfileDropdown/>
       </div>
     </nav>
   );
