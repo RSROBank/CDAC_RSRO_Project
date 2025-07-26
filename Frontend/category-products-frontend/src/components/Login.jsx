@@ -15,8 +15,10 @@ import {
   RotateCcw,
 } from "lucide-react";
 import { loginUser } from "../services/userService";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -28,6 +30,7 @@ const LoginPage = () => {
       if (response.success) {
         alert(`Logged in as ${email}`);
         console.log("Login successful:", response);
+        navigate("/dashboard")
         // Navigate to dashboard or store token here
       } else {
         alert("Message : " + response.message);
@@ -93,7 +96,7 @@ const styles = {
   button: {
     padding: "10px",
     fontSize: "1rem",
-    backgroundColor: "#007bff",
+    backgroundColor: "#C89D2A",
     color: "white",
     border: "none",
     borderRadius: "5px",

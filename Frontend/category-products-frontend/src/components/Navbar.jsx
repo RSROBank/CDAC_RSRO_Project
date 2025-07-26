@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav className="bg-blue-700 text-white px-6 py-3 shadow-md flex items-center justify-between">
+    <nav className="bg-[#0B2E53] text-white px-6 py-3 shadow-md flex items-center justify-between">
       <div className="text-xl font-bold tracking-wide">
         <Link to="/">
           <div className="text-white d-flex">
@@ -41,7 +41,7 @@ const Navbar = () => {
         <a href="/admindashboard" className="hover:underline text-white">
           Admin Dashboard
         </a>
-          <ProfileDropdown/>
+          {/* <ProfileDropdown/> */}
       </div>
     </nav>
   );
