@@ -30,7 +30,7 @@ const FDLoanSearchComponent = () => {
         </h2>
 
         {/* Filter Section */}
-        <div className="bg-white shadow-md rounded-2xl p-4 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white shadow-md rounded-2xl p-4 mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* <input
             type="text"
             placeholder="Filter by FD ID"
