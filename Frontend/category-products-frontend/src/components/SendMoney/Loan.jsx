@@ -55,9 +55,9 @@ const LoanSearchComponent = () => {
   }
 
   return (
-    <div className="bg-blue-50 min-h-screen p-6">
+    <div className="bg-[#FDFCF9] min-h-screen p-6">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold text-center mb-6 text-blue-800">
+        <h2 className="text-2xl font-bold text-center mb-6 text-[#0B2E53]">
           Search and Filter Loan
         </h2>
 
@@ -68,21 +68,21 @@ const LoanSearchComponent = () => {
             placeholder="Filter by Loan ID"
             value={filter.id}
             onChange={(e) => setFilter({ ...filter, id: e.target.value })}
-            className="w-full p-2 rounded-xl border border-blue-300"
+            className="w-full p-2 rounded-xl border border-[#0B2E53]"
           /> */}
           <input
             type="text"
             placeholder="Filter by Status"
             value={filter.status}
             onChange={(e) => setFilter({ ...filter, status: e.target.value })}
-            className="w-full p-2 rounded-xl border border-blue-300"
+            className="w-full p-2 rounded-xl border border-[#0B2E53] focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
           />
           <input
             type="text"
             placeholder="Filter by Amount"
             value={filter.amount}
             onChange={(e) => setFilter({ ...filter, amount: e.target.value })}
-            className="w-full p-2 rounded-xl border border-blue-300"
+            className="w-full p-2 rounded-xl border border-[#0B2E53] focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
           />
         </div>
 
@@ -92,9 +92,9 @@ const LoanSearchComponent = () => {
             filteredLoans.map((loan) => (
               <div
                 key={loan.id}
-                className="bg-white rounded-2xl shadow-lg p-4 flex flex-col md:flex-row justify-between items-start md:items-center"
+                className="bg-white rounded-2xl shadow-lg p-4 border border-[#0B2E53]/20 flex flex-col md:flex-row justify-between items-start md:items-center"
               >
-                <div className="text-blue-900 space-y-1">
+                <div className="text-[#0B2E53] space-y-1">
                   {/* <p><strong>Loan ID:</strong> {loan.id}</p> */}
                   <p><strong>Status:</strong> {loan.status}</p>
                   <p><strong>Tenure:</strong> {loan.tenure}</p>
@@ -114,10 +114,10 @@ const LoanSearchComponent = () => {
         {/* Button */}
         <div className="text-center mt-6">
           <button
-            className="bg-[#C89D2A] text-white px-6 py-2 rounded-xl hover:bg-blue-700 transition"
+            className="bg-[#0B2E53] text-white px-6 py-2 rounded-xl hover:bg-[#C89D2A] transition"
             onClick={handleLoan}
           >
-            Apply new Loan
+            Apply New Loan
           </button>
         </div>
       </div>
