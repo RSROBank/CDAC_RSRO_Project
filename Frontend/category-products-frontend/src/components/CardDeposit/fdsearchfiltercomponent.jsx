@@ -19,7 +19,6 @@ const fdDataSample = [
     createdDate: "2022-06-30",
     interestRate: 6,
   },
-  // add more sample data here
 ];
 
 const FDSearchFilterComponent = () => {
@@ -30,19 +29,28 @@ const FDSearchFilterComponent = () => {
 
   // Filter logic
   const filteredFDs = fdDataSample.filter((fd) => {
-    const matchesFDId = fd.fdId.toLowerCase().includes(searchFDId.toLowerCase());
+    const matchesFDId = fd.fdId
+      .toLowerCase()
+      .includes(searchFDId.toLowerCase());
     const matchesAmount = filterAmount
-      ? fd.principalAmount === Number(filterAmount) || fd.maturityAmount === Number(filterAmount)
+      ? fd.principalAmount === Number(filterAmount) ||
+        fd.maturityAmount === Number(filterAmount)
       : true;
-    const matchesDate = filterDate ? fd.maturityDate === filterDate || fd.createdDate === filterDate : true;
-    const matchesStatus = filterStatus ? fd.status.toLowerCase().includes(filterStatus.toLowerCase()) : true;
+    const matchesDate = filterDate
+      ? fd.maturityDate === filterDate || fd.createdDate === filterDate
+      : true;
+    const matchesStatus = filterStatus
+      ? fd.status.toLowerCase().includes(filterStatus.toLowerCase())
+      : true;
 
     return matchesFDId && matchesAmount && matchesDate && matchesStatus;
   });
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-50 rounded shadow-md">
-      <h2 className="text-2xl font-semibold mb-6 text-center">FD Search & Filter</h2>
+      <h2 className="text-2xl font-semibold mb-6 text-center">
+        FD Search & Filter
+      </h2>
 
       {/* Search and Filters */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
@@ -83,25 +91,51 @@ const FDSearchFilterComponent = () => {
         <table className="w-full table-auto border-collapse border border-gray-300">
           <thead>
             <tr className="bg-blue-100">
-              <th className="border border-gray-300 px-4 py-2 text-left">FD ID</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Status</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Maturity Date</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Principal Amount</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Maturity Amount</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Created Date</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Interest Rate (%)</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">
+                FD ID
+              </th>
+              <th className="border border-gray-300 px-4 py-2 text-left">
+                Status
+              </th>
+              <th className="border border-gray-300 px-4 py-2 text-left">
+                Maturity Date
+              </th>
+              <th className="border border-gray-300 px-4 py-2 text-left">
+                Principal Amount
+              </th>
+              <th className="border border-gray-300 px-4 py-2 text-left">
+                Maturity Amount
+              </th>
+              <th className="border border-gray-300 px-4 py-2 text-left">
+                Created Date
+              </th>
+              <th className="border border-gray-300 px-4 py-2 text-left">
+                Interest Rate (%)
+              </th>
             </tr>
           </thead>
           <tbody>
             {filteredFDs.map((fd) => (
               <tr key={fd.fdId} className="odd:bg-white even:bg-gray-50">
                 <td className="border border-gray-300 px-4 py-2">{fd.fdId}</td>
-                <td className="border border-gray-300 px-4 py-2">{fd.status}</td>
-                <td className="border border-gray-300 px-4 py-2">{fd.maturityDate}</td>
-                <td className="border border-gray-300 px-4 py-2">{fd.principalAmount}</td>
-                <td className="border border-gray-300 px-4 py-2">{fd.maturityAmount}</td>
-                <td className="border border-gray-300 px-4 py-2">{fd.createdDate}</td>
-                <td className="border border-gray-300 px-4 py-2">{fd.interestRate}</td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {fd.status}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {fd.maturityDate}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {fd.principalAmount}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {fd.maturityAmount}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {fd.createdDate}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {fd.interestRate}
+                </td>
               </tr>
             ))}
           </tbody>

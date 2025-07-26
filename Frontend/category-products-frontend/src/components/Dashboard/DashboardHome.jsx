@@ -1,4 +1,3 @@
-// src/components/Dashboard/DashboardHome.js
 import React, { useState } from "react";
 import ExpenditureCard from "./ExpenditureCard";
 import MiniStatement from "./MiniStatement";

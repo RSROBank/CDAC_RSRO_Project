@@ -4,7 +4,7 @@ const LoanSearchComponent = () => {
   const [loans, setLoans] = useState([]);
   const [filter, setFilter] = useState({ id: "", status: "", amount: "" });
 
-  // Dummy Loan Data
+
   useEffect(() => {
     const dummyLoans = [
       {

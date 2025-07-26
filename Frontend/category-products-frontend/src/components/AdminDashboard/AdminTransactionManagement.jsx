@@ -1,35 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const TransactionManagement = () => {
-  const [filters, setFilters] = useState({ id: '', status: '', type: '', user: '' });
+  const [filters, setFilters] = useState({
+    id: "",
+    status: "",
+    type: "",
+    user: "",
+  });
   const [selectedTransaction, setSelectedTransaction] = useState(null);
-  const [summaryReport, setSummaryReport] = useState('');
-  const [manualUpdate, setManualUpdate] = useState('');
+  const [summaryReport, setSummaryReport] = useState("");
+  const [manualUpdate, setManualUpdate] = useState("");
 
   const transactions = [
-    { id: 1, user: 'Rahul', type: 'Credit', amount: 1000, status: 'Success', date: '2025-07-23 07:00 PM' },
-    { id: 2, user: 'Amit', type: 'Debit', amount: 2500, status: 'Failed', date: '2025-07-22 03:00 PM' },
-    { id: 3, user: 'Priya', type: 'Credit', amount: 1500, status: 'Pending', date: '2025-07-23 06:30 PM' },
+    {
+      id: 1,
+      user: "Rahul",
+      type: "Credit",
+      amount: 1000,
+      status: "Success",
+      date: "2025-07-23 07:00 PM",
+    },
+    {
+      id: 2,
+      user: "Amit",
+      type: "Debit",
+      amount: 2500,
+      status: "Failed",
+      date: "2025-07-22 03:00 PM",
+    },
+    {
+      id: 3,
+      user: "Priya",
+      type: "Credit",
+      amount: 1500,
+      status: "Pending",
+      date: "2025-07-23 06:30 PM",
+    },
   ];
 
-  const filteredTransactions = transactions.filter(t =>
-    t.id.toString().includes(filters.id) &&
-    t.status.toLowerCase().includes(filters.status.toLowerCase()) &&
-    t.type.toLowerCase().includes(filters.type.toLowerCase()) &&
-    t.user.toLowerCase().includes(filters.user.toLowerCase())
+  const filteredTransactions = transactions.filter(
+    (t) =>
+      t.id.toString().includes(filters.id) &&
+      t.status.toLowerCase().includes(filters.status.toLowerCase()) &&
+      t.type.toLowerCase().includes(filters.type.toLowerCase()) &&
+      t.user.toLowerCase().includes(filters.user.toLowerCase())
   );
 
   const generateSummary = () => {
     const total = transactions.reduce((sum, t) => sum + t.amount, 0);
-    setSummaryReport(`Total: ${transactions.length} transactions | Total Amount: ₹${total}`);
+    setSummaryReport(
+      `Total: ${transactions.length} transactions | Total Amount: ₹${total}`
+    );
   };
 
   const handleManualUpdate = () => {
     if (manualUpdate.trim()) {
       alert(`Manual Update: ${manualUpdate}`);
-      setManualUpdate('');
+      setManualUpdate("");
     } else {
-      alert('Enter details for manual update.');
+      alert("Enter details for manual update.");
     }
   };
 
@@ -81,7 +110,9 @@ const TransactionManagement = () => {
                 className="bg-blue-100 rounded-lg p-4 flex justify-between items-center"
               >
                 <div>
-                  <p className="font-semibold text-blue-800">#{t.id} - {t.user}</p>
+                  <p className="font-semibold text-blue-800">
+                    #{t.id} - {t.user}
+                  </p>
                   <p className="text-sm text-gray-700">
                     ₹{t.amount} | {t.type} | {t.date} | {t.status}
                   </p>
@@ -95,7 +126,9 @@ const TransactionManagement = () => {
               </div>
             ))
           ) : (
-            <p className="text-gray-500 text-center">No matching transactions found.</p>
+            <p className="text-gray-500 text-center">
+              No matching transactions found.
+            </p>
           )}
         </div>
 
@@ -135,7 +168,9 @@ const TransactionManagement = () => {
 
         {/* Manual Update Section */}
         <div className="mt-8">
-          <h3 className="text-md font-semibold text-blue-800 mb-2">Manual Update</h3>
+          <h3 className="text-md font-semibold text-blue-800 mb-2">
+            Manual Update
+          </h3>
           <textarea
             value={manualUpdate}
             onChange={(e) => setManualUpdate(e.target.value)}

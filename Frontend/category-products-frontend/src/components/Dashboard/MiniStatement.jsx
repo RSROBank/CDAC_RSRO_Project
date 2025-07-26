@@ -1,12 +1,11 @@
-// src/components/Dashboard/MiniStatement.js
-import React from 'react';
+import React from "react";
 
 const transactions = [
-  { date: '2025-07-21', desc: 'ATM Withdrawal', amount: '-₹500' },
-  { date: '2025-07-20', desc: 'Electricity Bill', amount: '-₹1200' },
-  { date: '2025-07-19', desc: 'Salary Credit', amount: '+₹40,000' },
-  { date: '2025-07-18', desc: 'Grocery Store', amount: '-₹900' },
-  { date: '2025-07-17', desc: 'UPI to John', amount: '-₹300' },
+  { date: "2025-07-21", desc: "ATM Withdrawal", amount: "-₹500" },
+  { date: "2025-07-20", desc: "Electricity Bill", amount: "-₹1200" },
+  { date: "2025-07-19", desc: "Salary Credit", amount: "+₹40,000" },
+  { date: "2025-07-18", desc: "Grocery Store", amount: "-₹900" },
+  { date: "2025-07-17", desc: "UPI to John", amount: "-₹300" },
 ];
 
 const MiniStatement = () => {

@@ -1,4 +1,3 @@
-// src/components/Dashboard/MainContent.js
 import React from "react";
 import SearchFilterTransactions from "../EmployeeDashBoard/SearchFilterTransactions";
 import CustomersManagement from "./AdminCustomerManagement";
@@ -16,9 +15,7 @@ const MainContent = ({ selected }) => {
       {selected === "Customer Management" && <CustomersManagement />}
       {selected === "Transaction Management" && <SearchFilterTransactions />}
       {selected === "Employee Management" && <EmployeeManagement />}
-      {selected === "Data Updation and Maintenance" && (
-        <UserDataManagement />
-      )}
+      {selected === "Data Updation and Maintenance" && <UserDataManagement />}
     </div>
   );
 };

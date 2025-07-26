@@ -1,52 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const LoanFilterComponent = () => {
-  const [filter, setFilter] = useState({ id: '', userId: '', status: '' });
+  const [filter, setFilter] = useState({ id: "", userId: "", status: "" });
   const [selectedLoan, setSelectedLoan] = useState(null);
-  const [extendMessage, setExtendMessage] = useState('');
+  const [extendMessage, setExtendMessage] = useState("");
 
-  // Dummy loan data
   const loanData = [
     {
       Loan_Info_Id: 101,
       Review_Id: 1,
       Amount: 50000,
-      Approved_Date: '2025-06-15',
-      User_Id: 'U123',
+      Approved_Date: "2025-06-15",
+      User_Id: "U123",
       Tenure_Months: 12,
-      Status: 'Active',
+      Status: "Active",
       EMI_Amount: 4500,
       Total_Emis: 12,
-      Created_At: '2025-06-01',
-      Modify_At: '2025-07-01',
+      Created_At: "2025-06-01",
+      Modify_At: "2025-07-01",
     },
     {
       Loan_Info_Id: 102,
       Review_Id: 2,
       Amount: 80000,
-      Approved_Date: '2025-07-01',
-      User_Id: 'U456',
+      Approved_Date: "2025-07-01",
+      User_Id: "U456",
       Tenure_Months: 24,
-      Status: 'Pending',
+      Status: "Pending",
       EMI_Amount: 3800,
       Total_Emis: 24,
-      Created_At: '2025-06-10',
-      Modify_At: '2025-07-01',
+      Created_At: "2025-06-10",
+      Modify_At: "2025-07-01",
     },
   ];
 
   // Filter logic
-  const filteredLoans = loanData.filter(loan =>
-    (filter.id === '' || loan.Loan_Info_Id.toString().includes(filter.id)) &&
-    (filter.userId === '' || loan.User_Id.toLowerCase().includes(filter.userId.toLowerCase())) &&
-    (filter.status === '' || loan.Status.toLowerCase().includes(filter.status.toLowerCase()))
+  const filteredLoans = loanData.filter(
+    (loan) =>
+      (filter.id === "" || loan.Loan_Info_Id.toString().includes(filter.id)) &&
+      (filter.userId === "" ||
+        loan.User_Id.toLowerCase().includes(filter.userId.toLowerCase())) &&
+      (filter.status === "" ||
+        loan.Status.toLowerCase().includes(filter.status.toLowerCase()))
   );
 
   const handleExtendLoan = () => {
-    if (selectedLoan && selectedLoan.Status === 'Active') {
-      setExtendMessage(`Loan ID ${selectedLoan.Loan_Info_Id} extension requested.`);
+    if (selectedLoan && selectedLoan.Status === "Active") {
+      setExtendMessage(
+        `Loan ID ${selectedLoan.Loan_Info_Id} extension requested.`
+      );
     } else {
-      setExtendMessage('Loan extension not allowed unless status is Active.');
+      setExtendMessage("Loan extension not allowed unless status is Active.");
     }
   };
 
@@ -89,13 +93,27 @@ const LoanFilterComponent = () => {
             className="bg-white p-4 rounded-lg shadow-md flex flex-col md:flex-row justify-between items-center"
           >
             <div className="text-blue-800 space-y-1 text-sm md:text-base">
-              <p><strong>Loan ID:</strong> {loan.Loan_Info_Id}</p>
-              <p><strong>User ID:</strong> {loan.User_Id}</p>
-              <p><strong>Amount:</strong> ₹{loan.Amount}</p>
-              <p><strong>Status:</strong> {loan.Status}</p>
-              <p><strong>Tenure:</strong> {loan.Tenure_Months} months</p>
-              <p><strong>EMI:</strong> ₹{loan.EMI_Amount}</p>
-              <p><strong>Approved Date:</strong> {loan.Approved_Date}</p>
+              <p>
+                <strong>Loan ID:</strong> {loan.Loan_Info_Id}
+              </p>
+              <p>
+                <strong>User ID:</strong> {loan.User_Id}
+              </p>
+              <p>
+                <strong>Amount:</strong> ₹{loan.Amount}
+              </p>
+              <p>
+                <strong>Status:</strong> {loan.Status}
+              </p>
+              <p>
+                <strong>Tenure:</strong> {loan.Tenure_Months} months
+              </p>
+              <p>
+                <strong>EMI:</strong> ₹{loan.EMI_Amount}
+              </p>
+              <p>
+                <strong>Approved Date:</strong> {loan.Approved_Date}
+              </p>
             </div>
             <button
               className="mt-4 md:mt-0 bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700"
@@ -129,7 +147,9 @@ const LoanFilterComponent = () => {
           >
             Request Loan Extension
           </button>
-          {extendMessage && <p className="mt-3 text-green-700 font-semibold">{extendMessage}</p>}
+          {extendMessage && (
+            <p className="mt-3 text-green-700 font-semibold">{extendMessage}</p>
+          )}
         </div>
       )}
     </div>

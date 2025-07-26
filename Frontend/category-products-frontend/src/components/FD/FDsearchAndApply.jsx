@@ -4,7 +4,6 @@ const FDLoanSearchComponent = () => {
   const [fdData, setFdData] = useState([]);
   const [filter, setFilter] = useState({ id: "", amount: "", interest: "" });
 
-  // Dummy data fallback
   useEffect(() => {
     const dummyFDs = [
       {

@@ -1,4 +1,3 @@
-// src/components/Navbar.js
 import React from "react";
 import ProfileDropdown from "./UI/ProfileDown";
 import RSROBank from "../assets/Images/RSROBank.png";
@@ -24,22 +23,22 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="space-x-4 text-sm">
-        <a href="/login" className="hover:underline text-white">
+        <Link to="/login" className="hover:underline text-white">
           Login
-        </a>
-        <a href="/signup" className="hover:underline text-white">
+        </Link>
+        <Link to="/signup" className="hover:underline text-white">
           Sign Up
-        </a>
-        <a href="/dashboard" className="hover:underline text-white">
+        </Link>
+        <Link to="/dashboard" className="hover:underline text-white">
           Dashboard
-        </a>
+        </Link>
 
-        <a href="/employeedashboard" className="hover:underline text-white">
+        <Link to="/employeedashboard" className="hover:underline text-white">
           Employee Dashboard
-        </a>
-        <a href="/admindashboard" className="hover:underline text-white">
+        </Link>
+        <Link to="/admindashboard" className="hover:underline text-white">
           Admin Dashboard
-        </a>
+        </Link>
         {/* <ProfileDropdown/> */}
       </div>
     </nav>

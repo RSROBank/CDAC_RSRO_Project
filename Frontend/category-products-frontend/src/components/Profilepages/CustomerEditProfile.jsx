@@ -1,35 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { MapPin, Image, Mail, Phone, BadgeCheck } from 'lucide-react';
-import { toast } from 'react-toastify';
+import React, { useEffect, useState } from "react";
+import { MapPin, Image, Mail, Phone, BadgeCheck } from "lucide-react";
+import { toast } from "react-toastify";
 
 const UpdateCustomerProfile = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
-    dateOfBirth: '',
-    gender: '',
-    nationality: '',
+    fullName: "",
+    dateOfBirth: "",
+    gender: "",
+    nationality: "",
     photo: null,
-    photoId: '',
-    address: '',
-    mobileNo: '',
-    email: '',
+    photoId: "",
+    address: "",
+    mobileNo: "",
+    email: "",
   });
 
   const [imagePreview, setImagePreview] = useState(null);
 
-  // Simulated fetch profile (replace with actual API call)
   useEffect(() => {
     setTimeout(() => {
       const user = {
-        fullName: 'Rahul Verma',
-        dateOfBirth: '1998-05-20',
-        gender: 'Male',
-        nationality: 'Indian',
-        photoId: 'DOC123456',
-        address: '123, Gomti Nagar, Lucknow',
-        mobileNo: '9876543210',
-        email: 'rahul.verma@example.com',
-        photo: 'src/assets/Images/Cardsampleimage.png',
+        fullName: "Rahul Verma",
+        dateOfBirth: "1998-05-20",
+        gender: "Male",
+        nationality: "Indian",
+        photoId: "DOC123456",
+        address: "123, Gomti Nagar, Lucknow",
+        mobileNo: "9876543210",
+        email: "rahul.verma@example.com",
+        photo: "src/assets/Images/Cardsampleimage.png",
       };
       setFormData(user);
       if (user.photo) setImagePreview(user.photo);
@@ -38,7 +37,7 @@ const UpdateCustomerProfile = () => {
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === 'photo' && files && files[0]) {
+    if (name === "photo" && files && files[0]) {
       const file = files[0];
       setFormData({ ...formData, photo: file });
       setImagePreview(URL.createObjectURL(file));
@@ -50,21 +49,31 @@ const UpdateCustomerProfile = () => {
   const handleUpdate = (e) => {
     e.preventDefault();
     // Validation
-    if (!formData.address || !formData.photoId || !formData.mobileNo || !formData.email) {
-      toast.error('Please fill all editable fields');
+    if (
+      !formData.address ||
+      !formData.photoId ||
+      !formData.mobileNo ||
+      !formData.email
+    ) {
+      toast.error("Please fill all editable fields");
       return;
     }
 
     // Simulated API call
-    toast.success('Profile updaterequest submited!');
+    toast.success("Profile updaterequest submited!");
   };
 
   return (
     <div className="min-h-screen bg-blue-50 p-6">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-8">
-        <h2 className="text-2xl font-bold text-blue-700 mb-6">Update Profile</h2>
+        <h2 className="text-2xl font-bold text-blue-700 mb-6">
+          Update Profile
+        </h2>
 
-        <form onSubmit={handleUpdate} className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
+        <form
+          onSubmit={handleUpdate}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700"
+        >
           <div>
             <label className="block text-sm font-medium mb-1">Full Name</label>
             <input
@@ -76,7 +85,9 @@ const UpdateCustomerProfile = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Date of Birth</label>
+            <label className="block text-sm font-medium mb-1">
+              Date of Birth
+            </label>
             <input
               type="date"
               value={formData.dateOfBirth}
@@ -96,7 +107,9 @@ const UpdateCustomerProfile = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Nationality</label>
+            <label className="block text-sm font-medium mb-1">
+              Nationality
+            </label>
             <input
               type="text"
               value={formData.nationality}
