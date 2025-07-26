@@ -63,13 +63,13 @@ const LoanSearchComponent = () => {
 
         {/* Filter Inputs */}
         <div className="bg-white shadow-md rounded-2xl p-4 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <input
+          {/* <input
             type="text"
             placeholder="Filter by Loan ID"
             value={filter.id}
             onChange={(e) => setFilter({ ...filter, id: e.target.value })}
             className="w-full p-2 rounded-xl border border-blue-300"
-          />
+          /> */}
           <input
             type="text"
             placeholder="Filter by Status"
@@ -95,7 +95,7 @@ const LoanSearchComponent = () => {
                 className="bg-white rounded-2xl shadow-lg p-4 flex flex-col md:flex-row justify-between items-start md:items-center"
               >
                 <div className="text-blue-900 space-y-1">
-                  <p><strong>Loan ID:</strong> {loan.id}</p>
+                  {/* <p><strong>Loan ID:</strong> {loan.id}</p> */}
                   <p><strong>Status:</strong> {loan.status}</p>
                   <p><strong>Tenure:</strong> {loan.tenure}</p>
                   <p><strong>Amount:</strong> ₹{loan.amount}</p>

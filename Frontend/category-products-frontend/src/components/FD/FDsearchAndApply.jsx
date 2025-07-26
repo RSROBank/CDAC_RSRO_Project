@@ -26,18 +26,18 @@ const FDLoanSearchComponent = () => {
     <div className="bg-blue-50 min-h-screen p-6">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-2xl font-bold text-center mb-6 text-blue-800">
-          Search and Filter FD
+          Search FD by Amount and Interest Rate
         </h2>
 
         {/* Filter Section */}
         <div className="bg-white shadow-md rounded-2xl p-4 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <input
+          {/* <input
             type="text"
             placeholder="Filter by FD ID"
             value={filter.id}
             onChange={(e) => setFilter({ ...filter, id: e.target.value })}
             className="w-full p-2 rounded-xl border border-blue-300"
-          />
+          /> */}
           <input
             type="text"
             placeholder="Filter by Amount"
@@ -63,7 +63,7 @@ const FDLoanSearchComponent = () => {
                 className="bg-white rounded-2xl shadow-lg p-4 flex flex-col md:flex-row justify-between items-center"
               >
                 <div className="text-blue-800">
-                  <p><strong>ID:</strong> {item.id}</p>
+                  {/* <p><strong>ID:</strong> {item.id}</p> */}
                   <p><strong>Amount:</strong> ₹{item.amount}</p>
                   <p><strong>Interest:</strong> {item.interest}</p>
                   <p><strong>Time Period:</strong> {item.period}</p>
