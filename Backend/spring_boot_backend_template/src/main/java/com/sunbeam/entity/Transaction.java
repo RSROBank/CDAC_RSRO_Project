@@ -1,6 +1,8 @@
 package com.sunbeam.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -83,6 +85,26 @@ public class Transaction {
 		this.modifiedAt = modifiedAt;
 		this.fdId = fdId;
 		this.loanId = loanId;
+	}
+
+	public Optional<Transaction> findByUserId(Long userId2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Transaction> findByStatus(Status status2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Transaction save(Transaction transaction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void delete(Transaction transaction) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

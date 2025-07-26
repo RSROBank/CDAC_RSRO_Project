@@ -6,4 +6,5 @@ import com.sunbeam.entity.EmployeeEntity;
 
 public interface CustomerDao extends JpaRepository<EmployeeEntity, Long>{
 
+	
 }
