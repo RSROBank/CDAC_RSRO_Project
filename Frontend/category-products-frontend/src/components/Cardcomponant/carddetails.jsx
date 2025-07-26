@@ -69,22 +69,22 @@ const CardComponent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-blue-50 flex justify-center items-start py-10 px-4">
+    <div className="min-h-screen bg-[#FDFCF9] flex justify-center items-start py-10 px-4">
       <div className="bg-white shadow-lg rounded-xl p-5 w-full max-w-md font-sans">
-        <h2 className="text-xl font-semibold mb-5 text-center text-blue-800">
+        <h2 className="text-xl font-semibold mb-5 text-center text-[#0B2E53]">
           Card Payment
         </h2>
 
         <form onSubmit={handleSubmit} noValidate className="space-y-4">
           <div>
-            <label className="block font-medium">Card Number</label>
+            <label className="block font-medium text-[#0B2E53]">Card Number</label>
             <input
               type="text"
               maxLength="19"
               placeholder="1234 5678 9012 3456"
               value={cardNumber}
               onChange={handleCardNumberChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+              className="w-full border border-[#0B2E53] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
             />
             {cardError && (
               <div className="text-red-600 text-sm mt-1">{cardError}</div>
@@ -92,14 +92,14 @@ const CardComponent = () => {
           </div>
 
           <div>
-            <label className="block font-medium">Expiry (MM/YY)</label>
+            <label className="block font-medium text-[#0B2E53]">Expiry (MM/YY)</label>
             <input
               type="text"
               maxLength="5"
               placeholder="MM/YY"
               value={expiry}
               onChange={handleExpiryChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+              className="w-full border border-[#0B2E53] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
             />
             {expiryError && (
               <div className="text-red-600 text-sm mt-1">{expiryError}</div>
@@ -107,14 +107,14 @@ const CardComponent = () => {
           </div>
 
           <div>
-            <label className="block font-medium">CVV</label>
+            <label className="block font-medium text-[#0B2E53]">CVV</label>
             <input
               type="text"
               maxLength="4"
               placeholder="123"
               value={cvv}
               onChange={handleCvvChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+              className="w-full border border-[#0B2E53] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
             />
             {cvvError && (
               <div className="text-red-600 text-sm mt-1">{cvvError}</div>
@@ -123,7 +123,7 @@ const CardComponent = () => {
 
           <button
             type="submit"
-            className="w-full bg-[#C89D2A] text-white py-2 rounded-lg hover:bg-blue-700"
+            className="w-full bg-[#0B2E53] text-white py-2 rounded-lg hover:bg-[#C89D2A] transition duration-200"
           >
             Pay
           </button>
