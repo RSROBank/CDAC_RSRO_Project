@@ -35,7 +35,7 @@ const HomePage = () => {
               </h3>
               <ul className="mt-4 space-y-2">
                 <li> Home Loan: 8.25% p.a.</li>
-                {/* /</ul><li> Car Loan: 9.75% p.a.</li> */}
+                <li> Car Loan: 9.75% p.a.</li>
                 <li> Education Loan: 10.50% p.a.</li>
                 <li> Business Loan: 11.00% p.a.</li>
               </ul>
@@ -70,7 +70,7 @@ const HomePage = () => {
             </div>
             <div className="bg-gray-100 p-4 rounded-lg shadow">
               <h3 className="text-lg font-semibold">
-                 Personal & Business Loans
+                Personal & Business Loans
               </h3>
               <p>Low-interest loans tailored to meet your financial needs.</p>
             </div>
@@ -86,9 +86,7 @@ const HomePage = () => {
               <p>Keep your valuables secure in our state-of-the-art lockers.</p>
             </div>
             <div className="bg-gray-100 p-4 rounded-lg shadow">
-              <h3 className="text-lg font-semibold">
-                 International Banking
-              </h3>
+              <h3 className="text-lg font-semibold">International Banking</h3>
               <p>
                 Remittance, forex cards, and NRIs services for global citizens.
               </p>
