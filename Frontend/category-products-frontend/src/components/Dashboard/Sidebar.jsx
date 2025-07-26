@@ -21,7 +21,7 @@ const Sidebar = ({ selected, setSelected }) => {
         <button
           key={option}
           className={`w-full py-2 px-3 text-left border rounded mt-4
-             hover:bg-blue-100 ${selected === option ? "bg-blue-200" : ""}`}
+              ${selected === option ? "bg-[#C89D2A]" : ""}`}
           onClick={() => setSelected(option)}
         >
           {option}

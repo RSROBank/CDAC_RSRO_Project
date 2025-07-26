@@ -69,7 +69,7 @@ const FDLoanSearchComponent = () => {
                   <p><strong>Time Period:</strong> {item.period}</p>
                   <p><strong>Start Date:</strong> {item.date}</p>
                 </div>
-                <button className="mt-4 md:mt-0 bg-blue-600 text-white py-2 px-5 rounded-xl hover:bg-blue-700">
+                <button className="mt-4 md:mt-0 bg-[#C89D2A] text-white py-2 px-5 rounded-lg hover:bg-blue-700">
                   Apply
                 </button>
               </div>

@@ -119,7 +119,7 @@ const MoneyTransfer = () => {
 
       {/* Action Buttons */}
       <div className="flex justify-between">
-        <button className="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800 transition">
+        <button className="bg-[#C89D2A] text-white px-6 py-2 rounded hover:bg-blue-800 transition">
           Pay Now
         </button>
         <button className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition">

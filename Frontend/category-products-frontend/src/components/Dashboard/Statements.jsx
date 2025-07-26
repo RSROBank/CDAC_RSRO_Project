@@ -111,7 +111,7 @@ const Statements = () => {
 
       {/* Future Download */}
       <div className="text-right">
-        <button className="bg-blue-600 text-white px-4 py-2 rounded opacity-60 cursor-not-allowed">
+        <button className="bg-[#C89D2A] text-white px-4 py-2 rounded opacity-60 cursor-not-allowed">
           Download PDF (Coming Soon)
         </button>
       </div>
