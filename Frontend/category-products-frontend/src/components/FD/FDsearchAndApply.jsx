@@ -7,9 +7,27 @@ const FDLoanSearchComponent = () => {
   // Dummy data fallback
   useEffect(() => {
     const dummyFDs = [
-      { id: 1, amount: 10000, date: "2025-07-01", interest: "6.5%", period: "12 months" },
-      { id: 2, amount: 20000, date: "2025-06-15", interest: "7%", period: "24 months" },
-      { id: 3, amount: 15000, date: "2025-05-10", interest: "6.75%", period: "18 months" }
+      {
+        id: 1,
+        amount: 10000,
+        date: "2025-07-01",
+        interest: "6.5%",
+        period: "12 months",
+      },
+      {
+        id: 2,
+        amount: 20000,
+        date: "2025-06-15",
+        interest: "7%",
+        period: "24 months",
+      },
+      {
+        id: 3,
+        amount: 15000,
+        date: "2025-05-10",
+        interest: "6.75%",
+        period: "18 months",
+      },
     ];
     setFdData(dummyFDs);
   }, []);
@@ -17,7 +35,8 @@ const FDLoanSearchComponent = () => {
   const filteredFDs = fdData.filter((item) => {
     return (
       (filter.id === "" || item.id.toString().includes(filter.id)) &&
-      (filter.amount === "" || item.amount.toString().includes(filter.amount)) &&
+      (filter.amount === "" ||
+        item.amount.toString().includes(filter.amount)) &&
       (filter.interest === "" || item.interest.includes(filter.interest))
     );
   });
@@ -64,10 +83,18 @@ const FDLoanSearchComponent = () => {
               >
                 <div className="text-blue-800">
                   {/* <p><strong>ID:</strong> {item.id}</p> */}
-                  <p><strong>Amount:</strong> ₹{item.amount}</p>
-                  <p><strong>Interest:</strong> {item.interest}</p>
-                  <p><strong>Time Period:</strong> {item.period}</p>
-                  <p><strong>Start Date:</strong> {item.date}</p>
+                  <p>
+                    <strong>Amount:</strong> ₹{item.amount}
+                  </p>
+                  <p>
+                    <strong>Interest:</strong> {item.interest}
+                  </p>
+                  <p>
+                    <strong>Time Period:</strong> {item.period}
+                  </p>
+                  <p>
+                    <strong>Start Date:</strong> {item.date}
+                  </p>
                 </div>
                 <button className="mt-4 md:mt-0 bg-[#C89D2A] text-white py-2 px-5 rounded-lg hover:bg-blue-700">
                   Apply
@@ -75,7 +102,9 @@ const FDLoanSearchComponent = () => {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-600">No matching FD records found.</p>
+            <p className="text-center text-gray-600">
+              No matching FD records found.
+            </p>
           )}
         </div>
       </div>
