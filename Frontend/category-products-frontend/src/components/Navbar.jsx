@@ -1,10 +1,12 @@
 // src/components/Navbar.js
-import React from "react";
+import { useContext } from "react";
 import ProfileDropdown from "./UI/ProfileDown";
 import RSROBank from "../assets/Images/RSROBank.png";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../AuthContext/auth.context";
 
 const Navbar = () => {
+  const { user } = useContext(AuthContext)
   return (
     <nav className="bg-[#0B2E53] text-white px-6 py-3 shadow-md flex items-center justify-between">
       <div className="text-xl font-bold tracking-wide">
@@ -40,7 +42,9 @@ const Navbar = () => {
         <a href="/admindashboard" className="hover:underline text-white">
           Admin Dashboard
         </a>
-        {/* <ProfileDropdown/> */}
+        {user && (
+          <ProfileDropdown/>
+        )}
       </div>
     </nav>
   );

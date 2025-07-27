@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { loginUser } from "../services/userService";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthContext/auth.context";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useContext(AuthContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,6 +19,10 @@ const LoginPage = () => {
       if (response.success) {
         alert(`Logged in as ${email}`);
         console.log("Login successful:", response);
+        setUser({
+          email,
+          role: "customer"
+        })
         navigate("/dashboard")
         // Navigate to dashboard or store token here
       } else {
