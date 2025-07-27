@@ -37,29 +37,30 @@ const Statements = () => {
     .slice(0, showAll ? dummyTransactions.length : 10);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-[#0B2E53] bg-[#FDFCF9] p-4 min-h-screen">
       {/* Filters */}
-      <div className="bg-white p-4 shadow-md rounded space-y-4">
+      <div className="bg-white p-4 shadow-md rounded space-y-4 border border-[#0B2E53]/10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm">From Date</label>
+            <label className="block text-sm font-medium">From Date</label>
             <input type="date" name="fromDate" value={filters.fromDate} onChange={handleChange}
-              className="w-full border p-2 rounded" />
+              className="w-full border border-[#0B2E53] p-2 rounded focus:ring-2 focus:ring-[#C89D2A]" />
           </div>
           <div>
-            <label className="block text-sm">To Date</label>
+            <label className="block text-sm font-medium">To Date</label>
             <input type="date" name="toDate" value={filters.toDate} onChange={handleChange}
-              className="w-full border p-2 rounded" />
+              className="w-full border border-[#0B2E53] p-2 rounded focus:ring-2 focus:ring-[#C89D2A]" />
           </div>
           <div>
-            <label className="block text-sm">Account No</label>
+            <label className="block text-sm font-medium">Account No</label>
             <input type="text" name="accountNo" value={filters.accountNo} onChange={handleChange}
-              placeholder="Enter Account No" className="w-full border p-2 rounded" />
+              placeholder="Enter Account No" 
+              className="w-full border border-[#0B2E53] p-2 rounded focus:ring-2 focus:ring-[#C89D2A]" />
           </div>
           <div>
-            <label className="block text-sm">Transaction Type</label>
+            <label className="block text-sm font-medium">Transaction Type</label>
             <select name="transactionType" value={filters.transactionType} onChange={handleChange}
-              className="w-full border p-2 rounded">
+              className="w-full border border-[#0B2E53] p-2 rounded focus:ring-2 focus:ring-[#C89D2A]">
               <option value="">All</option>
               <option value="Credit">Credit</option>
               <option value="Debit">Debit</option>
@@ -69,7 +70,7 @@ const Statements = () => {
       </div>
 
       {/* User Info */}
-      <div className="bg-white p-4 shadow-md rounded space-y-2">
+      <div className="bg-white p-4 shadow-md rounded border border-[#0B2E53]/10 space-y-2">
         <h2 className="text-lg font-semibold">Account Details</h2>
         <p><strong>Name:</strong> Rahul Verma</p>
         <p><strong>Address:</strong> Lucknow, Uttar Pradesh</p>
@@ -77,11 +78,11 @@ const Statements = () => {
       </div>
 
       {/* Transactions */}
-      <div className="bg-white p-4 shadow-md rounded">
+      <div className="bg-white p-4 shadow-md rounded border border-[#0B2E53]/10">
         <h2 className="text-lg font-semibold mb-4">Recent Transactions</h2>
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b">
+            <tr className="border-b border-[#0B2E53]/20">
               <th className="text-left p-2">Date</th>
               <th className="text-left p-2">Type</th>
               <th className="text-left p-2">Description</th>
@@ -90,7 +91,7 @@ const Statements = () => {
           </thead>
           <tbody>
             {filteredTransactions.map((txn, idx) => (
-              <tr key={idx} className="border-b hover:bg-gray-100">
+              <tr key={idx} className="border-b border-[#0B2E53]/10 hover:bg-[#FDFCF9]">
                 <td className="p-2">{txn.date}</td>
                 <td className="p-2">{txn.type}</td>
                 <td className="p-2">{txn.desc}</td>
@@ -102,7 +103,7 @@ const Statements = () => {
 
         {!showAll && dummyTransactions.length > 10 && (
           <div className="text-right mt-4">
-            <button onClick={() => setShowAll(true)} className="text-blue-600 underline text-sm">
+            <button onClick={() => setShowAll(true)} className="text-[#C89D2A] underline text-sm hover:text-[#0B2E53]">
               Show more transactions
             </button>
           </div>
@@ -111,7 +112,7 @@ const Statements = () => {
 
       {/* Future Download */}
       <div className="text-right">
-        <button className="bg-blue-600 text-white px-4 py-2 rounded opacity-60 cursor-not-allowed">
+        <button className="bg-[#C89D2A] text-white px-4 py-2 rounded opacity-60 cursor-not-allowed">
           Download PDF (Coming Soon)
         </button>
       </div>

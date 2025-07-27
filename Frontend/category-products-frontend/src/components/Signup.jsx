@@ -64,39 +64,47 @@ function Signup() {
   const handleSignUp = async (e) => {
     e.preventDefault();
     console.log("Sign up attempted with:", formData);
-    if (formData.firstName.trim().length === 0) {
-      toast.warn("Please enter full name");
-    }
-    if (formData.lastName.trim().length === 0) {
-      toast.warn("Please enter full name");
-    } else if (formData.dateOfBirth.trim().length === 0) {
+    const nameRegex = /^[A-Za-z]+$/;
+    const mobileRegex = /^\+91-\d{10}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    const today = new Date();
+    const enteredDOB = new Date(formData.dateOfBirth);
+
+    if (!formData.firstName.trim().match(nameRegex)) {
+    toast.warn("First name must contain only alphabets");
+    } else if (!formData.lastName.trim().match(nameRegex)) {
+      toast.warn("Last name must contain only alphabets");
+    } else if (!formData.dateOfBirth) {
       toast.warn("Please enter date of birth");
-    } else if (formData.gender.trim().length === 0) {
+    } else if (enteredDOB >= today) {
+      toast.warn("Date of birth must be in the past");
+    } else if (!formData.gender) {
       toast.warn("Please select gender");
-    } else if (formData.nationality.trim().length === 0) {
-      toast.warn("Please enter nationality");
+    } else if (!formData.nationality.trim().match(nameRegex)) {
+      toast.warn("Nationality must contain only alphabets");
     } else if (!formData.photo) {
       toast.warn("Please upload photo ID");
-    } else if (!formData.photoId.trim().length === 0) {
+    } else if (formData.photoId.trim().length === 0) {
       toast.warn("Please enter photo ID");
     } else if (formData.address.trim().length === 0) {
       toast.warn("Please enter address");
-    } else if (formData.mobileNo.trim().length === 0) {
-      toast.warn("Please enter mobile number");
-    } else if (formData.email.trim().length === 0) {
-      toast.warn("Please enter email ID");
-    } else if (formData.password.trim().length === 0) {
-      toast.warn("Please enter password");
-    } else if (formData.confirmPassword.trim().length === 0) {
-      toast.warn("Please confirm password");
+    } else if (!formData.mobileNo.trim().match(mobileRegex)) {
+      toast.warn("Mobile number must be in format +91-XXXXXXXXXX");
+    } else if (!formData.email.trim().match(emailRegex)) {
+      toast.warn("Please enter a valid email ID");
+    } else if (!formData.password.match(passwordRegex)) {
+      toast.warn(
+        "Password must be at least 8 characters with uppercase, lowercase, number and special character"
+      );
     } else if (formData.password !== formData.confirmPassword) {
       toast.warn("Passwords do not match");
     } else if (!formData.termsAccepted) {
       toast.warn("Please accept the terms and conditions");
-    } else if (formData.captcha.trim().length === 0) {
-      toast.warn("Please enter captcha");
-    } else if (formData.captcha != captchaValue) {
-      toast.warn("captcha do not mathc");
+    } else if (!formData.captcha || formData.captcha !== captchaValue) {
+      toast.warn("Captcha does not match");
     } else {
       const {
         firstName,
@@ -173,15 +181,15 @@ function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-10 px-4 text-gray-800 font-sans">
-      <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl border border-blue-200 px-10 py-12">
-        <h1 className="text-3xl font-bold text-center text-blue-700 mb-10">
+    <div className="min-h-screen bg-[#FDFCF9] py-10 px-4 text-[#0B2E53] font-sans">
+      <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl border border-[#0B2E53]/20 px-10 py-12">
+        <h1 className="text-3xl font-bold text-center text-[#0B2E53] mb-10">
           Sign Up
         </h1>
         <form className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* First Name */}
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <User className="w-4 h-4" /> First Name
             </label>
             <input
@@ -189,14 +197,14 @@ function Signup() {
               name="firstName"
               value={formData.firstName}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             />
           </div>
 
           {/* Last Name */}
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <User className="w-4 h-4" /> Last Name
             </label>
             <input
@@ -204,14 +212,14 @@ function Signup() {
               name="lastName"
               value={formData.lastName}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             />
           </div>
 
           {/* Date of Birth */}
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <Calendar className="w-4 h-4" /> Date of Birth
             </label>
             <input
@@ -219,21 +227,21 @@ function Signup() {
               name="dateOfBirth"
               value={formData.dateOfBirth}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             />
           </div>
 
           {/* Gender */}
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <Users className="w-4 h-4" /> Gender
             </label>
             <select
               name="gender"
               value={formData.gender}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             >
               <option value="">Select Gender</option>
@@ -245,7 +253,7 @@ function Signup() {
 
           {/* Nationality */}
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <Flag className="w-4 h-4" /> Nationality
             </label>
             <input
@@ -253,14 +261,14 @@ function Signup() {
               name="nationality"
               value={formData.nationality}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             />
           </div>
 
           {/* govtid Photo  */}
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <Image className="w-4 h-4" /> Photo
             </label>
             <input
@@ -268,12 +276,12 @@ function Signup() {
               name="photo"
               onChange={handleFileChange}
               accept="image/*"
-              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white"
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white"
               required
             />
           {imagePreview && (
             <div className="mt-2">
-              <p className="text-sm text-gray-700">Image Preview:</p>
+              <p className="text-sm text-[#0B2E53]">Image Preview:</p>
               <img
                 src={imagePreview}
                 alt="Uploaded Preview"
@@ -285,7 +293,7 @@ function Signup() {
 
           {/* PhotoId */}
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               PhotoId
             </label>
             <input
@@ -293,14 +301,14 @@ function Signup() {
               name="photoId"
               value={formData.photoId}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             />
           </div>
 
           {/* Address */}
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <MapPin className="w-4 h-4" /> Address
             </label>
             <textarea
@@ -308,14 +316,14 @@ function Signup() {
               value={formData.address}
               onChange={handleInputChange}
               rows={3}
-              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             />
           </div>
 
           {/* Mobile Number */}
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <Phone className="w-4 h-4" /> Mobile No.
             </label>
             <input
@@ -323,14 +331,14 @@ function Signup() {
               name="mobileNo"
               value={formData.mobileNo}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             />
           </div>
 
           {/* Email ID */}
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <Mail className="w-4 h-4" /> Email ID
             </label>
             <input
@@ -338,14 +346,14 @@ function Signup() {
               name="email"
               value={formData.emailId}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             />
           </div>
 
           {/* Password */}
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <Lock className="w-4 h-4" /> Password
             </label>
             <input
@@ -353,14 +361,14 @@ function Signup() {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             />
           </div>
 
           {/* Confirm Password */}
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <Lock className="w-4 h-4" /> Confirm Password
             </label>
             <input
@@ -368,7 +376,7 @@ function Signup() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             />
           </div>
@@ -380,12 +388,12 @@ function Signup() {
               name="termsAccepted"
               checked={formData.termsAccepted}
               onChange={handleInputChange}
-              className="w-4 h-4 mt-1 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              className="w-4 h-4 mt-1 text-[#0B2E53] border-gray-300 rounded focus:ring-[#C89F3D]"
               required
             />
-            <label className="text-sm text-gray-700">
+            <label className="text-sm text-[#0B2E53]">
               I agree to the{" "}
-              <span className="text-blue-600 underline cursor-pointer hover:text-blue-800">
+              <span className="text-[#0B2E53] underline cursor-pointer hover:text-[#C89F3D]">
                 Terms & Conditions
               </span>
             </label>
@@ -394,20 +402,20 @@ function Signup() {
           {/* Captcha */}
           <div className="col-span-full space-y-2">
             <div className="flex items-center gap-2">
-              <Shield className="w-5 h-5 text-gray-700" />
+              <Shield className="w-5 h-5 text-[#0B2E53]" />
               <span className="font-medium text-sm">Captcha</span>
             </div>
-            <div className="flex items-center justify-between bg-blue-50 border border-blue-300 rounded-lg px-4 py-2">
-              <span className="font-mono font-semibold tracking-widest text-blue-800">
+            <div className="flex items-center justify-between bg-[#FDFCF9] border border-[#0B2E53] rounded-lg px-4 py-2">
+              <span className="font-mono font-semibold tracking-widest text-[#0B2E53]">
                 {captchaValue}
               </span>
               <button
                 type="button"
                 onClick={generateNewCaptcha}
-                className="text-blue-600 hover:text-blue-800"
+                className="text-[#0B2E53] hover:text-[#0B2E53]"
                 title="Refresh Captcha"
               >
-                <RotateCcw className="w-4 h-4" />
+                <RotateCcw className="w-4 h-4 text-[#C89F3D]" />
               </button>
             </div>
             <input
@@ -416,15 +424,15 @@ function Signup() {
               value={formData.captcha}
               onChange={handleInputChange}
               placeholder="Enter captcha"
-              className="w-full px-4 py-2 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             />
           </div>
 
           {/* Buttons */}
-          <div className="flex">
+          <div className="text-sm text-[#0B2E53]">
             Already have an account?{" "}
-            <button onClick={onBack} className="btn btn-link">
+            <button onClick={onBack} className="text-[#C89F3D] underline hover:text-[#0B2E53]">
               Login here
             </button>
           </div>
@@ -432,7 +440,7 @@ function Signup() {
             <button
               type="button"
               onClick={handleSignUp}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+              className="flex-1 bg-[#0B2E53] hover:bg-[#C89F3D] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
             >
               Sign Up
             </button>

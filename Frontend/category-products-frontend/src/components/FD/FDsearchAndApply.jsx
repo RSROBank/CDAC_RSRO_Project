@@ -42,9 +42,9 @@ const FDLoanSearchComponent = () => {
   });
 
   return (
-    <div className="bg-blue-50 min-h-screen p-6">
+    <div className="bg-[#FDFCF9] min-h-screen p-6">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold text-center mb-6 text-blue-800">
+        <h2 className="text-2xl font-bold text-center mb-6 text-[#0B2E53]">
           Search FD by Amount and Interest Rate
         </h2>
 
@@ -55,21 +55,21 @@ const FDLoanSearchComponent = () => {
             placeholder="Filter by FD ID"
             value={filter.id}
             onChange={(e) => setFilter({ ...filter, id: e.target.value })}
-            className="w-full p-2 rounded-xl border border-blue-300"
+            className="w-full p-2 rounded-xl border border-[#0B2E53]"
           /> */}
           <input
             type="text"
             placeholder="Filter by Amount"
             value={filter.amount}
             onChange={(e) => setFilter({ ...filter, amount: e.target.value })}
-            className="w-full p-2 rounded-xl border border-blue-300"
+            className="w-full p-2 rounded-xl border border-[#0B2E53] focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
           />
           <input
             type="text"
             placeholder="Filter by Interest Rate"
             value={filter.interest}
             onChange={(e) => setFilter({ ...filter, interest: e.target.value })}
-            className="w-full p-2 rounded-xl border border-blue-300"
+            className="w-full p-2 rounded-xl border border-[#0B2E53] focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
           />
         </div>
 
@@ -79,9 +79,9 @@ const FDLoanSearchComponent = () => {
             filteredFDs.map((item) => (
               <div
                 key={item.id}
-                className="bg-white rounded-2xl shadow-lg p-4 flex flex-col md:flex-row justify-between items-center"
+                className="bg-white rounded-2xl shadow-lg p-4 border border-[#0B2E53]/10 flex flex-col md:flex-row justify-between items-center"
               >
-                <div className="text-blue-800">
+                <div className="text-[#0B2E53] space-y-1">
                   {/* <p><strong>ID:</strong> {item.id}</p> */}
                   <p>
                     <strong>Amount:</strong> ₹{item.amount}
@@ -96,7 +96,7 @@ const FDLoanSearchComponent = () => {
                     <strong>Start Date:</strong> {item.date}
                   </p>
                 </div>
-                <button className="mt-4 md:mt-0 bg-blue-600 text-white py-2 px-5 rounded-xl hover:bg-blue-700">
+                <button className="mt-4 md:mt-0 bg-[#0B2E53] text-white py-2 px-5 rounded-lg hover:bg-[#C89D2A] transition-all">
                   Apply
                 </button>
               </div>
