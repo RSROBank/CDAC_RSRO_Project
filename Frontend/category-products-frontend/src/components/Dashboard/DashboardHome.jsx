@@ -15,7 +15,7 @@ const DashboardHome = () => {
     <div className="space-y-6">
       {/* User Info and Card Image */}
       <div className="flex gap-6">
-        <div className="bg-white p-4 shadow-md rounded w-1/2">
+        <div className="bg-[#FDFCF9] p-4 shadow-md rounded w-1/2">
           <h2 className="text-lg font-semibold mb-2">Full Name:</h2>
           <p>Rahul Verma</p>
           <p>Account Number: 1234567890</p>
