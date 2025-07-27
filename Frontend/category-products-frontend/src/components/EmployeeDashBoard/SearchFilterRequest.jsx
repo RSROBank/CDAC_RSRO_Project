@@ -33,9 +33,9 @@ const SearchFilterRequests = () => {
   };
 
   return (
-    <div className="bg-blue-50 min-h-screen p-6 font-sans">
+    <div className="bg-[#FDFCF9] min-h-screen p-6 font-sans">
       <div className="max-w-3xl mx-auto bg-white border border-gray-300 rounded-xl shadow-md p-6">
-        <h2 className="text-xl font-semibold text-center text-blue-800 border-b pb-2 mb-4">
+        <h2 className="text-xl font-semibold text-center text-[#0B2E53] border-b pb-2 mb-4">
           Search / Filter Requests
         </h2>
 
@@ -46,21 +46,21 @@ const SearchFilterRequests = () => {
             placeholder="Search by Name"
             value={filters.name}
             onChange={(e) => setFilters({ ...filters, name: e.target.value })}
-            className="p-2 border border-blue-300 rounded-lg"
+            className="p-2 border border-[#C89D2A] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
           />
           <input
             type="text"
             placeholder="Filter by ID"
             value={filters.id}
             onChange={(e) => setFilters({ ...filters, id: e.target.value })}
-            className="p-2 border border-blue-300 rounded-lg"
+            className="p-2 border border-[#C89D2A] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
           />
           <input
             type="text"
             placeholder="Filter by Status"
             value={filters.status}
             onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-            className="p-2 border border-blue-300 rounded-lg"
+            className="p-2 border border-[#C89D2A] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
           />
         </div>
 
@@ -70,32 +70,34 @@ const SearchFilterRequests = () => {
             filteredRequests.map((req) => (
               <div
                 key={req.id}
-                className="p-4 bg-blue-100 rounded-xl flex justify-between items-center"
+                className="p-4 bg-[#F9F7F2] rounded-xl flex justify-between items-center shadow"
               >
                 <div>
-                  <p className="font-medium text-blue-900">{req.name}</p>
-                  <p className="text-sm text-gray-700">Type: {req.type} | Status: {req.status}</p>
+                  <p className="font-medium text-[#0B2E53]">{req.name}</p>
+                  <p className="text-sm text-gray-700">
+                    Type: {req.type} | Status: {req.status}
+                  </p>
                 </div>
                 <button
                   onClick={() => setSelectedRequest(req)}
-                  className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700"
+                  className="bg-[#0B2E53] text-white px-4 py-1 rounded hover:bg-[#08213D]"
                 >
                   View
                 </button>
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-500">No matching requests found.</p>
+            <p className="text-center text-gray-200">No matching requests found.</p>
           )}
         </div>
 
         {/* Request Details View */}
         {selectedRequest && (
-          <div className="mt-6 bg-white border border-blue-300 rounded-lg p-4 shadow">
-            <h3 className="text-lg font-semibold text-blue-800 mb-2">
+          <div className="mt-6 bg-white border border-[#C89D2A] rounded-lg p-4 shadow">
+            <h3 className="text-lg font-semibold text-[#0B2E53] mb-2">
               {selectedRequest.type} Request - {selectedRequest.name}
             </h3>
-            <ul className="list-disc list-inside text-blue-900 mb-3">
+            <ul className="list-disc list-inside text-[#0B2E53] mb-3">
               <li>ID: {selectedRequest.id}</li>
               <li>Status: {selectedRequest.status}</li>
               <li>Type: {selectedRequest.type}</li>
@@ -135,6 +137,7 @@ const SearchFilterRequests = () => {
         )}
       </div>
     </div>
+
   );
 };
 
