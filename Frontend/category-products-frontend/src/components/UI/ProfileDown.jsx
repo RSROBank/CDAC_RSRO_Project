@@ -1,5 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../AuthContext/auth.context";
 
 const ProfileDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,6 +8,7 @@ const ProfileDropdown = () => {
   const [type, setType] = useState("customer");
   const navigate = useNavigate();
   const shareRef = useRef(null);
+  const { setUser } = useContext(AuthContext)
 
   // Toggle the dropdown menu
   const toggleDropdown = () => setIsOpen(!isOpen);
@@ -19,6 +21,7 @@ const ProfileDropdown = () => {
   const handleLogoutClick = () => {
     alert("You have been logged out");
     handleScrollToTop();
+    setUser(null)
     navigate("/"); // Redirect to the home page after logout
   };
 
@@ -75,21 +78,36 @@ const ProfileDropdown = () => {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
           <div className="py-1">
-            <Link
-              to="/customerprofile"
-              className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-500 transition-colors duration-300"
-              onClick={() => setIsOpen(false)}
-            >
-              My Profile
-            </Link>
             {
-              type === "employeeprofile" && (
+              type === "customer" && (
+              <Link
+                to="/customerprofile"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-500 transition-colors duration-300"
+                onClick={() => setIsOpen(false)}
+              >
+                My Profile
+              </Link>
+              )
+            }
+            {
+              type === "employee" && (
               <Link
                 to="/employeeprofile"
                 className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-500 transition-colors duration-300"
                 onClick={() => setIsOpen(false)}
               >
-                Profile
+                My Profile
+              </Link>
+              )
+            }
+             {
+              type === "admin" && (
+              <Link
+                to="/adminprofile"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-500 transition-colors duration-300"
+                onClick={() => setIsOpen(false)}
+              >
+                My Profile
               </Link>
               )
             }

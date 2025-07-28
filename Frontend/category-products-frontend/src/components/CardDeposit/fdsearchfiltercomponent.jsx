@@ -12,7 +12,7 @@ const fdDataSample = [
   },
   {
     fdId: "FD002",
-    status: "Matured",
+    status: "Matured",   
     maturityDate: "2024-06-30",
     principalAmount: 5000,
     maturityAmount: 5500,
@@ -47,7 +47,7 @@ const FDSearchFilterComponent = () => {
       {/* Search and Filters */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <input
-          type="text"
+          type="text" 
           placeholder="Search by FD ID"
           value={searchFDId}
           onChange={(e) => setSearchFDId(e.target.value)}
