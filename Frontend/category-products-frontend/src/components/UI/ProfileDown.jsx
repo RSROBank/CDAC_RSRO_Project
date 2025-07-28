@@ -1,5 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../AuthContext/auth.context";
 
 const ProfileDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,6 +8,7 @@ const ProfileDropdown = () => {
   const [type, setType] = useState("customer");
   const navigate = useNavigate();
   const shareRef = useRef(null);
+  const { setUser } = useContext(AuthContext)
 
   // Toggle the dropdown menu
   const toggleDropdown = () => setIsOpen(!isOpen);
@@ -19,6 +21,7 @@ const ProfileDropdown = () => {
   const handleLogoutClick = () => {
     alert("You have been logged out");
     handleScrollToTop();
+    setUser(null)
     navigate("/"); // Redirect to the home page after logout
   };
 
