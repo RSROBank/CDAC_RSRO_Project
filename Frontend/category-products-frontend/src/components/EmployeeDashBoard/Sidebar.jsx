@@ -1,12 +1,12 @@
 // src/components/Dashboard/Sidebar.js
-import React from 'react';
+import React from "react";
 
 const options = [
-  'Customer Management',
-  'Approval of Accounts, FD, Loans',
-  'Transaction Management',
-  'Loan EMI Management',
-  'Support and Maintenance',
+  "Customer Management",
+  "Approval of Accounts, FD, Loans",
+  "Transaction Management",
+  "Loan EMI Management",
+  "Support and Maintenance",
 ];
 
 const Sidebar = ({ selected, setSelected }) => {
