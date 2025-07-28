@@ -45,9 +45,9 @@ const CustomersManagement = () => {
   };
 
   return (
-    <div className="bg-blue-50 min-h-screen p-6 font-sans">
+    <div className="bg-[#FDFCF9] min-h-screen p-6 font-sans">
       <div className="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-lg">
-        <h2 className="text-2xl font-bold text-blue-800 mb-6 text-center border-b pb-2">
+        <h2 className="text-2xl font-bold text-[#0B2E53] mb-6 text-center border-b pb-2">
           Admin: Customer Management
         </h2>
 
@@ -57,14 +57,14 @@ const CustomersManagement = () => {
             placeholder="Search by Name"
             value={searchName}
             onChange={(e) => setSearchName(e.target.value)}
-            className="border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
+            className="border border-[#C89D2A] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
           />
           <input
             type="text"
             placeholder="Search by Customer ID"
             value={searchId}
             onChange={(e) => setSearchId(e.target.value)}
-            className="border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
+            className="border border-[#C89D2A] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
           />
         </div>
 
@@ -72,16 +72,16 @@ const CustomersManagement = () => {
           filteredCustomers.map((customer) => (
             <div
               key={customer.id}
-              className="p-4 mb-4 bg-blue-100 rounded shadow flex justify-between items-center"
+              className="p-4 mb-4 bg-[#F9F7F2] rounded shadow flex justify-between items-center"
             >
-              <div>
-                <p className="font-semibold text-blue-900">{customer.name}</p>
+              <div className="text-[#0B2E53]">
+                <p className="font-semibold">{customer.name}</p>
                 <p className="text-sm text-gray-700">ID: {customer.id}</p>
               </div>
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => setSelectedCustomer(customer)}
-                  className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700"
+                  className="bg-[#0B2E53] text-white px-4 py-1 rounded hover:bg-[#08213D]"
                 >
                   View
                 </button>
@@ -89,18 +89,16 @@ const CustomersManagement = () => {
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-500">
-            No matching customers found.
-          </p>
+          <p className="text-center text-[#C89D2A]">No matching customers found.</p>
         )}
 
         {selectedCustomer && (
-          <div className="mt-6 p-4 bg-white border border-blue-300 rounded-lg shadow space-y-4">
-            <h3 className="text-lg font-semibold text-blue-800 mb-2">
+          <div className="mt-6 p-4 bg-[#F9F7F2] border border-[#C89D2A] rounded-lg shadow space-y-4">
+            <h3 className="text-lg font-semibold text-[#0B2E53] mb-2">
               Full Profile for {selectedCustomer.name}
             </h3>
 
-            <ul className="list-disc pl-5 text-blue-900 space-y-1">
+            <ul className="list-disc pl-5 text-[#0B2E53] space-y-1">
               <li>Cards Linked: {selectedCustomer.accounts.cards}</li>
               <li>Loans: {selectedCustomer.accounts.loans}</li>
               <li>FDs: {selectedCustomer.accounts.fds}</li>
@@ -110,13 +108,13 @@ const CustomersManagement = () => {
 
             {/* Document Photo Preview */}
             <div className="mt-4">
-              <h4 className="text-md font-semibold mb-1">
+              <h4 className="text-md font-semibold mb-1 text-[#0B2E53]">
                 Uploaded Document Preview
               </h4>
               <img
-                src="src\assets\Images\Cardsampleimage.png"
+                src="src/assets/Images/Cardsampleimage.png"
                 alt="Document Preview"
-                className="w-60 border rounded-lg shadow-md"
+                className="w-60 border border-gray-300 rounded-lg shadow-md"
               />
             </div>
 
@@ -136,13 +134,13 @@ const CustomersManagement = () => {
               </button>
               <button
                 onClick={handleSendNotification}
-                className="bg-purple-600 text-white px-4 py-1 rounded hover:bg-purple-700"
+                className="bg-[#C89D2A] text-white px-4 py-1 rounded hover:bg-[#A77E20]"
               >
                 Notify
               </button>
               <button
                 onClick={() => setSelectedCustomer(null)}
-                className="bg-gray-500 text-white px-4 py-1 rounded hover:bg-gray-600"
+                className="bg-gray-600 text-white px-4 py-1 rounded hover:bg-gray-700"
               >
                 Close
               </button>

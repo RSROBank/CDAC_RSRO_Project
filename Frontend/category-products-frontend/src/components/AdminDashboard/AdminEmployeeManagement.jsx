@@ -37,9 +37,9 @@ const EmployeeManagement = () => {
   };
 
   return (
-    <div className="bg-blue-50 min-h-screen p-6 font-sans">
-      <div className="max-w-5xl mx-auto bg-white p-6 rounded-xl shadow-lg">
-        <h2 className="text-2xl font-bold text-blue-800 mb-6 text-center border-b pb-2">
+    <div className="bg-[#FDFCF9] min-h-screen p-6 font-sans">
+      <div className="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-lg">
+        <h2 className="text-2xl font-bold text-[#0B2E53] mb-6 text-center border-b pb-2">
           Admin: Search / Filter Employee Details
         </h2>
 
@@ -49,14 +49,14 @@ const EmployeeManagement = () => {
             placeholder="Search by Name"
             value={searchName}
             onChange={(e) => setSearchName(e.target.value)}
-            className="border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
+            className="border border-[#C89D2A] rounded px-3 py-2 focus:ring-2 focus:ring-[#C89D2A] focus:outline-none"
           />
           <input
             type="text"
             placeholder="Search by Employee ID"
             value={searchId}
             onChange={(e) => setSearchId(e.target.value)}
-            className="border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
+            className="border border-[#C89D2A] rounded px-3 py-2 focus:ring-2 focus:ring-[#C89D2A] focus:outline-none"
           />
         </div>
 
@@ -64,46 +64,46 @@ const EmployeeManagement = () => {
           filteredEmployees.map((emp) => (
             <div
               key={emp.id}
-              className="p-4 mb-4 bg-blue-100 rounded shadow flex justify-between items-center"
+              className="p-4 mb-4 bg-[#F9F7F2] rounded shadow flex justify-between items-center"
             >
               <div>
-                <p className="font-semibold text-blue-900">{emp.name}</p>
+                <p className="font-semibold text-[#0B2E53]">{emp.name}</p>
                 <p className="text-sm text-gray-700">ID: {emp.id}</p>
               </div>
               <button
                 onClick={() => setSelectedEmployee(emp)}
-                className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700"
+                className="bg-[#0B2E53] text-white px-4 py-1 rounded hover:bg-[#08213D]"
               >
                 View
               </button>
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-500">
+          <p className="text-center text-[#C89D2A] font-medium">
             No matching employees found.
           </p>
         )}
 
         {selectedEmployee && (
-          <div className="mt-6 p-5 bg-white border border-blue-300 rounded-lg shadow space-y-4">
-            <h3 className="text-lg font-semibold text-blue-800 mb-2">
+          <div className="mt-6 p-4 bg-[#F9F7F2] border border-[#C89D2A] rounded-lg shadow space-y-4">
+            <h3 className="text-lg font-semibold text-[#0B2E53] mb-2">
               Profile: {selectedEmployee.name}
             </h3>
-            <ul className="list-disc pl-5 text-blue-900 space-y-1">
+            <ul className="list-disc pl-5 text-[#0B2E53] space-y-1">
               <li>Email: {selectedEmployee.email}</li>
               <li>Phone: {selectedEmployee.phone}</li>
               <li>
                 Documents:{" "}
                 {selectedEmployee.documents.map((doc, idx) => (
-                  <span key={idx} className="text-blue-700 underline mr-2">
+                  <span key={idx} className="text-[#C89D2A] underline mr-2">
                     {doc}
                   </span>
                 ))}
               </li>
             </ul>
 
-            <div className="border-t pt-4">
-              <h4 className="text-md font-semibold mb-2 text-blue-700">
+            <div className="border-t pt-4 border-[#C89D2A]">
+              <h4 className="text-md font-semibold mb-2 text-[#0B2E53]">
                 Processed FD/Loan Summary
               </h4>
               <p className="text-sm text-gray-800">
@@ -138,6 +138,7 @@ const EmployeeManagement = () => {
         )}
       </div>
     </div>
+
   );
 };
 

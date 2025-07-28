@@ -41,38 +41,40 @@ const FDSearchFilterComponent = () => {
   });
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gray-50 rounded shadow-md">
-      <h2 className="text-2xl font-semibold mb-6 text-center">FD Search & Filter</h2>
+    <div className="max-w-4xl mx-auto p-6 bg-[#FDFCF9] rounded shadow-md">
+      <h2 className="text-2xl font-semibold mb-6 text-center text-[#0B2E53]">
+        FD Search & Filter
+      </h2>
 
       {/* Search and Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <input
-          type="text" 
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        {/* <input
+          type="text"
           placeholder="Search by FD ID"
           value={searchFDId}
           onChange={(e) => setSearchFDId(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+          className="border border-[#0B2E53] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
+        /> */}
         <input
           type="number"
           placeholder="Filter by Amount"
           value={filterAmount}
           onChange={(e) => setFilterAmount(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="border border-[#0B2E53] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
         />
         <input
           type="date"
           placeholder="Filter by Date"
           value={filterDate}
           onChange={(e) => setFilterDate(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="border border-[#0B2E53] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
         />
         <input
           type="text"
           placeholder="Filter by Status"
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="border border-[#0B2E53] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
         />
       </div>
 
@@ -80,32 +82,34 @@ const FDSearchFilterComponent = () => {
       {filteredFDs.length === 0 ? (
         <p className="text-center text-gray-500">No FD records found.</p>
       ) : (
-        <table className="w-full table-auto border-collapse border border-gray-300">
-          <thead>
-            <tr className="bg-blue-100">
-              <th className="border border-gray-300 px-4 py-2 text-left">FD ID</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Status</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Maturity Date</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Principal Amount</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Maturity Amount</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Created Date</th>
-              <th className="border border-gray-300 px-4 py-2 text-left">Interest Rate (%)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredFDs.map((fd) => (
-              <tr key={fd.fdId} className="odd:bg-white even:bg-gray-50">
-                <td className="border border-gray-300 px-4 py-2">{fd.fdId}</td>
-                <td className="border border-gray-300 px-4 py-2">{fd.status}</td>
-                <td className="border border-gray-300 px-4 py-2">{fd.maturityDate}</td>
-                <td className="border border-gray-300 px-4 py-2">{fd.principalAmount}</td>
-                <td className="border border-gray-300 px-4 py-2">{fd.maturityAmount}</td>
-                <td className="border border-gray-300 px-4 py-2">{fd.createdDate}</td>
-                <td className="border border-gray-300 px-4 py-2">{fd.interestRate}</td>
+        <div className="overflow-x-auto">
+          <table className="w-full table-auto border-collapse border border-[#0B2E53]">
+            <thead>
+              <tr className="bg-[#0B2E53] text-white">
+                <th className="border border-[#0B2E53] px-4 py-2 text-left">FD ID</th>
+                <th className="border border-[#0B2E53] px-4 py-2 text-left">Status</th>
+                <th className="border border-[#0B2E53] px-4 py-2 text-left">Maturity Date</th>
+                <th className="border border-[#0B2E53] px-4 py-2 text-left">Principal Amount</th>
+                <th className="border border-[#0B2E53] px-4 py-2 text-left">Maturity Amount</th>
+                <th className="border border-[#0B2E53] px-4 py-2 text-left">Created Date</th>
+                <th className="border border-[#0B2E53] px-4 py-2 text-left">Interest Rate (%)</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredFDs.map((fd) => (
+                <tr key={fd.fdId} className="odd:bg-white even:bg-blue-50 text-[#0B2E53]">
+                  <td className="border border-[#0B2E53] px-4 py-2">{fd.fdId}</td>
+                  <td className="border border-[#0B2E53] px-4 py-2">{fd.status}</td>
+                  <td className="border border-[#0B2E53] px-4 py-2">{fd.maturityDate}</td>
+                  <td className="border border-[#0B2E53] px-4 py-2">₹{fd.principalAmount}</td>
+                  <td className="border border-[#0B2E53] px-4 py-2">₹{fd.maturityAmount}</td>
+                  <td className="border border-[#0B2E53] px-4 py-2">{fd.createdDate}</td>
+                  <td className="border border-[#0B2E53] px-4 py-2">{fd.interestRate}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

@@ -44,102 +44,104 @@ const SupportMaintenanceLoans = () => {
   };
 
   return (
-    <div className="min-h-screen bg-blue-50 p-6 font-sans">
-      <h2 className="text-2xl font-bold text-blue-800 mb-4 text-center">
-        Search / Filter Loans - Support & Maintenance
-      </h2>
+    <div className="min-h-screen bg-[#FDFCF9] p-6 font-sans">
+      <div className="max-w-3xl mx-auto bg-white border border-gray-300 rounded-xl shadow p-6">
+        <h2 className="text-xl font-semibold text-center text-[#0B2E53] border-b pb-2 mb-4">
+          Search / Filter Loans - Support & Maintenance
+        </h2>
 
-      {/* Search Input */}
-      <div className="mb-6 flex justify-center">
-        <input
-          type="text"
-          placeholder="Search by name or loan ID..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full max-w-md p-2 border border-gray-300 rounded"
-        />
-      </div>
-
-      {/* Loan List */}
-      <div className="space-y-4">
-        {filtered.map((loan) => (
-          <div
-            key={loan.id}
-            className="bg-white p-4 rounded-lg shadow flex justify-between items-center"
-          >
-            <div>
-              <p>
-                <strong>Loan ID:</strong> {loan.id}
-              </p>
-              <p>
-                <strong>Customer:</strong> {loan.customer}
-              </p>
-              <p>
-                <strong>Status:</strong> {loan.status}
-              </p>
-            </div>
-            <button
-              onClick={() => setSelectedLoan(loan)}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              Respond
-            </button>
-          </div>
-        ))}
-        {filtered.length === 0 && (
-          <p className="text-center text-gray-500">No tickets found.</p>
-        )}
-      </div>
-
-      {/* Response Modal */}
-      {selectedLoan && (
-        <div className="mt-6 bg-white p-6 rounded-lg shadow">
-          <h3 className="text-xl font-semibold text-blue-700 mb-3">
-            Respond to Query - {selectedLoan.customer}
-          </h3>
-          <p className="mb-2">
-            <strong>Loan ID:</strong> {selectedLoan.id}
-          </p>
-          <p className="mb-2">
-            <strong>Query:</strong> {selectedLoan.query}
-          </p>
-          <textarea
-            className="w-full mt-3 p-2 border border-gray-300 rounded"
-            rows={3}
-            placeholder="Type your response here..."
-            value={responseText}
-            onChange={(e) => setResponseText(e.target.value)}
-          ></textarea>
-          <div className="flex gap-4 mt-4">
-            <button
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-              onClick={handleRespond}
-            >
-              Submit Response
-            </button>
-            <button
-              className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-              onClick={() => {
-                setSelectedLoan(null);
-                setResponseText("");
-              }}
-            >
-              Cancel
-            </button>
-          </div>
+        {/* Search Input */}
+        <div className="mb-6 flex justify-center">
+          <input
+            type="text"
+            placeholder="Search by name or loan ID..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full p-2 border border-[#C89D2A] rounded focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
+          />
         </div>
-      )}
 
-      {/* Notification Panel */}
-      <div className="mt-8 bg-white p-4 rounded-lg shadow">
-        <h4 className="text-lg font-semibold text-blue-700 mb-2">
-          Notifications & Audit Logs
-        </h4>
-        <ul className="list-disc list-inside text-sm text-blue-800 space-y-1">
-          {notifications.map((note, idx) => (
-            <li key={idx}>{note}</li>
+        {/* Loan List */}
+        <div className="space-y-4">
+          {filtered.map((loan) => (
+            <div
+              key={loan.id}
+              className="bg-[#F9F7F2] rounded-xl p-4 flex justify-between items-center shadow"
+            >
+              <div className="text-[#0B2E53]">
+                <p>
+                  <strong>Loan ID:</strong> {loan.id}
+                </p>
+                <p>
+                  <strong>Customer:</strong> {loan.customer}
+                </p>
+                <p>
+                  <strong>Status:</strong> {loan.status}
+                </p>
+              </div>
+              <button
+                onClick={() => setSelectedLoan(loan)}
+                className="px-4 py-2 bg-[#0B2E53] text-white rounded hover:bg-[#08213D]"
+              >
+                Respond
+              </button>
+            </div>
           ))}
-        </ul>
+          {filtered.length === 0 && (
+            <p className="text-center text-[#C89D2A] font-medium">No tickets found.</p>
+          )}
+        </div>
+
+        {/* Response Modal */}
+        {selectedLoan && (
+          <div className="mt-6 bg-white p-6 rounded-lg shadow">
+            <h3 className="text-xl font-semibold text-[#0B2E53] mb-3">
+              Respond to Query - {selectedLoan.customer}
+            </h3>
+            <p className="mb-2">
+              <strong>Loan ID:</strong> {selectedLoan.id}
+            </p>
+            <p className="mb-2">
+              <strong>Query:</strong> {selectedLoan.query}
+            </p>
+            <textarea
+              className="w-full mt-3 p-2 border border-[#C89D2A] rounded focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
+              rows={3}
+              placeholder="Type your response here..."
+              value={responseText}
+              onChange={(e) => setResponseText(e.target.value)}
+            ></textarea>
+            <div className="flex gap-4 mt-4">
+              <button
+                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                onClick={handleRespond}
+              >
+                Submit Response
+              </button>
+              <button
+                className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+                onClick={() => {
+                  setSelectedLoan(null);
+                  setResponseText("");
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Notification Panel */}
+        <div className="mt-8 bg-white p-4 rounded-lg shadow">
+          <h4 className="text-lg font-semibold text-[#0B2E53] mb-2">
+            Notifications & Audit Logs
+          </h4>
+          <ul className="list-disc list-inside text-sm text-[#0B2E53] space-y-1">
+            {notifications.map((note, idx) => (
+              <li key={idx}>{note}</li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ const transactions = [
 
 const MiniStatement = () => {
   return (
-    <div className="bg-white p-4 shadow-md rounded">
+    <div className="bg-[#FDFCF9] p-4 shadow-md rounded">
       <h2 className="text-lg font-semibold mb-4">Mini Statement</h2>
       <table className="w-full text-sm">
         <thead>
