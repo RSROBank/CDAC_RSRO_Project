@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import GenericProfile from './GenericProfile';
 
 const CustomerProfile = () => {
   const [profile, setProfile] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    // Simulate fetching data
     setTimeout(() => {
       setProfile({
         fullName: 'Rahul Verma',
@@ -25,38 +23,25 @@ const CustomerProfile = () => {
 
   if (!profile) return <p className="text-center mt-10 text-gray-500">Loading profile...</p>;
 
+  const fields = [
+    { label: 'Full Name', value: profile.fullName },
+    { label: 'Date of Birth', value: profile.dob },
+    { label: 'Gender', value: profile.gender },
+    { label: 'Nationality', value: profile.nationality },
+    { label: 'Photo ID', value: profile.photoId },
+    { label: 'Mobile', value: profile.mobile },
+    { label: 'Email', value: profile.email },
+    { label: 'Status', value: profile.status },
+    { label: 'Address', value: profile.address, fullWidth: true },
+  ];
+
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-xl mt-10">
-      <h2 className="text-2xl font-bold mb-6 text-blue-700 border-b pb-2">Customer Profile</h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-800">
-        <div><strong>Full Name:</strong> {profile.fullName}</div>
-        <div><strong>Date of Birth:</strong> {profile.dob}</div>
-        <div><strong>Gender:</strong> {profile.gender}</div>
-        <div><strong>Nationality:</strong> {profile.nationality}</div>
-        <div><strong>Photo ID:</strong> {profile.photoId}</div>
-        <div><strong>Status:</strong> {profile.status}</div>
-        <div><strong>Mobile:</strong> {profile.mobile}</div>
-        <div><strong>Email:</strong> {profile.email}</div>
-        <div className="md:col-span-2"><strong>Address:</strong> {profile.address}</div>
-        <div className="md:col-span-2">
-          <img
-            src={profile.photo}
-            alt="User Document"
-            className="w-40 h-40 object-cover rounded shadow border"
-          />
-        </div>
-      </div>
-
-      <div className="mt-6 text-right">
-        <button
-          onClick={() => navigate('/customereditprofile')}
-          className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700"
-        >
-          Update Profile
-        </button>
-      </div>
-    </div>
+    <GenericProfile
+      title="Customer Profile"
+      fields={fields}
+      photo={profile.photo}
+      onEdit="/customereditprofile"
+    />
   );
 };
 

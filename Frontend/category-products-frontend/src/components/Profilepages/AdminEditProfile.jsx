@@ -1,30 +1,32 @@
 import GenericEditProfile from './GenericEditProfile';
 import { MapPin, Phone, Mail, Image } from 'lucide-react';
 
-const CustomerEditProfile = () => {
-  const fetchCustomerProfile = async () => {
-    return {
-      fullName: "Rahul Verma",
-      dateOfBirth: "1998-05-20",
-      gender: "Male",
-      nationality: "Indian",
-      photoId: "DOC123456",
-      photo: "/assets/Images/Cardsampleimage.png",
-      city: "Lucknow",
-      state: "UP",
-      country: "India",
-      pinCode: "226010",
-      mobileNo: "9876543210",
-      email: "rahul.verma@example.com"
-    };
-  };
 
-  const updateCustomerProfile = async (formData) => {
-    console.log("Submitted data:", formData);
-    return { success: true, message: "Customer profile updated successfully" };
-  };
+
+const AdminEditProfile = () => {
+    const fetchCustomerProfile = async () => {
+        return {
+            fullName: "Rahul Verma",
+            dateOfBirth: "1998-05-20",
+            gender: "Male",
+            nationality: "Indian",
+            photoId: "DOC123456",
+            photo: "/assets/Images/Cardsampleimage.png",
+            city: "Lucknow",
+            state: "UP",
+            country: "India",
+            pinCode: "226010",
+            mobileNo: "9876543210",
+            email: "rahul.verma@example.com"
+        };
+        };
+
+        const updateCustomerProfile = async (formData) => {
+        console.log("Submitted data:", formData);
+        return { success: true, message: "Customer profile updated successfully" };
+        };
   return (
-  <GenericEditProfile
+    <GenericEditProfile
     title="Update Customer Profile"
     fetchProfile={fetchCustomerProfile}
     onSubmit={updateCustomerProfile}
@@ -47,4 +49,4 @@ const CustomerEditProfile = () => {
   );
 };
 
-export default CustomerEditProfile;
+export default AdminEditProfile;

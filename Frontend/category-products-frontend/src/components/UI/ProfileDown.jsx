@@ -78,21 +78,36 @@ const ProfileDropdown = () => {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
           <div className="py-1">
-            <Link
-              to="/customerprofile"
-              className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-500 transition-colors duration-300"
-              onClick={() => setIsOpen(false)}
-            >
-              My Profile
-            </Link>
             {
-              type === "employeeprofile" && (
+              type === "customer" && (
+              <Link
+                to="/customerprofile"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-500 transition-colors duration-300"
+                onClick={() => setIsOpen(false)}
+              >
+                My Profile
+              </Link>
+              )
+            }
+            {
+              type === "employee" && (
               <Link
                 to="/employeeprofile"
                 className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-500 transition-colors duration-300"
                 onClick={() => setIsOpen(false)}
               >
-                Profile
+                My Profile
+              </Link>
+              )
+            }
+             {
+              type === "admin" && (
+              <Link
+                to="/adminprofile"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-500 transition-colors duration-300"
+                onClick={() => setIsOpen(false)}
+              >
+                My Profile
               </Link>
               )
             }

@@ -12,7 +12,7 @@ const fdDataSample = [
   },
   {
     fdId: "FD002",
-    status: "Matured",
+    status: "Matured",   
     maturityDate: "2024-06-30",
     principalAmount: 5000,
     maturityAmount: 5500,
