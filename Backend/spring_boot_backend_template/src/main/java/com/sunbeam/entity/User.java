@@ -59,7 +59,7 @@ public class User {
     @JoinColumn(name="address_id")
     private AddressEntity address;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", length = 14, unique = true)
     private Long phoneNumber;
 
     @Column(length = 100)
