@@ -1,11 +1,13 @@
 package com.sunbeam.service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sunbeam.custom_exceptions.AuthenticationFailureException;
 import com.sunbeam.dao.UserDao;
@@ -32,21 +34,41 @@ public class UserServiceImpl  implements UserService{
 	}
 
 	@Override
-	public ApiResponse signUp(RegisterDTO dto)  {
-		// TODO Auto-generated method stub
+	public ApiResponse signUp(RegisterDTO dto, MultipartFile img) {
+	    // Create a new User manually
+		User user = new User();
 
-		User user = modelMapper.map(dto, User.class);
-		if (dto.getPhoto() != null && !dto.getPhoto().isEmpty()) {
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+
+        // Convert String → LocalDate
+        user.setDateOfBirth(LocalDate.parse(dto.getDateOfBirth()));
+
+        user.setGender(dto.getGender());
+        user.setNationality(dto.getNationality());
+        user.setPhotoId(dto.getPhotoId());
+        
+        // Convert String → Long
+        user.setPhoneNumber(Long.parseLong(dto.getPhoneNumber()));
+
+        user.setEmail(dto.getEmail());
+        user.setPassword(dto.getPassword());
+
+        // Set address (already as AddressEntity)
+        user.setAddress(dto.getAddress());
+        if (img != null && !img.isEmpty()) {
             try {
-				user.setPhoto(dto.getPhoto().getBytes());
+				user.setPhoto(img.getBytes());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-
-		userDao.save(user);
-		return new ApiResponse("Successfully save.");
+        } else {
+            return new ApiResponse("Photo is missing or empty.");
+        }
+	    userDao.save(user);
+	    return new ApiResponse("Successfully saved.");
 	}
+
 	
 }
