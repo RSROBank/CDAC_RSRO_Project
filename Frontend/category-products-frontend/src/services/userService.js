@@ -4,20 +4,21 @@ import { config } from '../config'
 
 export async function addNewUser(user) {
   try {
-    const url = `${config}/user/signup`
-    const body = user
-    const response = await axios.post(url, body, {
+    const url = `${config.serverURL}/user/signup`;
+    const response = await axios.post(url, user, {
       headers: {
         "Content-Type": "multipart/form-data"
       }
-    })
-    if (response.status == 200) {
-      return response.data
+    });
+    console.log("response: ",response);
+    if (response.status === 200) {
+      return response.data;
     }
   } catch (ex) {
-    console.log(`exception: `, ex)
+    console.log("exception:", ex);
   }
 }
+
 
 export const loginUser = async (email, password) => {
   const res = await fetch(BASE_URL + "/login", {

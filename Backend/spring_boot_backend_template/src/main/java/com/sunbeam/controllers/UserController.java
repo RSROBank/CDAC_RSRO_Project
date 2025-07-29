@@ -10,8 +10,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sunbeam.custom_exceptions.IOException;
 import com.sunbeam.dto.LoginDTO;
 import com.sunbeam.dto.RegisterDTO;
 import com.sunbeam.dto.UserDTO;
@@ -30,6 +36,7 @@ import lombok.NoArgsConstructor;
 public class UserController {
 	
 	private UserService userService;
+	private ObjectMapper objectMapper;
 	
 	@PostMapping("/login")
 	public ResponseEntity<?> userLogin(@RequestBody LoginDTO dto,HttpSession session)
@@ -47,12 +54,10 @@ public class UserController {
 	}
 	
 	@PostMapping("/signup")
-	public ResponseEntity<?> userSignUp(@ModelAttribute RegisterDTO dto)
+	public ResponseEntity<?> userSignUp(@RequestParam("image") MultipartFile img , @RequestParam("filedata") String filedata) throws IOException, JsonMappingException, JsonProcessingException
 	{
-		System.out.println("in sign up "+ dto);
-		
-		return ResponseEntity.ok(
-				userService.signUp(dto));
+		RegisterDTO dto1 = objectMapper.readValue(filedata, RegisterDTO.class);
+		return ResponseEntity.ok(userService.signUp(dto1, img));
 	}
 
 }

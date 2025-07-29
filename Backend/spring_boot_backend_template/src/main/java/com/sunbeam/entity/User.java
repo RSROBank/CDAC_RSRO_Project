@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,17 +14,21 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
+@ToString
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,8 +55,9 @@ public class User {
     @Column(name = "acc_reference_id")
     private Long accReferenceId = null;
 
-    @Column(name = "address", columnDefinition = "TEXT")
-    private String address;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="address_id")
+    private AddressEntity address;
 
     @Column(name = "phone_number")
     private Long phoneNumber;
@@ -78,7 +84,7 @@ public class User {
     private byte[] photo;
 
 	public User(String firstName, String lastName, LocalDate dateOfBirth, String gender, String nationality,
-			String photoId, Long accReferenceId, String address, Long mobileNo, String email, String password,
+			String photoId, Long accReferenceId, AddressEntity address, Long mobileNo, String email, String password,
 			LocalDateTime createdAt, LocalDateTime modifiedAt, Status status, byte[] photo) {
 		super();
 		this.firstName = firstName;
