@@ -9,6 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ImageDto {
-	MultipartFile photo;
+public class ImageDTO {
+	private MultipartFile photo;
 }
