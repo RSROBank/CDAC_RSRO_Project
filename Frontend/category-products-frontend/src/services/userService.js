@@ -32,3 +32,22 @@ export const loginUser = async (email, password) => {
   const data = await res.json();
   return data;
 };
+
+export async function getCustomerStatement(accountNo, filters) {
+  try {
+    const response = await axios.get(`${config.serverURL}/user/statements`, {
+      params: {
+        accountNo: accountNo,
+        fromDate: filters.fromDate || undefined,
+        toDate: filters.toDate || undefined,
+        type: filters.transactionType || undefined,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch statement:", error);
+    return null;
+  }
+}
+
