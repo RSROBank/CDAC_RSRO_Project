@@ -2,6 +2,7 @@ package com.sunbeam.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Random;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sunbeam.custom_exceptions.AuthenticationFailureException;
+import com.sunbeam.dao.AccountDao;
 import com.sunbeam.dao.UserDao;
 import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.LoginDTO;
 import com.sunbeam.dto.RegisterDTO;
 import com.sunbeam.dto.UserDTO;
+import com.sunbeam.entity.AccountEntity;
 import com.sunbeam.entity.User;
 
 import lombok.AllArgsConstructor;
@@ -25,12 +28,18 @@ import lombok.AllArgsConstructor;
 public class UserServiceImpl  implements UserService{
 
 	private UserDao userDao;
+	private AccountDao accountDao;
+
 	private final ModelMapper modelMapper;
 
 	@Override
 	public UserDTO signIn(LoginDTO dto) {
 		User entity = userDao.findByEmailAndPassword(dto.getEmail(), dto.getPassword()).orElseThrow(() -> new AuthenticationFailureException("Invalid email or password"));
 		return modelMapper.map(entity, UserDTO.class);
+	}
+	
+	private String generate12DigitNumber() {
+	    return String.valueOf(100000000000L + new Random().nextLong() % 900000000000L).substring(0, 12);
 	}
 
 	@Override
@@ -67,6 +76,13 @@ public class UserServiceImpl  implements UserService{
             return new ApiResponse("Photo is missing or empty.");
         }
 	    userDao.save(user);
+	    AccountEntity account = new AccountEntity();
+	    account.setCustomer(user); // link the saved user
+	    account.setAccountNumber(generate12DigitNumber());
+	    account.setUpiId(generate12DigitNumber());
+	    account.setBalance(0.0);
+	    accountDao.save(account);
+
 	    return new ApiResponse("Successfully saved.");
 	}
 

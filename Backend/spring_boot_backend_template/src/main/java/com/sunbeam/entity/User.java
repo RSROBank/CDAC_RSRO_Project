@@ -52,8 +52,8 @@ public class User {
     @Column(name = "govt_id", length = 50)
     private String photoId;
 
-    @Column(name = "acc_reference_id")
-    private Long accReferenceId = null;
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private AccountEntity account;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="address_id")
@@ -84,7 +84,7 @@ public class User {
     private byte[] photo;
 
 	public User(String firstName, String lastName, LocalDate dateOfBirth, String gender, String nationality,
-			String photoId, Long accReferenceId, AddressEntity address, Long mobileNo, String email, String password,
+			String photoId, AccountEntity account, AddressEntity address, Long mobileNo, String email, String password,
 			LocalDateTime createdAt, LocalDateTime modifiedAt, Status status, byte[] photo) {
 		super();
 		this.firstName = firstName;
@@ -93,7 +93,7 @@ public class User {
 		this.gender = gender;
 		this.nationality = nationality;
 		this.photoId = photoId;
-		this.accReferenceId = accReferenceId;
+		this.account = account;
 		this.address = address;
 		this.phoneNumber = mobileNo;
 		this.email = email;
@@ -102,6 +102,11 @@ public class User {
 		this.modifiedAt = modifiedAt;
 		this.status = status;
 		this.photo = photo;
+	}
+
+	public String getFullName() {
+		// TODO Auto-generated method stub
+		return firstName +" "+ lastName;
 	}
     
 
