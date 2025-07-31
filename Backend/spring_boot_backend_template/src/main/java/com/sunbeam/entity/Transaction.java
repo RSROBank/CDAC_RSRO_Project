@@ -40,11 +40,11 @@ public class Transaction {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "transaction_mode")
-	private TransacMode transactionMode;
+	private TransactionMode transactionMode;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "transaction_type")
-	private TransacType transactionType;
+	private TransactionType transactionType;
 	
 	@Enumerated(EnumType.STRING)
 	private Status status;
@@ -68,7 +68,7 @@ public class Transaction {
 	private Long loanId;
 
 	public Transaction(Long userId, Long toAccount, Float amount, Status status, String description,
-			TransacMode transactionMode, TransacType transactionType, LocalDateTime createdAt, LocalDateTime modifiedAt, Long fdId,
+			TransactionMode transactionMode, TransactionType transactionType, LocalDateTime createdAt, LocalDateTime modifiedAt, Long fdId,
 			Long loanId) {
 		super();
 		this.userId = userId;
