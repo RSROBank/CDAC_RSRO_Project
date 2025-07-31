@@ -1,6 +1,6 @@
 package com.sunbeam.entity;
 
-public enum TransacType {
+public enum TransactionType {
 	
 	DEBIT, CREDIT
 
