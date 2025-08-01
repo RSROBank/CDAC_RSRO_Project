@@ -29,7 +29,6 @@ import lombok.AllArgsConstructor;
 @EnableMethodSecurity 
 @AllArgsConstructor
 public class SecurityConfiguration {
-	
 
 	private final CustomJwtFilter customJwtFilter;
 	private JwtAuthEntryPoint jwtAuthEntryPoint;

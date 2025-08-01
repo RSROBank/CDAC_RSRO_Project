@@ -1,0 +1,9 @@
+{
+  "savingsInterestRate": 3.5,
+  "fdRates": {
+    "1year": 6.5,
+    "3year": 7.0,
+    "5year": 7.5
+  },
+  "loanInterestRate": 9.2
+}
