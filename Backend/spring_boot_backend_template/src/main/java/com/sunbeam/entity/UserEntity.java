@@ -59,8 +59,6 @@ public class UserEntity implements UserDetails {
     @Column(name = "govt_id", length = 50)
     private String photoId;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
-    private AccountEntity account;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="address_id")
@@ -91,7 +89,7 @@ public class UserEntity implements UserDetails {
     private byte[] photo;
 
 	public UserEntity(String firstName, String lastName, LocalDate dateOfBirth, String gender, String nationality,
-			String photoId, AccountEntity account, AddressEntity address, Long mobileNo, String email, String password,
+			String photoId, AddressEntity address, Long mobileNo, String email, String password,
 			LocalDateTime createdAt, LocalDateTime modifiedAt, Status status, byte[] photo) {
 		super();
 		this.firstName = firstName;
@@ -100,7 +98,6 @@ public class UserEntity implements UserDetails {
 		this.gender = gender;
 		this.nationality = nationality;
 		this.photoId = photoId;
-		this.account = account;
 		this.address = address;
 		this.phoneNumber = mobileNo;
 		this.email = email;
