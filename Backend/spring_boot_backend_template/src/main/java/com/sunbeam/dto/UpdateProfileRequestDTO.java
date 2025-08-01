@@ -3,9 +3,11 @@ package com.sunbeam.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class UpdateProfileRequestDTO {
 
 	@NotBlank(message = "Address Line 1 is required")
@@ -24,7 +26,7 @@ public class UpdateProfileRequestDTO {
 	private String country;
 
 	@NotBlank(message = "Pin Code is required")
-	private String pincode;
+	private long pincode;
 
 	@NotBlank(message = "Mobile number is required")
 	private String mobileNo;

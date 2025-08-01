@@ -5,30 +5,36 @@ import { getCustomerProfileById } from '../../services/userService';
 const CustomerProfile = () => {
   const [profile, setProfile] = useState(null);
 
-  const getProfile = async()=>{
-    const result = await getCustomerProfileById(userId);
-    console.log("result in Customer profile: ", result);
-    return result;
-  }
   useEffect(() => {
-    const user = getProfile();
-    setProfile({
-      fullName: 'John',
-      dob: '1998-05-20',
-      gender: 'Male',
-      nationality: 'Indian',
-      photoId: 'Doc123456',
-      photo: 'src/assets/Images/Cardsampleimage.png',
-      adrLine1: "bharat nagar",
-      adrLine2: "babail Road",
-      city: "panipat",
-      state: "haryana",
-      country: "India",
-      pincode: "123456",
-      mobile: '9876543210',
-      email: 'rahul.verma@example.com',
-      status: 'Active',
-    });
+    const fetchProfile = async () => {
+      try {
+        const data = await getCustomerProfileById(1);
+        console.log("Fetched profile data:", data);
+
+        setProfile({
+          fullName: data.fullName,
+          userName: data.userName,
+          dob: data.dateOfBirth,
+          gender: data.gender,
+          nationality: data.nationality,
+          photoId: data.photoId,
+          photo: data.photo,
+          adrLine1: data.adrLine1,
+          adrLine2: data.adrLine2,
+          city: data.city,
+          state: data.state,
+          country: data.country,
+          pincode: data.pincode,
+          mobile: data.phoneNumber,
+          email: data.email,
+          status: "Active",
+        });
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
+
+    fetchProfile(); // Call the async function
   }, []);
 
   if (!profile) return <p className="text-center mt-10 text-gray-500">Loading profile...</p>;

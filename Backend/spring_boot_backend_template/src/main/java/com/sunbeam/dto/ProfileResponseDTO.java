@@ -5,6 +5,8 @@ import lombok.Setter;
 import lombok.ToString;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
+
+import com.sunbeam.entity.Status;
 @Getter
 @Setter
 @ToString
@@ -54,13 +56,13 @@ public class ProfileResponseDTO {
 
     @NotBlank(message = "Pincode is required")
     @Pattern(regexp = "^[0-9]{5,10}$", message = "Pincode must be 5-10 digits")
-    private String pincode;
+    private long pincode;
 
     @NotBlank(message = "Mobile number is required")
     @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Mobile number must be 10-15 digits")
     private String phoneNumber;
 
-
+    private Status status;
     private String photo;
 
 }

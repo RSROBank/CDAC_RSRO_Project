@@ -15,8 +15,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sunbeam.custom_exceptions.AuthenticationFailureException;
 import com.sunbeam.custom_exceptions.ResourceNotFoundException;
 import com.sunbeam.dao.AccountDao;
+import com.sunbeam.dao.AdminDao;
+import com.sunbeam.dao.EmployeeDao;
 import com.sunbeam.dao.UserDao;
+import com.sunbeam.dto.AdminResponseDTO;
 import com.sunbeam.dto.ApiResponse;
+import com.sunbeam.dto.EmployeeResponseDTO;
 import com.sunbeam.dto.LoginDTO;
 import com.sunbeam.dto.ProfileResponseDTO;
 import com.sunbeam.dto.RegisterDTO;
@@ -24,6 +28,8 @@ import com.sunbeam.dto.UpdateProfileRequestDTO;
 import com.sunbeam.dto.UserDTO;
 import com.sunbeam.entity.AccountEntity;
 import com.sunbeam.entity.AddressEntity;
+import com.sunbeam.entity.Admin;
+import com.sunbeam.entity.EmployeeEntity;
 import com.sunbeam.entity.User;
 
 import lombok.AllArgsConstructor;
@@ -33,9 +39,17 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserServiceImpl  implements UserService{
 
+<<<<<<< Updated upstream
 	private final UserDao userDao;
 	private final AccountDao accountDao;
 	private final PasswordEncoder encoder;
+=======
+	private final UserDao userDao;
+	private final EmployeeDao employeeDao;
+	private final AdminDao adminDao;
+	private final AccountDao accountDao;
+	private final PasswordEncoder encoder;
+>>>>>>> Stashed changes
 	private final ModelMapper modelMapper;
 
 	@Override
@@ -114,8 +128,25 @@ public class UserServiceImpl  implements UserService{
 		User user = userDao.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User not found"));
 		AddressEntity adr = new AddressEntity(dto.getAdrLine1(), dto.getAdrLine2(), dto.getCity(), dto.getState(), dto.getCountry(), dto.getPincode());
 		user.setAddress(adr);
+		System.out.println(user.getFirstName());
 		user.setPhoneNumber(Long.parseLong(dto.getMobileNo()));
+		System.out.println(user.getPhoneNumber());
 		return new ApiResponse("Customer data successfully modified");
+	}
+
+	@Override
+	public EmployeeResponseDTO getEmployeeProfileByUserId(Long userId) {
+		EmployeeEntity user = employeeDao.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User not found"));
+        EmployeeResponseDTO dto = modelMapper.map(user, EmployeeResponseDTO.class);
+        dto.setFullName(user.getFirstName()+" "+user.getLastName());
+        return dto;
+	}
+
+	@Override
+	public AdminResponseDTO getAdminProfileByUserId(Long userId) {
+		Admin user = adminDao.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User not found"));
+        AdminResponseDTO dto = modelMapper.map(user, AdminResponseDTO.class);
+        return dto;
 	}
 
 	
