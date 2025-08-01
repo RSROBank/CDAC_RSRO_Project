@@ -39,17 +39,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserServiceImpl  implements UserService{
 
-<<<<<<< Updated upstream
 	private final UserDao userDao;
 	private final AccountDao accountDao;
 	private final PasswordEncoder encoder;
-=======
-	private final UserDao userDao;
 	private final EmployeeDao employeeDao;
 	private final AdminDao adminDao;
-	private final AccountDao accountDao;
-	private final PasswordEncoder encoder;
->>>>>>> Stashed changes
 	private final ModelMapper modelMapper;
 
 	@Override

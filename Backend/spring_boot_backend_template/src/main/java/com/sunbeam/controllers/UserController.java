@@ -40,7 +40,6 @@ import lombok.NoArgsConstructor;
 @RestController
 @RequestMapping("/user")
 @AllArgsConstructor
-<<<<<<< Updated upstream
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class UserController {	
 	private final UserService userService;
