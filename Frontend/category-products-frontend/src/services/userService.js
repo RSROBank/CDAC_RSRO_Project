@@ -32,13 +32,39 @@ export const getCustomerProfileById = async (userId) => {
   }
 }
 
+export const getEmployeeProfileById = async (userId) => {
+  try{
+    const url = `${config.serverURL}/user/employeeprofile/${userId}`;
+    const res = await axios.get(url)
+    console.log("Profile data: ", res);
+    if(res.status == 200){
+      return res.data;
+    }
+  }catch(ex){
+    console.log("exception: ", ex);
+  }
+}
+
+export const getAdminProfileById = async (userId) => {
+  try{
+    const url = `${config.serverURL}/user/adminprofile/${userId}`;
+    const res = await axios.get(url)
+    console.log("Profile data: ", res);
+    if(res.status == 200){
+      return res.data;
+    }
+  }catch(ex){
+    console.log("exception: ", ex);
+  }
+}
+
 export const updateCustomerProfileById = async (userId, userData) => {
   try{
     const url = `${config.serverURL}/user/profile/${userId}`;
-    const res = await axios.get(url, userData)
+    const res = await axios.put(url, userData)
     console.log("response data: ", res);
     if(res.status == 200){
-      return res.data;
+      return res;
     }
   }catch(ex){
     console.log("exception: ", ex);

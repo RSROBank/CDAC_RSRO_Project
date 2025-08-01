@@ -15,9 +15,12 @@ import UpdateCustomerProfile from "./components/Profilepages/CustomerEditProfile
 import { AuthContext } from "./AuthContext/auth.context";
 import { useState } from "react";
 import EmployeeEditProfile from "./components/Profilepages/EmployeeEditProfile";
+import AdminEditProfile from "./components/Profilepages/AdminEditProfile";
+import EmployeeProfile from "./components/Profilepages/EmployeeProfile";
+import AdminProfile from "./components/Profilepages/AdminProfile";
 
 function App() {
-  const [user, setUser] = useState("customer")
+  const [user, setUser] = useState("admin")
   return (
     <>
       {/* Container fills the full height and uses flex layout */}
@@ -32,6 +35,8 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/customerprofile" element={user === "customer" ? <CustomerProfile /> : <Navigate to="/" />} />
+            <Route path="/employeeprofile" element={user === "employee" ? <EmployeeProfile /> : <Navigate to="/" />} />
+            <Route path="/adminprofile" element={user === "admin" ? <AdminProfile /> : <Navigate to="/" />} />
             <Route
               path="/customereditprofile"
               element={<UpdateCustomerProfile />}
@@ -39,6 +44,10 @@ function App() {
             <Route
               path="/employeeeditprofile"
               element={<EmployeeEditProfile />}
+            />
+            <Route
+              path="/admineditprofile"
+              element={<AdminEditProfile />}
             />
             <Route path="/" element={<HomePage />} />
             <Route path="/dashboard" element={user === "customer" ? <CustomerDashboard /> : <Navigate to="/" />} />

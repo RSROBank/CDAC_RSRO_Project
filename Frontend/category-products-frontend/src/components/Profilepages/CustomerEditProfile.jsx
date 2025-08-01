@@ -1,34 +1,58 @@
+import React, { useEffect, useState } from 'react';
 import GenericEditProfile from './GenericEditProfile';
 import { MapPin, Phone, Mail, Image } from 'lucide-react';
+import { getCustomerProfileById, updateCustomerProfileById } from '../../services/userService';
 
 const CustomerEditProfile = () => {
-  const fetchCustomerProfile = async () => {
-    return {
-      fullName: "Rahul Verma",
-      dateOfBirth: "1998-05-20",
-      gender: "Male",
-      nationality: "Indian",
-      photoId: "DOC123456",
-      photo: "/assets/Images/Cardsampleimage.png",
-      adrLine1: "bharat nagar",
-      adrLine2: "babail Road",
-      city: "panipat",
-      state: "haryana",
-      country: "India",
-      pincode: "123456",
-      mobileNo: "9876543210",
-      email: "rahul.verma@example.com"
-    };
+  const [profile, setProfile] = useState(null);
+
+  const fetchProfile = async () => {
+    try {
+      const data = await getCustomerProfileById(1);
+      console.log("Fetched profile data:", data);
+
+      setProfile({
+        fullName: data.fullName,
+        userName: data.userName,
+        dateOfBirth: data.dateOfBirth,
+        gender: data.gender,
+        nationality: data.nationality,
+        photoId: data.photoId,
+        photo: data.photo,
+        adrLine1: data.adrLine1,
+        adrLine2: data.adrLine2,
+        city: data.city,
+        state: data.state,
+        country: data.country,
+        pincode: data.pincode,
+        mobileNo: data.phoneNumber, // ensure this key matches editable field
+        email: data.email,
+        status: "Active",
+      });
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    }
   };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
   const updateCustomerProfile = async (formData) => {
     console.log("Submitted data:", formData);
-    return { success: true, message: "Customer profile updated successfully" };
+    const userId = 1; // dynamically set this if needed
+    const result = await updateCustomerProfileById(userId, formData);
+    return result;
   };
+
+  if (!profile) {
+    return <p className="text-center mt-10 text-gray-500">Loading profile...</p>;
+  }
+
   return (
     <GenericEditProfile
       title="Update Customer Profile"
-      fetchProfile={fetchCustomerProfile}
+      fetchProfile={() => Promise.resolve(profile)}
       onSubmit={updateCustomerProfile}
       readOnlyFields={[
         { label: "Full Name", key: "fullName" },
@@ -48,7 +72,6 @@ const CustomerEditProfile = () => {
         { label: "Mobile No", key: "mobileNo", icon: <Phone /> },
       ]}
     />
-
   );
 };
 

@@ -19,4 +19,8 @@ public interface UserService {
 
 	ApiResponse updateProfileByUserId(Long userId, UpdateProfileRequestDTO dto);
 
+	Object getEmployeeProfileByUserId(Long userId);
+
+	Object getAdminProfileByUserId(Long userId);
+
 }

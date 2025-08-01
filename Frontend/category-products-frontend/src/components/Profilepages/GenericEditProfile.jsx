@@ -55,7 +55,7 @@ const GenericEditProfile = ({
       toast.error('Address Line 2 must contain only alphabets');
       return false;
     }
-    if (formData.pincode && !pincodeRegex.test(formData.pincode.trim())) {
+    if (formData.pincode && !pincodeRegex.test(formData.pincode)) {
       toast.error('Pin Code must be 6 digits');
       return false;
     }
@@ -78,8 +78,8 @@ const GenericEditProfile = ({
     });
     
     const result = await onSubmit(updatedData);
-    if (result.success) {
-      toast.success(result.message);
+    if (result.status == 200) {
+      toast.success(result.data.message);
     } else {
       toast.error(result.message || 'Update failed');
     }
