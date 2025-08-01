@@ -20,20 +20,6 @@ export async function addNewUser(user) {
   }
 }
 
-export async function LoanCard1(user) {
-  try {
-    const url = `${config.serverURL}/deposit/savedeposit`;
-    const response = await axios.post(url, user, {
-    });
-    console.log("response: ",response);
-    if (response.status === 200) {
-      return response.data;
-    }
-  } catch (ex) {
-    console.log("exception:", ex);
-  }
-}
-
 
 export const loginUser = async (email, password) => {
   const res = await fetch(BASE_URL + "/login", {
@@ -63,6 +49,21 @@ export async function getCustomerStatement(accountNo, filters) {
   } catch (error) {
     console.error("Failed to fetch statement:", error);
     return null;
+  }
+}
+
+
+export async function LoanCard1(user) {
+  try {
+    const url = `${config.serverURL}/deposit/savedeposit`;
+    const response = await axios.post(url, user, {
+    });
+    console.log("response: ",response);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (ex) {
+    console.log("exception:", ex);
   }
 }
 
