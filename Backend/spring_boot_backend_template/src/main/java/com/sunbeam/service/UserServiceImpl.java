@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,9 +28,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserServiceImpl  implements UserService{
 
-	private UserDao userDao;
-	private AccountDao accountDao;
-
+	private final UserDao userDao;
+	private final AccountDao accountDao;
+	private final PasswordEncoder encoder;
 	private final ModelMapper modelMapper;
 
 	@Override
@@ -61,7 +62,7 @@ public class UserServiceImpl  implements UserService{
         user.setPhoneNumber(Long.parseLong(dto.getPhoneNumber()));
 
         user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
+        user.setPassword(encoder.encode(dto.getPassword()));
 
         // Set address (already as AddressEntity)
         user.setAddress(dto.getAddress());
