@@ -1,6 +1,7 @@
 import axios from "axios";
 const BASE_URL = "http://localhost:8080/user";
 import { config } from '../config'
+import LoanCard from '../components/FdDeposit';
 
 export async function addNewUser(user) {
   try {
@@ -9,6 +10,20 @@ export async function addNewUser(user) {
       headers: {
         "Content-Type": "multipart/form-data"
       }
+    });
+    console.log("response: ",response);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (ex) {
+    console.log("exception:", ex);
+  }
+}
+
+export async function LoanCard1(user) {
+  try {
+    const url = `${config.serverURL}/deposit/savedeposit`;
+    const response = await axios.post(url, user, {
     });
     console.log("response: ",response);
     if (response.status === 200) {
