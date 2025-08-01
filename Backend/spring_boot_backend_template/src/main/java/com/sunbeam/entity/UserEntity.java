@@ -28,14 +28,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@Entity
+@Table(name = "new_users") // class level annotation , to specify table name
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@Entity
-@Table(name = "users")
 @ToString
-public class User {
-
+public class UserEntity implements UserDetails {
+	private static final String ROLE= "ROLE_CUSTOMER";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -89,7 +90,7 @@ public class User {
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] photo;
 
-	public User(String firstName, String lastName, LocalDate dateOfBirth, String gender, String nationality,
+	public UserEntity(String firstName, String lastName, LocalDate dateOfBirth, String gender, String nationality,
 			String photoId, AccountEntity account, AddressEntity address, Long mobileNo, String email, String password,
 			LocalDateTime createdAt, LocalDateTime modifiedAt, Status status, byte[] photo) {
 		super();
@@ -110,11 +111,25 @@ public class User {
 		this.photo = photo;
 	}
 
+	
 	public String getFullName() {
 		return firstName +" "+ lastName;
 	}
 	
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+	
+		return List.of(new SimpleGrantedAuthority(ROLE));
+	}
 
-    
+	
+
+	@Override
+	public String getUsername() {
+		
+		return this.email;
+	}
+	
 
 }
