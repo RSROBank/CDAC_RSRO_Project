@@ -40,13 +40,18 @@ public class AddressEntity {
 	    @Column(name = "pin_code")
 	    private String pinCode;
 	    
-		public AddressEntity(String city, String state, String country, String pinCode) {
+		public AddressEntity(String adrLine1, String adrLine2, String city, String state, String country,
+				String pinCode) {
 			super();
+			this.adrLine1 = adrLine1;
+			this.adrLine2 = adrLine2;
 			this.city = city;
 			this.state = state;
 			this.country = country;
 			this.pinCode = pinCode;
 		}
+	    
+		
 	    
 		    
 	}

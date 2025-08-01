@@ -2,6 +2,7 @@ package com.sunbeam.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.Random;
 
 import org.modelmapper.ModelMapper;
@@ -12,13 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sunbeam.custom_exceptions.AuthenticationFailureException;
+import com.sunbeam.custom_exceptions.ResourceNotFoundException;
 import com.sunbeam.dao.AccountDao;
 import com.sunbeam.dao.UserDao;
 import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.LoginDTO;
+import com.sunbeam.dto.ProfileResponseDTO;
 import com.sunbeam.dto.RegisterDTO;
+import com.sunbeam.dto.UpdateProfileRequestDTO;
 import com.sunbeam.dto.UserDTO;
 import com.sunbeam.entity.AccountEntity;
+import com.sunbeam.entity.AddressEntity;
 import com.sunbeam.entity.User;
 
 import lombok.AllArgsConstructor;
@@ -85,6 +90,32 @@ public class UserServiceImpl  implements UserService{
 	    accountDao.save(account);
 
 	    return new ApiResponse("Successfully saved.");
+	}
+	
+	@Override
+    public ProfileResponseDTO getProfileByUserId(Long userId) {
+        User user = userDao.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User not found"));
+        ProfileResponseDTO dto = modelMapper.map(user, ProfileResponseDTO.class);
+        dto.setFullName(user.getFirstName()+" "+user.getLastName());
+        dto.setAdrLine1(user.getAddress().getAdrLine1());
+        dto.setAdrLine2(user.getAddress().getAdrLine2());
+        dto.setCity(user.getAddress().getCity());
+        dto.setCountry(user.getAddress().getCountry());
+        dto.setState(user.getAddress().getState());
+        dto.setPincode(user.getAddress().getPinCode());
+        String base64Image = Base64.getEncoder().encodeToString(user.getPhoto());
+        dto.setPhoto("data:image/jpeg;base64," + base64Image);
+        return dto;
+    }
+
+	@Override
+	public ApiResponse updateProfileByUserId(Long userId, UpdateProfileRequestDTO dto) {
+		// TODO Auto-generated method stub
+		User user = userDao.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User not found"));
+		AddressEntity adr = new AddressEntity(dto.getAdrLine1(), dto.getAdrLine2(), dto.getCity(), dto.getState(), dto.getCountry(), dto.getPincode());
+		user.setAddress(adr);
+		user.setPhoneNumber(Long.parseLong(dto.getMobileNo()));
+		return new ApiResponse("Customer data successfully modified");
 	}
 
 	

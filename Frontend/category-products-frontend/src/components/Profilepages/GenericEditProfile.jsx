@@ -31,30 +31,53 @@ const GenericEditProfile = ({
   };
 
   const validate = () => {
+    const nameRegex = /^[A-Za-z ]+$/;
     const mobileRegex = /^\d{10}$/;
     const pincodeRegex = /^\d{6}$/;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (formData.email && !emailRegex.test(formData.email)) {
-      toast.error('Invalid email format');
+    if (formData.city && !nameRegex.test(formData.city.trim())) {
+      toast.error('City must contain only alphabets');
       return false;
     }
-    if (formData.mobileNo && !mobileRegex.test(formData.mobileNo)) {
-      toast.error('Mobile number must be 10 digits');
+    if (formData.state && !nameRegex.test(formData.state.trim())) {
+      toast.error('State must contain only alphabets');
       return false;
     }
-    if (formData.pinCode && !pincodeRegex.test(formData.pinCode)) {
+    if (formData.country && !nameRegex.test(formData.country.trim())) {
+      toast.error('Country must contain only alphabets');
+      return false;
+    }
+    if (formData.adrLine1 && !nameRegex.test(formData.adrLine1.trim())) {
+      toast.error('Address Line 1 must contain only alphabets');
+      return false;
+    }
+    if (formData.adrLine2 && !nameRegex.test(formData.adrLine2.trim())) {
+      toast.error('Address Line 2 must contain only alphabets');
+      return false;
+    }
+    if (formData.pincode && !pincodeRegex.test(formData.pincode.trim())) {
       toast.error('Pin Code must be 6 digits');
       return false;
     }
+    if (formData.mobileNo && !mobileRegex.test(formData.mobileNo.trim())) {
+      toast.error('Mobile number must be 10 digits');
+      return false;
+    }
+
     return true;
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
-    const result = await onSubmit(formData);
+    const updatedData = {};
+    editableFields.forEach(({ key }) => {
+      updatedData[key] = formData[key];
+    });
+    
+    const result = await onSubmit(updatedData);
     if (result.success) {
       toast.success(result.message);
     } else {
@@ -82,7 +105,7 @@ const GenericEditProfile = ({
 
           {editableFields.map(({ label, key, icon, type = 'text' }) => (
             <div key={key}>
-              <label className="block text-sm font-medium mb-1 flex items-center gap-2">
+              <label className="text-sm font-medium mb-1 flex items-center gap-2">
                 {icon} {label}
               </label>
               <input
@@ -94,24 +117,6 @@ const GenericEditProfile = ({
               />
             </div>
           ))}
-
-          <div>
-            <label className="block text-sm font-medium mb-1">Upload New Photo</label>
-            <input
-              type="file"
-              name="photo"
-              accept="image/*"
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg"
-            />
-            {imagePreview && (
-              <img
-                src={imagePreview}
-                alt="Preview"
-                className="w-32 h-32 mt-2 object-cover border rounded"
-              />
-            )}
-          </div>
         </form>
 
         <div className="mt-6 flex gap-4 justify-end">

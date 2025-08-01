@@ -14,6 +14,7 @@ import CustomerProfile from "./components/Profilepages/CustomerProfile";
 import UpdateCustomerProfile from "./components/Profilepages/CustomerEditProfile";
 import { AuthContext } from "./AuthContext/auth.context";
 import { useState } from "react";
+import EmployeeEditProfile from "./components/Profilepages/EmployeeEditProfile";
 
 function App() {
   const [user, setUser] = useState("customer")
@@ -34,6 +35,10 @@ function App() {
             <Route
               path="/customereditprofile"
               element={<UpdateCustomerProfile />}
+            />
+            <Route
+              path="/employeeeditprofile"
+              element={<EmployeeEditProfile />}
             />
             <Route path="/" element={<HomePage />} />
             <Route path="/dashboard" element={user === "customer" ? <CustomerDashboard /> : <Navigate to="/" />} />
