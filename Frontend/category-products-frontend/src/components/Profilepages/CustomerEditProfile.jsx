@@ -10,10 +10,12 @@ const CustomerEditProfile = () => {
       nationality: "Indian",
       photoId: "DOC123456",
       photo: "/assets/Images/Cardsampleimage.png",
-      city: "Lucknow",
-      state: "UP",
+      adrLine1: "bharat nagar",
+      adrLine2: "babail Road",
+      city: "panipat",
+      state: "haryana",
       country: "India",
-      pinCode: "226010",
+      pincode: "123456",
       mobileNo: "9876543210",
       email: "rahul.verma@example.com"
     };
@@ -24,26 +26,29 @@ const CustomerEditProfile = () => {
     return { success: true, message: "Customer profile updated successfully" };
   };
   return (
-  <GenericEditProfile
-    title="Update Customer Profile"
-    fetchProfile={fetchCustomerProfile}
-    onSubmit={updateCustomerProfile}
-    readOnlyFields={[
-      { label: "Full Name", key: "fullName" },
-      { label: "Date of Birth", key: "dateOfBirth" },
-      { label: "Gender", key: "gender" },
-      { label: "Nationality", key: "nationality" },
-    ]}
-    editableFields={[
-      { label: "City", key: "city", icon: <MapPin /> },
-      { label: "State", key: "state", icon: <MapPin /> },
-      { label: "Country", key: "country", icon: <MapPin /> },
-      { label: "Pin Code", key: "pinCode", icon: <MapPin /> },
-      { label: "Mobile No", key: "mobileNo", icon: <Phone /> },
-      { label: "Email", key: "email", icon: <Mail />, type: "email" },
-      { label: "Photo ID", key: "photoId", icon: <Image /> },
-    ]}
-  />
+    <GenericEditProfile
+      title="Update Customer Profile"
+      fetchProfile={fetchCustomerProfile}
+      onSubmit={updateCustomerProfile}
+      readOnlyFields={[
+        { label: "Full Name", key: "fullName" },
+        { label: "Date of Birth", key: "dateOfBirth" },
+        { label: "Gender", key: "gender" },
+        { label: "Nationality", key: "nationality" },
+        { label: "Photo ID", key: "photoId", icon: <Image /> },
+        { label: "Email", key: "email", icon: <Mail />, type: "email" },
+      ]}
+      editableFields={[
+        { label: "Address Line 1", key: "adrLine1", icon: <MapPin /> },
+        { label: "Address Line 2", key: "adrLine2", icon: <MapPin /> },
+        { label: "City", key: "city", icon: <MapPin /> },
+        { label: "State", key: "state", icon: <MapPin /> },
+        { label: "Country", key: "country", icon: <MapPin /> },
+        { label: "Pin Code", key: "pincode", icon: <MapPin /> },
+        { label: "Mobile No", key: "mobileNo", icon: <Phone /> },
+      ]}
+    />
+
   );
 };
 

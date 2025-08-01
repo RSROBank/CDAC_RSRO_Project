@@ -32,6 +32,8 @@ function Signup() {
     confirmPassword: "",
     termsAccepted: false,
     captcha: "",
+    adrline1: "",
+    adrline2 : "",
     city: "",
     state: "",
     country: "",
@@ -49,7 +51,6 @@ function Signup() {
     if (name === "photo" && files && files[0]) {
       const file = files[0];
       setFormData({ ...formData, photo: file });
-      setImagePreview(URL.createObjectURL(file));
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -57,10 +58,12 @@ function Signup() {
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
       setFormData((prev) => ({
         ...prev,
         photo: e.target.files[0],
       }));
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
@@ -91,6 +94,10 @@ function Signup() {
       toast.warn("Nationality must contain only alphabets");
     } else if (!formData.city.trim().match(nameRegex)) {
       toast.warn("city must contain only alphabets");
+    }else if (!formData.adrline1.trim().match(nameRegex)) {
+      toast.warn("Address line 1 must contain only alphabets");
+    }else if (!formData.adrline2.trim().match(nameRegex)) {
+      toast.warn("Address line 2 must contain only alphabets");
     }else if (!formData.state.trim().match(nameRegex)) {
       toast.warn("state must contain only alphabets");
     } else if (!formData.country.trim().match(nameRegex)) {
@@ -124,6 +131,8 @@ function Signup() {
         nationality,
         photo,
         photoId,
+        adrline1,
+        adrline2,
         city,
         state,
         country,
@@ -134,6 +143,8 @@ function Signup() {
       } = formData;
 
       const addressObj = {
+        adrline1,
+        adrline2,
         city,
         state,
         country,
@@ -175,9 +186,11 @@ function Signup() {
   };
 
   const handleCancel = () => {
-    toast.error("rerrodfs");
+    // toast.error("rerrodfs");
+    setImagePreview(null);
     setFormData({
-      fullName: "",
+      firstName: "",
+      lastName : "",
       dateOfBirth: "",
       gender: "",
       nationality: "",
@@ -190,6 +203,12 @@ function Signup() {
       confirmPassword: "",
       termsAccepted: false,
       captcha: "",
+      adrline1: "",
+      adrline2 : "",
+      city: "",
+      state: "",
+      country: "",
+      pinCode: "",
     });
   };
 
@@ -294,7 +313,8 @@ function Signup() {
             <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <Image className="w-4 h-4" /> Photo
             </label>
-            <input
+            {!formData.photo && (
+              <input
               type="file"
               name="photo"
               onChange={handleFileChange}
@@ -302,6 +322,7 @@ function Signup() {
               className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white"
               required
             />
+            )}
             {imagePreview && (
               <div className="mt-2">
                 <p className="text-sm text-[#0B2E53]">Image Preview:</p>
@@ -329,8 +350,32 @@ function Signup() {
             />
           </div>
 
-          {/* Address */}
           <div>
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
+              <MapPin className="w-4 h-4" /> Address Line 1
+            </label>
+            <input
+              type="text"
+              name="adrline1"
+              value={formData.adrline1}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
+              required
+            />
+            </div>
+            <div>
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
+              <MapPin className="w-4 h-4" /> Address Line 2
+            </label>
+            <input
+              type="text"
+              name="adrline2"
+              value={formData.adrline2}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
+              required
+            />
+            </div>
             <div>
             <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <MapPin className="w-4 h-4" /> City
@@ -358,7 +403,6 @@ function Signup() {
                 required
               />
             </div>
-
             <div>
               <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
                 Country
@@ -372,6 +416,12 @@ function Signup() {
                 required
               />
             </div>
+
+          {/* Address */}
+          <div>
+            
+
+            
 
             <div>
               <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
