@@ -28,7 +28,7 @@ public class LoanInfo {
 	
 	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private int id;
+	    private Long id;
 
 	    private BigDecimal amount;
 	    @Column(name = "approved_date")

@@ -1,6 +1,7 @@
 import axios from "axios";
 const BASE_URL = "http://localhost:8080/user";
 import { config } from '../config'
+import LoanCard from '../components/FdDeposit';
 
 export async function addNewUser(user) {
   try {
@@ -100,6 +101,21 @@ export async function getCustomerStatement(accountNo, filters) {
   } catch (error) {
     console.error("Failed to fetch statement:", error);
     return null;
+  }
+}
+
+
+export async function LoanCard1(user) {
+  try {
+    const url = `${config.serverURL}/deposit/savedeposit`;
+    const response = await axios.post(url, user, {
+    });
+    console.log("response: ",response);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (ex) {
+    console.log("exception:", ex);
   }
 }
 
