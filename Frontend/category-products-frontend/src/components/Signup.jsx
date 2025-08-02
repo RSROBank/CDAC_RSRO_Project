@@ -33,7 +33,7 @@ function Signup() {
     termsAccepted: false,
     captcha: "",
     adrline1: "",
-    adrline2 : "",
+    adrline2: "",
     city: "",
     state: "",
     country: "",
@@ -94,15 +94,15 @@ function Signup() {
       toast.warn("Nationality must contain only alphabets");
     } else if (!formData.city.trim().match(nameRegex)) {
       toast.warn("city must contain only alphabets");
-    }else if (!formData.adrline1.trim().match(nameRegex)) {
-      toast.warn("Address line 1 must contain only alphabets");
-    }else if (!formData.adrline2.trim().match(nameRegex)) {
-      toast.warn("Address line 2 must contain only alphabets");
-    }else if (!formData.state.trim().match(nameRegex)) {
+    } else if (!formData.adrline1.trim()) {
+      toast.warn("Address line 1 must contain atleast character");
+    } else if (!formData.adrline2.trim()) {
+      toast.warn("Address line 2 must contain atleast character");
+    } else if (!formData.state.trim().match(nameRegex)) {
       toast.warn("state must contain only alphabets");
     } else if (!formData.country.trim().match(nameRegex)) {
       toast.warn("country must contain only alphabets");
-    }else if (!formData.pinCode.trim().match(pincodeRegex)) {
+    } else if (!formData.pinCode.trim().match(pincodeRegex)) {
       toast.warn("pincode must be number and six digits");
     } else if (!formData.photo) {
       toast.warn("Please upload photo ID");
@@ -171,7 +171,7 @@ function Signup() {
       // Call the registerUser function
       try {
         const result = await addNewUser(userdb);
-        console.log("result in signup page ",result);
+        console.log("result in signup page ", result);
         if (result && result.message === "Successfully saved.") {
           toast.success("Successfully registered a user");
           navigate("/login");
@@ -190,7 +190,7 @@ function Signup() {
     setImagePreview(null);
     setFormData({
       firstName: "",
-      lastName : "",
+      lastName: "",
       dateOfBirth: "",
       gender: "",
       nationality: "",
@@ -204,7 +204,7 @@ function Signup() {
       termsAccepted: false,
       captcha: "",
       adrline1: "",
-      adrline2 : "",
+      adrline2: "",
       city: "",
       state: "",
       country: "",
@@ -294,6 +294,7 @@ function Signup() {
           </div>
 
           {/* Nationality */}
+          {/* <div className="flex flex-col gap-4"> */}
           <div>
             <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <Flag className="w-4 h-4" /> Nationality
@@ -307,38 +308,10 @@ function Signup() {
               required
             />
           </div>
-
-          {/* govtid Photo  */}
-          <div>
-            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
-              <Image className="w-4 h-4" /> Photo
-            </label>
-            {!formData.photo && (
-              <input
-              type="file"
-              name="photo"
-              onChange={handleFileChange}
-              accept="image/*"
-              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white"
-              required
-            />
-            )}
-            {imagePreview && (
-              <div className="mt-2">
-                <p className="text-sm text-[#0B2E53]">Image Preview:</p>
-                <img
-                  src={imagePreview}
-                  alt="Uploaded Preview"
-                  className="w-32 h-32 object-cover border rounded"
-                />
-              </div>
-            )}
-          </div>
-
           {/* PhotoId */}
           <div>
-            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
-              PhotoId
+            <label className="text-sm font-medium text-[#0B2E53] flex items-center gap-2">
+              GovtId no.
             </label>
             <input
               type="text"
@@ -349,6 +322,58 @@ function Signup() {
               required
             />
           </div>
+
+          {/* Photo Upload and Preview - Side by Side */}
+          <div className="md:col-span-2 flex flex-col justify-between md:flex-row items-start gap-6">
+            <div>
+              <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
+                <Image className="w-4 h-4" /> Upload Photo
+              </label>
+              {!formData.photo ? (
+                <input
+                  type="file"
+                  name="photo"
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  className="w-64 px-4 py-2 border border-[#0B2E53] rounded-lg bg-white"
+                  required
+                />
+              ) : (
+                <>
+                  <p className="text-sm text-green-700 font-medium">Photo uploaded ✅</p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData((prev) => ({ ...prev, photo: null }));
+                      setImagePreview(null);
+                    }}
+                    className="text-xs text-red-600 underline mt-1 hover:text-red-800"
+                  >
+                    Remove Photo
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Image preview */}
+            {imagePreview && (
+              <div className="flex-shrink-0">
+                <p className="text-sm text-[#0B2E53] mb-1">Preview:</p>
+                <img
+                  src={imagePreview}
+                  alt="Uploaded Preview"
+                  className="w-40 h-24 object-cover border border-[#0B2E53] rounded-lg shadow-sm"
+                />
+              </div>
+            )}
+          </div>
+
+
+
+
+
+
+
 
           <div>
             <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
@@ -362,8 +387,8 @@ function Signup() {
               className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             />
-            </div>
-            <div>
+          </div>
+          <div>
             <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <MapPin className="w-4 h-4" /> Address Line 2
             </label>
@@ -375,8 +400,8 @@ function Signup() {
               className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             />
-            </div>
-            <div>
+          </div>
+          <div>
             <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
               <MapPin className="w-4 h-4" /> City
             </label>
@@ -388,40 +413,40 @@ function Signup() {
               className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
               required
             />
-            </div>
+          </div>
 
-            <div>
-              <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
-                State
-              </label>
-              <input
-                type="text"
-                name="state"
-                value={formData.state}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
-                required
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
-                Country
-              </label>
-              <input
-                type="text"
-                name="country"
-                value={formData.country}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
-                required
-              />
-            </div>
+          <div>
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
+              State
+            </label>
+            <input
+              type="text"
+              name="state"
+              value={formData.state}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
+              required
+            />
+          </div>
+          <div>
+            <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
+              Country
+            </label>
+            <input
+              type="text"
+              name="country"
+              value={formData.country}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-[#0B2E53] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#C89F3D]"
+              required
+            />
+          </div>
 
           {/* Address */}
           <div>
-            
 
-            
+
+
 
             <div>
               <label className="text-sm font-medium text-[#0B2E53] mb-1 flex items-center gap-2">
