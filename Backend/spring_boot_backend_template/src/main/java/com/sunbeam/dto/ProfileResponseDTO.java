@@ -62,8 +62,11 @@ public class ProfileResponseDTO {
     @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Mobile number must be 10-15 digits")
     private String phoneNumber;
 
+    @NotNull
     private Status status;
-    private String photo;
+    
+    @NotNull
+    private byte[] photo;
 
 }
 

@@ -1,8 +1,9 @@
 package com.sunbeam.service;
 
+import java.io.IOException;
+
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sunbeam.custom_exceptions.IOException;
 import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.LoginDTO;
 import com.sunbeam.dto.ProfileResponseDTO;
