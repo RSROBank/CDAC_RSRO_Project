@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Herosection from "./Herosection";
+import axios from "axios";
 
 const HomePage = () => {
+  const [loanRates, setLoanRates] = useState([]);
+  const [fdRates, setFdRates] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/admin/rates")
+      .then((response) => {
+        setLoanRates(response.data.loanRates || []);
+        setFdRates(response.data.fdRates || []);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch rates:", error);
+      });
+  }, []);
+
   return (
     <>
       <div className="min-h-screen bg-gray-50 text-gray-800">
@@ -34,10 +50,11 @@ const HomePage = () => {
                 Loan Interest Rates
               </h3>
               <ul className="mt-4 space-y-2">
-                <li> Home Loan: 8.25% p.a.</li>
-                {/* /</ul><li> Car Loan: 9.75% p.a.</li> */}
-                <li> Education Loan: 10.50% p.a.</li>
-                <li> Business Loan: 11.00% p.a.</li>
+                {loanRates.map((loan, idx) => (
+                  <li key={idx}>
+                    {loan.type}: {loan.rate}
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="p-6 bg-white rounded shadow">
@@ -45,11 +62,11 @@ const HomePage = () => {
                 Fixed Deposit Rates
               </h3>
               <ul className="mt-4 space-y-2">
-                <li>7 Days – 45 Days: 4.00% p.a.</li>
-                <li>46 Days – 180 Days: 5.00% p.a.</li>
-                <li>181 Days – 1 Year: 6.25% p.a.</li>
-                <li>1 Year – 3 Years: 7.00% p.a.</li>
-                <li>Senior Citizens: +0.50% on all tenures</li>
+                {fdRates.map((fd, idx) => (
+                  <li key={idx}>
+                    {fd.term}: {fd.rate}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -70,7 +87,7 @@ const HomePage = () => {
             </div>
             <div className="bg-gray-100 p-4 rounded-lg shadow">
               <h3 className="text-lg font-semibold">
-                 Personal & Business Loans
+                Personal & Business Loans
               </h3>
               <p>Low-interest loans tailored to meet your financial needs.</p>
             </div>
@@ -86,9 +103,7 @@ const HomePage = () => {
               <p>Keep your valuables secure in our state-of-the-art lockers.</p>
             </div>
             <div className="bg-gray-100 p-4 rounded-lg shadow">
-              <h3 className="text-lg font-semibold">
-                 International Banking
-              </h3>
+              <h3 className="text-lg font-semibold">International Banking</h3>
               <p>
                 Remittance, forex cards, and NRIs services for global citizens.
               </p>

@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 
 
 @RestController
-@RequestMapping("/api/transactions")
+@RequestMapping("/user/transactions")
 @AllArgsConstructor
 public class LoanTranasactionControllers {
     @Autowired

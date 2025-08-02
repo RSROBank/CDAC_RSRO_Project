@@ -10,13 +10,13 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @RestController
-@RequestMapping("/api/loans")
+@RequestMapping("/user/loans")
 @AllArgsConstructor
 @CrossOrigin
 public class LoanInfoController {
 
     private final LoanInfoService loanInfoService;
-
+  
     @PostMapping("/saveloan")
     public ResponseEntity<?> savedLoan(@RequestBody LoanInfoDTO dto) {
     	System.out.println("save loan"+dto);

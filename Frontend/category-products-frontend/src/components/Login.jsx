@@ -19,7 +19,7 @@ const LoginPage = () => {
         setUser({ email, role: "customer" });
         navigate("/dashboard");
       } else {
-        alert("Message : " + response.message);
+        alert("Message : " + response.message());
       }
     } catch (error) {
       console.error("Login error:", error);
