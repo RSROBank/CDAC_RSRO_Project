@@ -31,7 +31,7 @@ import com.sunbeam.dto.UpdateProfileRequestDTO;
 import com.sunbeam.dto.UserDTO;
 import com.sunbeam.entity.User;
 import com.sunbeam.security.JwtUtils;
-import com.sunbeam.service.FileStorageService;
+
 import com.sunbeam.service.UserService;
 
 import lombok.AllArgsConstructor;
