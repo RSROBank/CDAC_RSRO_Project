@@ -1,6 +1,7 @@
 import axios from "axios";
 const BASE_URL = "http://localhost:8080/user";
 import { config } from '../config'
+import LoanCard from '../components/FdDeposit';
 
 export async function addNewUser(user) {
   try {
@@ -58,6 +59,61 @@ export const getAdminProfileById = async (userId) => {
   }
 }
 
+export const createLoanQuery = async (body) => {
+  try{
+    const url = `${config.serverURL}/user/loanquery`;
+    const res = await axios.post(url, body)
+    console.log("Query data: ", res);
+    if(res.status == 200){
+      return res;
+    }
+  }catch(ex){
+    console.log("exception: ", ex);
+  }
+}
+
+export const getAllLoanById = async (userId) => {
+  try{
+    const url = `${config.serverURL}/user/loanquery/${userId}`;
+    const res = await axios.get(url)
+    console.log("Query data: ", res);
+    if(res.status == 200){
+      return res;
+    }
+  }catch(ex){
+    console.log("exception: ", ex);
+  }
+}
+
+export const getAllLoanByEmpId = async (empId) => {
+  try{
+    const url = `${config.serverURL}/employee/loanquery/${empId}`;
+    const res = await axios.get(url)
+    console.log("Query data: ", res);
+    if(res.status == 200){
+      return res;
+    }
+  }catch(ex){
+    console.log("exception: ", ex);
+  }
+}
+
+export const sendResponseLoanById = async (queryid, message) => {
+  try{
+    const body = {
+      response : message,
+    }
+    const url = `${config.serverURL}/employee/loanquery/${queryid}`;
+    const res = await axios.put(url, body)
+    console.log("Query data: ", res);
+    if(res.status == 200){
+      return res;
+    }
+  }catch(ex){
+    console.log("exception: ", ex);
+  }
+}
+
 export const updateCustomerProfileById = async (userId, userData) => {
   try{
     const url = `${config.serverURL}/user/profile/${userId}`;
@@ -100,6 +156,42 @@ export async function getCustomerStatement(accountNo, filters) {
   } catch (error) {
     console.error("Failed to fetch statement:", error);
     return null;
+  }
+}
+
+
+export async function LoanCard1(user) {
+  try {
+    const url = `${config.serverURL}/deposit/savedeposit`;
+    const response = await axios.post(url, user, {
+    });
+    console.log("response: ",response);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (ex) {
+    console.log("exception:", ex);
+  }
+}
+
+export const saveLoanByUserId = async (userId, loan) => {
+  try{
+    const url = 'http://localhost:8080/api/loans/saveloan';
+    const body = {
+        amount : loan.amount,
+        tenureMonths : loan.tenure,
+        userId: userId,
+        totalEmis : loan.emiLeft,
+        emiAmount : loan.emi
+    }
+    const res = await axios.post(url, body)
+    console.log("loan data: ", res);
+    if(res.status == 200){
+      return res.data;
+    }
+  }catch(ex){
+    console.error("Error submitting loan:", ex.message)
+    console.log("exception: ", ex);
   }
 }
 

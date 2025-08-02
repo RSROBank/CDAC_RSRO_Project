@@ -3,6 +3,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import com.sunbeam.entity.Status;
 
 import jakarta.validation.constraints.NotNull;
@@ -15,10 +17,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@CrossOrigin(origins = "http://localhost:3000")
 @NoArgsConstructor
 @AllArgsConstructor
 public class DepositDTO {
 	
+	@NotNull
+	private Long id;
 	@NotNull(message = "user id is required")
     private Long userId;
 	@NotNull(message = "principal amount is required")

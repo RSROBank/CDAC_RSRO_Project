@@ -14,12 +14,13 @@ const LoginPage = () => {
     try {
       const response = await loginUser(email, password);
 
-      if (response.success) {
+      if (response.jwt) {
         alert(`Logged in as ${email}`);
+        sessionStorage.setItem("jwt", response.jwt);
         setUser({ email, role: "customer" });
         navigate("/dashboard");
       } else {
-        alert("Message : " + response.message);
+        alert("Message : " + response.message());
       }
     } catch (error) {
       console.error("Login error:", error);
