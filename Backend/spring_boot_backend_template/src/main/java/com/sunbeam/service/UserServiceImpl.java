@@ -65,41 +65,45 @@ public class UserServiceImpl  implements UserService{
 	}
 
 	@Override
-	public ApiResponse signUp(RegisterDTO dto, MultipartFile img) {
+	public ApiResponse signUp(RegisterDTO dto, MultipartFile img) throws IOException {
 	    // Create a new User manually
+
 		User user = new User();
 
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
 
-        // Convert String → LocalDate
+        
         user.setDateOfBirth(LocalDate.parse(dto.getDateOfBirth()));
 
         user.setGender(dto.getGender());
         user.setNationality(dto.getNationality());
         user.setPhotoId(dto.getPhotoId());
         
-        // Convert String → Long
+       
         user.setPhoneNumber(Long.parseLong(dto.getPhoneNumber()));
 
         user.setEmail(dto.getEmail());
         user.setPassword(encoder.encode(dto.getPassword()));
 
-        // Set address (already as AddressEntity)
+        
         user.setAddress(dto.getAddress());
-        if (img != null && !img.isEmpty()) {
-            try {
-				user.setPhoto(img.getBytes());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        } else {
-            return new ApiResponse("Photo is missing or empty.");
-        }
+
+//        if (img != null && !img.isEmpty()) {
+//            try {
+//				user.setPhoto(img.getBytes());
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//        } else {
+//            return new ApiResponse("Photo is missing or empty.");
+//        }
+        
+        user.setPhoto(img.getBytes());
 	    userDao.save(user);
 	    AccountEntity account = new AccountEntity();
-	    account.setCustomer(user); // link the saved user
+	    account.setCustomer(user); 
 	    account.setAccountNumber(generate12DigitNumber());
 	    account.setUpiId(generate12DigitNumber());
 	    account.setBalance(0.0);
@@ -119,8 +123,10 @@ public class UserServiceImpl  implements UserService{
         dto.setCountry(user.getAddress().getCountry());
         dto.setState(user.getAddress().getState());
         dto.setPincode(user.getAddress().getPinCode());
-        String base64Image = Base64.getEncoder().encodeToString(user.getPhoto());
-        dto.setPhoto("data:image/jpeg;base64," + base64Image);
+//        String base64Image = Base64.getEncoder().encodeToString(user.getPhoto());
+        
+//        dto.setPhoto("data:image/jpeg;base64," + base64Image);
+        dto.setPhoto(user.getPhoto());
         return dto;
     }
 

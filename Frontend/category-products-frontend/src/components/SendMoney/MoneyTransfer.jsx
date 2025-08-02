@@ -3,6 +3,10 @@ import React, { useState } from 'react';
 const MoneyTransfer = () => {
   const [paymentType, setPaymentType] = useState('moneyTransfer');
 
+
+
+
+  
   return (
     <div className="bg-white shadow-xl rounded-xl p-6 max-w-xl mx-auto font-sans mt-10 text-[#0B2E53] border border-[#0B2E53]/10">
       <h1 className="text-2xl font-semibold text-[#0B2E53] mb-4 text-center">Select Payment Method</h1>
