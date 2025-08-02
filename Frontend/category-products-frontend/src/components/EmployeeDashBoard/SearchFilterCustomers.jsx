@@ -65,7 +65,7 @@ const CustomersManagement = () => {
                   >
                     View
                   </button>
-                  <button
+                  {/* <button
                     onClick={() => alert(`Updating ${customer.name}'s details`)}
                     className="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700"
                   >
@@ -76,7 +76,7 @@ const CustomersManagement = () => {
                     className="bg-[#C89D2A] text-white px-4 py-1 rounded hover:bg-[#A77E20]"
                   >
                     Assist
-                  </button>
+                  </button> */}
                 </div>
               </div>
             ))

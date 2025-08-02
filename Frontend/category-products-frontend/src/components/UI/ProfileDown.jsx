@@ -111,13 +111,13 @@ const ProfileDropdown = () => {
               </Link>
               )
             }
-            <Link
+            {/* <Link
               to="/notifications"
               className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-500 transition-colors duration-300"
               onClick={() => setIsOpen(false)}
             >
               Notifications
-            </Link>
+            </Link> */}
             <button
               onClick={handleLogoutClick}
               className="w-full text-left block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-500 transition-colors duration-300"
