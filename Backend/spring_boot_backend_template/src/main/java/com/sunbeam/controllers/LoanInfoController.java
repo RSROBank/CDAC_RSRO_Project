@@ -10,13 +10,12 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @RestController
-@RequestMapping("/api/loans")
+@RequestMapping("/user/loans")
 @AllArgsConstructor
 public class LoanInfoController {
 
     private final LoanInfoService loanInfoService;
 
-   
 
     @PostMapping("/saveLoan")
     public ResponseEntity<?> savedLoan(@RequestBody LoanInfoDTO dto) {
