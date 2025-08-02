@@ -119,3 +119,24 @@ export async function LoanCard1(user) {
   }
 }
 
+export const saveLoanByUserId = async (userId, loan) => {
+  try{
+    const url = 'http://localhost:8080/api/loans/saveloan';
+    const body = {
+        amount : loan.amount,
+        tenureMonths : loan.tenure,
+        userId: userId,
+        totalEmis : loan.emiLeft,
+        emiAmount : loan.emi
+    }
+    const res = await axios.post(url, body)
+    console.log("loan data: ", res);
+    if(res.status == 200){
+      return res.data;
+    }
+  }catch(ex){
+    console.error("Error submitting loan:", ex.message)
+    console.log("exception: ", ex);
+  }
+}
+

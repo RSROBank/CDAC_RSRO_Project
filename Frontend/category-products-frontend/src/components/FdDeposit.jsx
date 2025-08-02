@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function LoanCard({ item }) {
   const [status, setStatus] = useState(""); // success or error message
@@ -19,7 +19,6 @@ function LoanCard({ item }) {
           interest: item.interest,
           period: item.tenuremonths,
           date: item.startdate,
-          status: item.status,
           empid: item.empreferenceid,
           createdat: item.createdat,
           modifiedat: item.modifiedat,
@@ -42,7 +41,33 @@ function LoanCard({ item }) {
     }
   };
 
-  return (
+  const fetchDeposits = async (userId) => {
+  try {
+    const response = await fetch(`http://localhost:8080/user/deposit/getdeposit/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch deposits");
+    }
+
+    const result = await response.json();
+    console.log("Fetched deposit data:", result);
+    return result;
+  } catch (error) {
+    console.error("Error fetching deposits:", error);
+    return [];
+  }
+};
+
+useEffect(()=>{
+  fetchDeposits(userId);
+}, [])
+
+ return (
     <div className="text-[#0B2E53] space-y-1 p-4 border rounded-md shadow-md">
       <p><strong>Amount:</strong> ₹{item.amount}</p>
       <p><strong>Interest:</strong> {item.interest}</p>
