@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunbeam.custom_exceptions.IOException;
 import com.sunbeam.dto.AuthResp;
@@ -63,7 +61,7 @@ public class UserController {
 	@PostMapping("/signup")
 	public ResponseEntity<?> userSignUp(@RequestParam("image") MultipartFile img,
 			@RequestParam("filedata") String filedata)
-			throws IOException, JsonMappingException, JsonProcessingException {
+			throws IOException, java.io.IOException {
 		RegisterDTO dto1 = objectMapper.readValue(filedata, RegisterDTO.class);
 		return ResponseEntity.ok(userService.signUp(dto1, img));
 	}

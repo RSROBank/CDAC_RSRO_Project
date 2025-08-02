@@ -57,8 +57,9 @@ public class UserServiceImpl  implements UserService{
 	}
 
 	@Override
-	public ApiResponse signUp(RegisterDTO dto, MultipartFile img) {
-	    
+	public ApiResponse signUp(RegisterDTO dto, MultipartFile img) throws IOException {
+	    // Create a new User manually
+
 		User user = new User();
 
         user.setFirstName(dto.getFirstName());
@@ -79,16 +80,19 @@ public class UserServiceImpl  implements UserService{
 
         
         user.setAddress(dto.getAddress());
-        if (img != null && !img.isEmpty()) {
-            try {
-				user.setPhoto(img.getBytes());
-			} catch (IOException e) {
-				
-				e.printStackTrace();
-			}
-        } else {
-            return new ApiResponse("Photo is missing or empty.");
-        }
+
+//        if (img != null && !img.isEmpty()) {
+//            try {
+//				user.setPhoto(img.getBytes());
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//        } else {
+//            return new ApiResponse("Photo is missing or empty.");
+//        }
+        
+        user.setPhoto(img.getBytes());
 	    userDao.save(user);
 	    AccountEntity account = new AccountEntity();
 	    account.setCustomer(user); 
@@ -111,8 +115,10 @@ public class UserServiceImpl  implements UserService{
         dto.setCountry(user.getAddress().getCountry());
         dto.setState(user.getAddress().getState());
         dto.setPincode(user.getAddress().getPinCode());
-        String base64Image = Base64.getEncoder().encodeToString(user.getPhoto());
-        dto.setPhoto("data:image/jpeg;base64," + base64Image);
+//        String base64Image = Base64.getEncoder().encodeToString(user.getPhoto());
+        
+//        dto.setPhoto("data:image/jpeg;base64," + base64Image);
+        dto.setPhoto(user.getPhoto());
         return dto;
     }
 
