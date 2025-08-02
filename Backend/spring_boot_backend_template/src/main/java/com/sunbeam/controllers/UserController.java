@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunbeam.custom_exceptions.IOException;
 import com.sunbeam.dto.AuthResp;
+import com.sunbeam.dto.LoanRequestDTO;
 import com.sunbeam.dto.LoginDTO;
 import com.sunbeam.dto.RegisterDTO;
 import com.sunbeam.dto.UpdateProfileRequestDTO;
@@ -85,6 +86,18 @@ public class UserController {
 	public ResponseEntity<?> updateCustomerProfile(@PathVariable Long userId, @RequestBody UpdateProfileRequestDTO dto) {
 		System.out.println(dto.toString());
 		return ResponseEntity.ok(userService.updateProfileByUserId(userId, dto));
+	}
+	
+	@PostMapping("/loanquery")
+	public ResponseEntity<?> createLoanQuery(@RequestBody LoanRequestDTO dto){
+		System.out.println(dto.toString());
+		return ResponseEntity.ok(userService.saveQuery(dto));
+	}
+	
+	@GetMapping("/loanquery/{userId}")
+	public ResponseEntity<?> getAllLoanQuery(@PathVariable Long userId){
+		System.out.println(userId);
+		return ResponseEntity.ok(userService.getAllLoanQuery(userId));
 	}
 
 }

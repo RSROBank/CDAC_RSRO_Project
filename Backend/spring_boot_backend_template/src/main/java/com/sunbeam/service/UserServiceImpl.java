@@ -2,8 +2,11 @@ package com.sunbeam.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +20,14 @@ import com.sunbeam.custom_exceptions.ResourceNotFoundException;
 import com.sunbeam.dao.AccountDao;
 import com.sunbeam.dao.AdminDao;
 import com.sunbeam.dao.EmployeeDao;
+import com.sunbeam.dao.NotificationDao;
 import com.sunbeam.dao.UserDao;
 import com.sunbeam.dto.AdminResponseDTO;
 import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.EmployeeResponseDTO;
+import com.sunbeam.dto.LoanRequestDTO;
 import com.sunbeam.dto.LoginDTO;
+import com.sunbeam.dto.NotificationResponseDTO;
 import com.sunbeam.dto.ProfileResponseDTO;
 import com.sunbeam.dto.RegisterDTO;
 import com.sunbeam.dto.UpdateProfileRequestDTO;
@@ -30,6 +36,7 @@ import com.sunbeam.entity.AccountEntity;
 import com.sunbeam.entity.AddressEntity;
 import com.sunbeam.entity.Admin;
 import com.sunbeam.entity.EmployeeEntity;
+import com.sunbeam.entity.Notification;
 import com.sunbeam.entity.User;
 
 import lombok.AllArgsConstructor;
@@ -41,6 +48,7 @@ public class UserServiceImpl  implements UserService{
 
 	private final UserDao userDao;
 	private final AccountDao accountDao;
+	private final NotificationDao notificationDao;
 	private final PasswordEncoder encoder;
 	private final EmployeeDao employeeDao;
 	private final AdminDao adminDao;
@@ -147,6 +155,25 @@ public class UserServiceImpl  implements UserService{
 		Admin user = adminDao.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User not found"));
         AdminResponseDTO dto = modelMapper.map(user, AdminResponseDTO.class);
         return dto;
+	}
+
+	@Override
+	
+	public ApiResponse saveQuery(LoanRequestDTO dto) {
+		Notification notification = modelMapper.map(dto, Notification.class);
+		notification.setExpiresAt(LocalDateTime.now().plusDays(1));
+		notification.setEmployeeId(1);
+		notificationDao.save(notification);
+		return new ApiResponse("query saved successfully");
+	}
+
+	@Override
+	public List<NotificationResponseDTO> getAllLoanQuery(Long userId) {
+		List<Notification> notificationList = notificationDao.findByUserId(userId);
+		List<NotificationResponseDTO> notificationDtos = notificationList.stream()
+			    .map((Notification notification) -> modelMapper.map(notification, NotificationResponseDTO.class))
+			    .collect(Collectors.toList());
+		return notificationDtos;
 	}
 
 	
