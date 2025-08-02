@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 public class LoanInfoServiceImpl implements LoanInfoService {
 	
 
-    private final ModelMapper modelMapper;
+	private final ModelMapper modelMapper;
     private final LoanInfoDAO loanInfoDAO;
     @Override
     public ApiResponse saveLoanInfo(LoanInfoDTO dto) {

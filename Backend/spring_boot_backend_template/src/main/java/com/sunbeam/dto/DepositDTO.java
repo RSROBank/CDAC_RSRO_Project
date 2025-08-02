@@ -22,6 +22,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class DepositDTO {
 	
+	@NotNull
+	private Long id;
 	@NotNull(message = "user id is required")
     private Long userId;
 	@NotNull(message = "principal amount is required")

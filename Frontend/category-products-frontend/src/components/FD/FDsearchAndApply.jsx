@@ -5,6 +5,7 @@ const FDLoanSearchComponent = () => {
   const [filter, setFilter] = useState({ id: "", amount: "", interest: "" });
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
+  const [userId, setUserId] = useState(1);
 
   // Dummy data
   useEffect(() => {
@@ -12,23 +13,32 @@ const FDLoanSearchComponent = () => {
       {
         id: 1,
         amount: 10000,
-        date: "2025-07-01",
-        interest: "6.5%",
-        period: "12 months",
+        startDate: "2025-07-01",
+        interest: 6.5,
+        tenureMonths: "12",
+        status: "PENDING",
+        empReferenceId: 1,
+
       },
       {
         id: 2,
         amount: 20000,
-        date: "2025-06-15",
-        interest: "7%",
-        period: "24 months",
+        startDate: "2025-06-15",
+        interest: 7,
+        tenureMonths: "24",
+        status: "PENDING",
+        empReferenceId: 1,
+
       },
       {
         id: 3,
         amount: 15000,
-        date: "2025-05-10",
-        interest: "6.75%",
-        period: "18 months",
+        startDate: "2025-05-10",
+        interest: 6.75,
+        tenureMonths: "18",
+        status: "PENDING",
+        empReferenceId: 1
+      
       },
     ];
     setFdData(dummyFDs);
@@ -55,11 +65,13 @@ const FDLoanSearchComponent = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: item.amount,
+          principalAmount: item.amount,
           interest: item.interest,
-          period: item.period,
-          date: item.date,
-          status: "pending"
+          tenureMonths: item.tenureMonths,
+          startDate: `${item.startDate}T00:00:00`,
+          status: "PENDING",
+          empReferenceId: 1,
+          userId: userId
         }),
       });
 
@@ -123,6 +135,8 @@ const FDLoanSearchComponent = () => {
                   <p><strong>Interest:</strong> {item.interest}</p>
                   <p><strong>Time Period:</strong> {item.period}</p>
                   <p><strong>Start Date:</strong> {item.date}</p>
+                  <p><strong>Status:</strong> {item.status}</p>
+                  <p><strong>Emp Id:</strong> {item.empid}</p>
                 </div>
                 <button
                   className="mt-4 md:mt-0 bg-[#0B2E53] text-white py-2 px-5 rounded-lg hover:bg-[#C89D2A] transition-all"
