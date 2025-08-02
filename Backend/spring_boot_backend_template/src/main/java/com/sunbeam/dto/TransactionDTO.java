@@ -3,7 +3,8 @@ package com.sunbeam.dto;
 import java.time.LocalDateTime;
 
 import com.sunbeam.entity.Status;
-
+import com.sunbeam.entity.TransactionMode;
+import com.sunbeam.entity.TransactionType;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -25,41 +26,37 @@ import lombok.ToString;
 public class TransactionDTO {
 
 	
-	@NotNull
-	@NotBlank
-	private long id;
-	
-	@NotNull
+//	@NotNull
+//	private long id;
+//	
 	@NotBlank
 	private String userId;
 	
-	@NotBlank
 	@NotNull
 	private Long toAccount;
 	
 	@NotBlank
+	private String accountHolderName;
+	
+	@NotNull
 	@Min(1)
 	private Float amount;
 	
 	@NotNull
 	private Status status;
 	
-	
+	@NotBlank
 	private String description;
 	
 	@NotBlank
-	@NotNull
-	private String transactionMode;
+	private TransactionMode transactionMode;
 	
 	@NotBlank
-	@NotNull
-	private String transactionType;
+	private TransactionType transactionType;
 	
-	@NotBlank
 	@NotNull
 	private LocalDateTime createdAt;
 	
-	@NotBlank
 	@NotNull
 	private LocalDateTime modifiedAt;
 	
