@@ -58,6 +58,61 @@ export const getAdminProfileById = async (userId) => {
   }
 }
 
+export const createLoanQuery = async (body) => {
+  try{
+    const url = `${config.serverURL}/user/loanquery`;
+    const res = await axios.post(url, body)
+    console.log("Query data: ", res);
+    if(res.status == 200){
+      return res;
+    }
+  }catch(ex){
+    console.log("exception: ", ex);
+  }
+}
+
+export const getAllLoanById = async (userId) => {
+  try{
+    const url = `${config.serverURL}/user/loanquery/${userId}`;
+    const res = await axios.get(url)
+    console.log("Query data: ", res);
+    if(res.status == 200){
+      return res;
+    }
+  }catch(ex){
+    console.log("exception: ", ex);
+  }
+}
+
+export const getAllLoanByEmpId = async (empId) => {
+  try{
+    const url = `${config.serverURL}/employee/loanquery/${empId}`;
+    const res = await axios.get(url)
+    console.log("Query data: ", res);
+    if(res.status == 200){
+      return res;
+    }
+  }catch(ex){
+    console.log("exception: ", ex);
+  }
+}
+
+export const sendResponseLoanById = async (queryid, message) => {
+  try{
+    const body = {
+      response : message,
+    }
+    const url = `${config.serverURL}/employee/loanquery/${queryid}`;
+    const res = await axios.put(url, body)
+    console.log("Query data: ", res);
+    if(res.status == 200){
+      return res;
+    }
+  }catch(ex){
+    console.log("exception: ", ex);
+  }
+}
+
 export const updateCustomerProfileById = async (userId, userData) => {
   try{
     const url = `${config.serverURL}/user/profile/${userId}`;

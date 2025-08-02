@@ -6,7 +6,7 @@ const options = [
   "Approval of Accounts, FD, Loans",
   "Transaction Management",
   "Loan EMI Management",
-  "Support and Maintenance",
+  "Support and Maintenance"
 ];
 
 const Sidebar = ({ selected, setSelected }) => {
