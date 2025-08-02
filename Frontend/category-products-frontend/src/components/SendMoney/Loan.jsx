@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createLoanQuery } from "../../services/userService";
+import { saveLoanByUserId } from "../../services/userService";
 import { toast } from "react-toastify";
 
 const LoanSearchComponent = () => {
@@ -9,15 +10,14 @@ const LoanSearchComponent = () => {
   const [queryMessage, setQueryMessage] = useState('');
   const [queryTitle, setQueryTitle] = useState('');
   const [currentLoanId, setCurrentLoanId] = useState(null);
-  const userId = 1;
+  const [userId, setUserId] = useState(1);
 
   // Dummy Loan Data
   useEffect(() => {
     const dummyLoans = [
       {
         id: "L001",
-        status: "Active",
-        tenure: "12 months",
+        tenure: "12",
         amount: 50000,
         emi: 4167,
         emiLeft: 10,
@@ -26,8 +26,7 @@ const LoanSearchComponent = () => {
       },
       {
         id: "L002",
-        status: "Pending",
-        tenure: "24 months",
+        tenure: "24",
         amount: 100000,
         emi: 4167,
         emiLeft: 24,
@@ -36,8 +35,7 @@ const LoanSearchComponent = () => {
       },
       {
         id: "L003",
-        status: "Rejected",
-        tenure: "6 months",
+        tenure: "6",
         amount: 30000,
         emi: 5200,
         emiLeft: 6,
@@ -51,15 +49,30 @@ const LoanSearchComponent = () => {
   // Filter Logic
   const filteredLoans = loans.filter((loan) => {
     return (
-      (filter.id === "" || loan.id.toLowerCase().includes(filter.id.toLowerCase())) &&
-      (filter.status === "" || loan.status.toLowerCase().includes(filter.status.toLowerCase())) &&
+      (filter.id === "" ||
+        loan.id.toLowerCase().includes(filter.id.toLowerCase())) &&
+      (filter.status === "" ||
+        loan.status.toLowerCase().includes(filter.status.toLowerCase())) &&
       (filter.amount === "" || loan.amount.toString().includes(filter.amount))
     );
   });
 
-  const handleLoan = () => {
-    console.log("new loan created");
-  }
+  const handleLoan =  async (loan) => {
+    console.log("new loan created", loan);
+    try {
+          const response = await saveLoanByUserId(userId, loan);
+          console.log(response)
+          if (response.success) {
+            console.log("save successful:", response);
+            // Navigate to dashboard or store token here
+          } else {
+            toast.success("Message : " + response.message);
+          }
+        } catch (error) {
+          console.error("save error:", error);
+          toast.error("An error occurred while saving in.");
+        }
+  };
 
   const handleSendQuery = async () => {
 
@@ -121,13 +134,35 @@ const LoanSearchComponent = () => {
               >
                 <div className="text-[#0B2E53] space-y-1">
                   {/* <p><strong>Loan ID:</strong> {loan.id}</p> */}
-                  <p><strong>Status:</strong> {loan.status}</p>
-                  <p><strong>Tenure:</strong> {loan.tenure}</p>
-                  <p><strong>Amount:</strong> ₹{loan.amount}</p>
-                  <p><strong>EMI:</strong> ₹{loan.emi}</p>
-                  <p><strong>EMIs Left:</strong> {loan.emiLeft}</p>
-                  <p><strong>Start Date:</strong> {loan.createdDate}</p>
-                  <p><strong>Interest Rate:</strong> {loan.interestRate}</p>
+                  <p>
+                    <strong>Status:</strong> {loan.status}
+                  </p>
+                  <p>
+                    <strong>Tenure:</strong> {loan.tenure}
+                  </p>
+                  <p>
+                    <strong>Amount:</strong> ₹{loan.amount}
+                  </p>
+                  <p>
+                    <strong>EMI:</strong> ₹{loan.emi}
+                  </p>
+                  <p>
+                    <strong>EMIs Left:</strong> {loan.emiLeft}
+                  </p>
+                  <p>
+                    <strong>Start Date:</strong> {loan.createdDate}
+                  </p>
+                  <p>
+                    <strong>Interest Rate:</strong> {loan.interestRate}
+                  </p>
+                </div>
+                <div className="text-center mt-6">
+                  <button
+                    className="bg-[#0B2E53] text-white px-6 py-2 rounded-xl hover:bg-[#C89D2A] transition"
+                    onClick={() => handleLoan(loan)}
+                  >
+                    Apply For Loan
+                  </button>
                 </div>
                 <div className="mt-4 md:mt-0 md:ml-4">
                   <button
@@ -143,7 +178,9 @@ const LoanSearchComponent = () => {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-600">No matching loan records found.</p>
+            <p className="text-center text-gray-600">
+              No matching loan records found.
+            </p>
           )}
         </div>
 
@@ -197,14 +234,6 @@ const LoanSearchComponent = () => {
 
 
         {/* Button */}
-        <div className="text-center mt-6">
-          <button
-            className="bg-[#0B2E53] text-white px-6 py-2 rounded-xl hover:bg-[#C89D2A] transition"
-            onClick={handleLoan}
-          >
-            Apply New Loan
-          </button>
-        </div>
       </div>
     </div>
   );
