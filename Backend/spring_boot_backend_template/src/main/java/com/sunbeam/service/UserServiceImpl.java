@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -147,6 +148,12 @@ public class UserServiceImpl  implements UserService{
 		Admin user = adminDao.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User not found"));
         AdminResponseDTO dto = modelMapper.map(user, AdminResponseDTO.class);
         return dto;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String email) {
+		User user = userDao.findByEmail(email).orElseThrow(() ->new AuthenticationFailureException("Email is invalid !!"));
+		return modelMapper.map(user, UserDetails.class);
 	}
 
 	

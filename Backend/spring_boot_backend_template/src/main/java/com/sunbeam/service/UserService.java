@@ -2,6 +2,7 @@ package com.sunbeam.service;
 
 import java.io.IOException;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sunbeam.dto.ApiResponse;
@@ -23,5 +24,7 @@ public interface UserService {
 	Object getEmployeeProfileByUserId(Long userId);
 
 	Object getAdminProfileByUserId(Long userId);
+
+	UserDetails loadUserByUsername(String email);
 
 }
