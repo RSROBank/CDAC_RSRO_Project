@@ -7,6 +7,7 @@ import com.sunbeam.custom_exceptions.IOException;
 import com.sunbeam.dto.AdminResponseDTO;
 import java.io.IOException;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sunbeam.dto.ApiResponse;
@@ -35,5 +36,7 @@ public interface UserService {
 	ApiResponse saveQuery(LoanRequestDTO dto);
 
 	List<NotificationResponseDTO> getAllLoanQuery(Long userId);
+
+	UserDetails loadUserByUsername(String email);
 
 }

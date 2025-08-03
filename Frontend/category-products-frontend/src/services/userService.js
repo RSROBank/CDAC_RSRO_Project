@@ -1,17 +1,17 @@
 import axios from "axios";
 const BASE_URL = "http://localhost:8080/user";
-import { config } from '../config'
-import LoanCard from '../components/FdDeposit';
+import { config } from "../config";
+import LoanCard from "../components/FdDeposit";
 
 export async function addNewUser(user) {
   try {
     const url = `${config.serverURL}/user/signup`;
     const response = await axios.post(url, user, {
       headers: {
-        "Content-Type": "multipart/form-data"
-      }
+        "Content-Type": "multipart/form-data",
+      },
     });
-    console.log("response: ",response);
+    console.log("response: ", response);
     if (response.status === 200) {
       return response.data;
     }
@@ -21,43 +21,43 @@ export async function addNewUser(user) {
 }
 
 export const getCustomerProfileById = async (userId) => {
-  try{
+  try {
     const url = `${config.serverURL}/user/profile/${userId}`;
-    const res = await axios.get(url)
+    const res = await axios.get(url);
     console.log("Profile data: ", res);
-    if(res.status == 200){
+    if (res.status == 200) {
       return res.data;
     }
-  }catch(ex){
+  } catch (ex) {
     console.log("exception: ", ex);
   }
-}
+};
 
 export const getEmployeeProfileById = async (userId) => {
-  try{
+  try {
     const url = `${config.serverURL}/user/employeeprofile/${userId}`;
-    const res = await axios.get(url)
+    const res = await axios.get(url);
     console.log("Profile data: ", res);
-    if(res.status == 200){
+    if (res.status == 200) {
       return res.data;
     }
-  }catch(ex){
+  } catch (ex) {
     console.log("exception: ", ex);
   }
-}
+};
 
 export const getAdminProfileById = async (userId) => {
-  try{
+  try {
     const url = `${config.serverURL}/user/adminprofile/${userId}`;
-    const res = await axios.get(url)
+    const res = await axios.get(url);
     console.log("Profile data: ", res);
-    if(res.status == 200){
+    if (res.status == 200) {
       return res.data;
     }
-  }catch(ex){
+  } catch (ex) {
     console.log("exception: ", ex);
   }
-}
+};
 
 export const createLoanQuery = async (body) => {
   try{
@@ -115,18 +115,17 @@ export const sendResponseLoanById = async (queryid, message) => {
 }
 
 export const updateCustomerProfileById = async (userId, userData) => {
-  try{
+  try {
     const url = `${config.serverURL}/user/profile/${userId}`;
-    const res = await axios.put(url, userData)
+    const res = await axios.put(url, userData);
     console.log("response data: ", res);
-    if(res.status == 200){
+    if (res.status == 200) {
       return res;
     }
-  }catch(ex){
+  } catch (ex) {
     console.log("exception: ", ex);
   }
-}
-
+};
 
 export const loginUser = async (email, password) => {
   const res = await fetch(BASE_URL + "/login", {
@@ -134,6 +133,7 @@ export const loginUser = async (email, password) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({ email, password }),
   });
 
@@ -159,13 +159,11 @@ export async function getCustomerStatement(accountNo, filters) {
   }
 }
 
-
 export async function LoanCard1(user) {
   try {
     const url = `${config.serverURL}/deposit/savedeposit`;
-    const response = await axios.post(url, user, {
-    });
-    console.log("response: ",response);
+    const response = await axios.post(url, user, {});
+    console.log("response: ", response);
     if (response.status === 200) {
       return response.data;
     }
@@ -175,23 +173,32 @@ export async function LoanCard1(user) {
 }
 
 export const saveLoanByUserId = async (userId, loan) => {
-  try{
-    const url = 'http://localhost:8080/api/loans/saveloan';
+  try {
+    const url = "http://localhost:8080/api/loans/saveloan";
     const body = {
-        amount : loan.amount,
-        tenureMonths : loan.tenure,
-        userId: userId,
-        totalEmis : loan.emiLeft,
-        emiAmount : loan.emi
-    }
-    const res = await axios.post(url, body)
+      amount: loan.amount,
+      tenureMonths: loan.tenure,
+      userId: userId,
+      totalEmis: loan.emiLeft,
+      emiAmount: loan.emi,
+    };
+    const res = await axios.post(url, body);
     console.log("loan data: ", res);
-    if(res.status == 200){
+    if (res.status == 200) {
       return res.data;
     }
-  }catch(ex){
-    console.error("Error submitting loan:", ex.message)
+  } catch (ex) {
+    console.error("Error submitting loan:", ex.message);
     console.log("exception: ", ex);
   }
-}
+};
 
+export const verifyOtp = async (email, otp) => {
+  const response = await axios.post(
+    `${BASE_URL}/verifyOtp`,
+    { email, otp },
+    { withCredentials: true }
+  );
+  console.log(response);
+  return response.data;
+};
