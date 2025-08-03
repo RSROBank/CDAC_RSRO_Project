@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunbeam.custom_exceptions.IOException;
 import com.sunbeam.dto.AuthResp;
+import com.sunbeam.dto.LoanRequestDTO;
 import com.sunbeam.dto.LoginDTO;
 import com.sunbeam.dto.OtpRequest;
 import com.sunbeam.dto.RegisterDTO;
@@ -105,6 +106,7 @@ public class UserController {
 		return ResponseEntity.ok(userService.updateProfileByUserId(userId, dto));
 	}
 	
+
 	@PostMapping("/verifyOtp")
 	public ResponseEntity<?> verifyOtp(@RequestBody OtpRequest dto, HttpSession session) {
 		
@@ -141,6 +143,7 @@ public class UserController {
 		System.out.println(userId);
 		return ResponseEntity.ok(userService.getAllLoanQuery(userId));
 	}
+
 
 
 }
