@@ -129,6 +129,18 @@ public class UserController {
 	
 		    return ResponseEntity.ok().body(new AuthResp("Successful login!", jwtUtils.generateJwtToken(auth)));
 	}
+	
+	@PostMapping("/loanquery")
+	public ResponseEntity<?> createLoanQuery(@RequestBody LoanRequestDTO dto){
+		System.out.println(dto.toString());
+		return ResponseEntity.ok(userService.saveQuery(dto));
+	}
+	
+	@GetMapping("/loanquery/{userId}")
+	public ResponseEntity<?> getAllLoanQuery(@PathVariable Long userId){
+		System.out.println(userId);
+		return ResponseEntity.ok(userService.getAllLoanQuery(userId));
+	}
 
 
 }
