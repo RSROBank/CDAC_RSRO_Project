@@ -60,59 +60,59 @@ export const getAdminProfileById = async (userId) => {
 };
 
 export const createLoanQuery = async (body) => {
-  try{
+  try {
     const url = `${config.serverURL}/user/loanquery`;
-    const res = await axios.post(url, body)
+    const res = await axios.post(url, body);
     console.log("Query data: ", res);
-    if(res.status == 200){
+    if (res.status == 200) {
       return res;
     }
-  }catch(ex){
+  } catch (ex) {
     console.log("exception: ", ex);
   }
-}
+};
 
 export const getAllLoanById = async (userId) => {
-  try{
+  try {
     const url = `${config.serverURL}/user/loanquery/${userId}`;
-    const res = await axios.get(url)
+    const res = await axios.get(url);
     console.log("Query data: ", res);
-    if(res.status == 200){
+    if (res.status == 200) {
       return res;
     }
-  }catch(ex){
+  } catch (ex) {
     console.log("exception: ", ex);
   }
-}
+};
 
 export const getAllLoanByEmpId = async (empId) => {
-  try{
+  try {
     const url = `${config.serverURL}/employee/loanquery/${empId}`;
-    const res = await axios.get(url)
+    const res = await axios.get(url);
     console.log("Query data: ", res);
-    if(res.status == 200){
+    if (res.status == 200) {
       return res;
     }
-  }catch(ex){
+  } catch (ex) {
     console.log("exception: ", ex);
   }
-}
+};
 
 export const sendResponseLoanById = async (queryid, message) => {
-  try{
+  try {
     const body = {
-      response : message,
-    }
+      response: message,
+    };
     const url = `${config.serverURL}/employee/loanquery/${queryid}`;
-    const res = await axios.put(url, body)
+    const res = await axios.put(url, body);
     console.log("Query data: ", res);
-    if(res.status == 200){
+    if (res.status == 200) {
       return res;
     }
-  }catch(ex){
+  } catch (ex) {
     console.log("exception: ", ex);
   }
-}
+};
 
 export const updateCustomerProfileById = async (userId, userData) => {
   try {

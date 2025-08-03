@@ -66,7 +66,7 @@ public class UserServiceImpl  implements UserService{
 	}
 
 	@Override
-	public ApiResponse signUp(RegisterDTO dto, MultipartFile img) throws IOException {
+	public ApiResponse signUp(RegisterDTO dto, MultipartFile img) throws Exception {
 	    // Create a new User manually
 
 		User user = new User();
@@ -105,10 +105,12 @@ public class UserServiceImpl  implements UserService{
 	    userDao.save(user);
 	    AccountEntity account = new AccountEntity();
 	    account.setCustomer(user); 
-	    account.setAccountNumber(generate12DigitNumber());
+	    account.setAccountNumber(generate12DigitNumber(dto));
 	    account.setUpiId(generate12DigitNumber());
 	    account.setBalance(0.0);
 	    accountDao.save(account);
+	    System.out.println("Date : "+ dto.getDateOfBirth());
+	    System.out.println("Date : "+ dto.getGender());
 
 	    return new ApiResponse("Successfully saved.");
 	}
@@ -176,6 +178,7 @@ public class UserServiceImpl  implements UserService{
 			    .collect(Collectors.toList());
 		return notificationDtos;
 	}
+
 
 	
 }

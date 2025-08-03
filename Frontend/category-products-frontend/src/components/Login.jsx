@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { loginUser, verifyOtp } from "../services/userService";
 import { AuthContext } from "../AuthContext/auth.context";
 import { Lock, User } from "lucide-react";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -18,15 +19,18 @@ const LoginPage = () => {
       const response = await loginUser(email, password);
 
       if (response.requireOtp) {
-        alert("OTP sent to your email.");
+        // alert("OTP sent to your email.");
+        toast.success("OTP sent to your email.");
         setRequireOtp(true); // Show OTP input field
       } else if (response.jwt) {
-        alert(`Logged in as ${email}`);
+        // alert(`Logged in as ${email}`);
+        toast.success(`Logged in as ${email}`);
         sessionStorage.setItem("jwt", response.jwt);
         setUser({ email, role: "customer" });
         navigate("/dashboard");
       } else {
-        alert("Login failed: " + response.message);
+        // alert("Login failed: " + response.message);
+        toast.error("Login failed: " + response.message);
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -39,12 +43,14 @@ const LoginPage = () => {
     try {
       const response = await verifyOtp(email, otp);
       if (response.jwt) {
-        alert("OTP verified! Logged in.", response);
+        //alert("OTP verified! Logged in.");
+        toast.success("OTP verified! Logged in.");
         sessionStorage.setItem("jwt", response.jwt);
         setUser({ email, role: "customer" });
         navigate("/dashboard");
       } else {
-        alert("Message : " + response.message);
+        // alert("Message : " + response.message);
+        toast.error("Message : " + response.message);
       }
     } catch (error) {
       console.error("OTP error:", error);
