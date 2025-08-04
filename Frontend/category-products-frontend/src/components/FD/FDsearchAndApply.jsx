@@ -74,6 +74,7 @@ const FDLoanSearchComponent = () => {
   });
 
   const handleApplyClick = async (item) => {
+    const token = sessionStorage.getItem("jwt");
     try {
       setLoading(true);
       setStatus("Applying...");
@@ -81,7 +82,9 @@ const FDLoanSearchComponent = () => {
       if (viewType === "FD") {
         const response = await fetch("http://localhost:8080/user/deposit/savedeposit", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json",
+            "Authorization" : `Bearer ${token}`
+           },
           body: JSON.stringify({
             principalAmount: item.amount,
             interest: item.interest,
