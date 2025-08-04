@@ -57,31 +57,31 @@ const LoanSearchComponent = () => {
     );
   });
 
-  const handleLoan =  async (loan) => {
+  const handleLoan = async (loan) => {
     console.log("new loan created", loan);
     try {
-          const response = await saveLoanByUserId(userId, loan);
-          console.log(response)
-          if (response.success) {
-            console.log("save successful:", response);
-            // Navigate to dashboard or store token here
-          } else {
-            toast.success("Message : " + response.message);
-          }
-        } catch (error) {
-          console.error("save error:", error);
-          toast.error("An error occurred while saving in.");
-        }
+      const response = await saveLoanByUserId(userId, loan);
+      console.log(response)
+      if (response.success) {
+        console.log("save successful:", response);
+        // Navigate to dashboard or store token here
+      } else {
+        toast.success("Message : " + response.message);
+      }
+    } catch (error) {
+      console.error("save error:", error);
+      toast.error("An error occurred while saving in.");
+    }
   };
 
   const handleSendQuery = async () => {
 
     const body = {
-      userId : userId,
+      userId: userId,
       email: "dummy@gmail.com",
-      title : queryTitle,
-      message : queryMessage,
-      notificationType : "Loan"
+      title: queryTitle,
+      message: queryMessage,
+      notificationType: "Loan"
     }
 
     try {
@@ -125,64 +125,42 @@ const LoanSearchComponent = () => {
         </div>
 
         {/* Loan Cards */}
-        <div className="space-y-4">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {filteredLoans.length > 0 ? (
             filteredLoans.map((loan) => (
               <div
                 key={loan.id}
-                className="bg-white rounded-2xl shadow-lg p-4 border border-[#0B2E53]/20 flex flex-col md:flex-row justify-between items-start md:items-center"
+                className="bg-white rounded-2xl shadow-md p-5 border border-[#0B2E53]/10 hover:shadow-lg hover:scale-[1.02] transition-all duration-200 flex flex-col justify-between"
               >
-                <div className="text-[#0B2E53] space-y-1">
-                  {/* <p><strong>Loan ID:</strong> {loan.id}</p> */}
-                  <p>
-                    <strong>Status:</strong> {loan.status}
-                  </p>
-                  <p>
-                    <strong>Tenure:</strong> {loan.tenure}
-                  </p>
-                  <p>
-                    <strong>Amount:</strong> ₹{loan.amount}
-                  </p>
-                  <p>
-                    <strong>EMI:</strong> ₹{loan.emi}
-                  </p>
-                  <p>
-                    <strong>EMIs Left:</strong> {loan.emiLeft}
-                  </p>
-                  <p>
-                    <strong>Start Date:</strong> {loan.createdDate}
-                  </p>
-                  <p>
-                    <strong>Interest Rate:</strong> {loan.interestRate}
-                  </p>
+                <div className="text-[#0B2E53] text-sm space-y-2">
+                  <h4 className="text-lg font-semibold text-[#0B2E53] mb-2">
+                    Loan #{loan.id}
+                  </h4>
+
+                  <p><strong>Status:</strong> {loan.status}</p>
+                  <p><strong>Tenure:</strong> {loan.tenure} months</p>
+                  <p><strong>Amount:</strong> ₹{loan.amount}</p>
+                  <p><strong>EMI:</strong> ₹{loan.emi}</p>
+                  <p><strong>EMIs Left:</strong> {loan.emiLeft}</p>
+                  <p><strong>Start Date:</strong> {loan.createdDate}</p>
+                  <p><strong>Interest Rate:</strong> {loan.interestRate}</p>
                 </div>
-                <div className="text-center mt-6">
-                  <button
-                    className="bg-[#0B2E53] text-white px-6 py-2 rounded-xl hover:bg-[#C89D2A] transition"
-                    onClick={() => handleLoan(loan)}
-                  >
-                    Apply For Loan
-                  </button>
-                </div>
-                <div className="mt-4 md:mt-0 md:ml-4">
-                  <button
-                    onClick={() => {
-                      setCurrentLoanId(loan.id);
-                      setShowQueryBox(!showQueryBox)}
-                    }
-                    className="bg-[#0B2E53] text-white px-4 py-2 rounded-lg hover:bg-[#0B2E53]/90 transition"
-                  >
-                    Request
-                  </button>
-                </div>
+
+                <button
+                  className="mt-4 bg-[#0B2E53] text-white py-2 rounded-lg hover:bg-[#C89D2A] transition-all"
+                  onClick={() => handleLoan(loan)}
+                >
+                  Apply For Loan
+                </button>
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-600">
+            <p className="col-span-full text-center text-gray-600">
               No matching loan records found.
             </p>
           )}
         </div>
+
 
 
         {showQueryBox && (
