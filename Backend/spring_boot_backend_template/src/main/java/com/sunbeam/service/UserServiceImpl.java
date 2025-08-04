@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,13 +39,15 @@ import com.sunbeam.entity.Admin;
 import com.sunbeam.entity.EmployeeEntity;
 import com.sunbeam.entity.Notification;
 import com.sunbeam.entity.User;
-
+import com.sunbeam.exception_handler.GlobalExceptionHandler;
 import lombok.AllArgsConstructor;
 
 @Transactional
 @Service
 @AllArgsConstructor
 public class UserServiceImpl  implements UserService{
+
+    private final GlobalExceptionHandler globalExceptionHandler;
 
 	private final UserDao userDao;
 	private final AccountDao accountDao;
@@ -60,12 +63,34 @@ public class UserServiceImpl  implements UserService{
 		return modelMapper.map(entity, UserDTO.class);
 	}
 	
+	private String generate12DigitNumber(RegisterDTO dto) {
+		StringBuilder string = new StringBuilder();
+		string.append(dto.getFirstName().substring(0, 2)) ;
+		string.append(dto.getDateOfBirth().substring(2, 4)) ;
+		string.append(dto.getLastName().substring(0, 2));
+		string.append(dto.getDateOfBirth().substring(8, 10));
+		
+		if(dto.getGender().equals("male"))
+		{
+			string.append("1M");
+		} 
+		else
+		{
+			string.append("0M");
+		}
+		string.append(dto.getPhoneNumber().substring(7, 9));
+		string.append(dto.getEmail().substring(3, 6));
+		string.append(dto.getPhoneNumber().substring(2, 5));
+		return string.toString();
+	}
+	
 	private String generate12DigitNumber() {
+		
 	    return String.valueOf(100000000000L + new Random().nextLong() % 900000000000L).substring(0, 12);
 	}
 
 	@Override
-	public ApiResponse signUp(RegisterDTO dto, MultipartFile img) throws IOException {
+	public ApiResponse signUp(RegisterDTO dto, MultipartFile img) throws Exception {
 	    // Create a new User manually
 
 		User user = new User();
@@ -104,10 +129,12 @@ public class UserServiceImpl  implements UserService{
 	    userDao.save(user);
 	    AccountEntity account = new AccountEntity();
 	    account.setCustomer(user); 
-	    account.setAccountNumber(generate12DigitNumber());
+	    account.setAccountNumber(generate12DigitNumber(dto));
 	    account.setUpiId(generate12DigitNumber());
 	    account.setBalance(0.0);
 	    accountDao.save(account);
+	    System.out.println("Date : "+ dto.getDateOfBirth());
+	    System.out.println("Date : "+ dto.getGender());
 
 	    return new ApiResponse("Successfully saved.");
 	}
@@ -157,7 +184,7 @@ public class UserServiceImpl  implements UserService{
         return dto;
 	}
 
-	@Override
+
 	
 	public ApiResponse saveQuery(LoanRequestDTO dto) {
 		Notification notification = modelMapper.map(dto, Notification.class);
@@ -175,6 +202,7 @@ public class UserServiceImpl  implements UserService{
 			    .collect(Collectors.toList());
 		return notificationDtos;
 	}
+
 
 	
 }

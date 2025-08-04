@@ -1,4 +1,5 @@
 package com.sunbeam.dto;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import com.sunbeam.entity.Status;
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProfileResponseDTO {
     @NotBlank(message = "Full name is required")
     @Size(max = 100, message = "Full name cannot exceed 100 characters")
