@@ -173,7 +173,8 @@ public class UserServiceImpl  implements UserService{
 	public EmployeeResponseDTO getEmployeeProfileByUserId(Long userId) {
 		EmployeeEntity user = employeeDao.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User not found"));
         EmployeeResponseDTO dto = modelMapper.map(user, EmployeeResponseDTO.class);
-        dto.setFullName(user.getFirstName()+" "+user.getLastName());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getFirstName());
         return dto;
 	}
 

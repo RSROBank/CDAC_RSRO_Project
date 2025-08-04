@@ -47,4 +47,5 @@ public class EmployeeResponseDTO {
     @NotBlank(message = "Status is required")
     @Pattern(regexp = "^(Active|Inactive|Pending)$", message = "Status must be Active, Inactive or Pending")
     private String status;
+
 }
