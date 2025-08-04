@@ -3,6 +3,8 @@ const BASE_URL = "http://localhost:8080/user";
 import { config } from "../config";
 import LoanCard from "../components/FdDeposit";
 
+const token = sessionStorage.getItem("jwt");
+
 export async function addNewUser(user) {
   try {
     const url = `${config.serverURL}/user/signup`;
@@ -23,9 +25,15 @@ export async function addNewUser(user) {
 export const getCustomerProfileById = async (userId) => {
   try {
     const url = `${config.serverURL}/user/profile/${userId}`;
-    const res = await axios.get(url);
+    const res = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     console.log("Profile data: ", res);
-    if (res.status == 200) {
+
+    if (res.status === 200) {
       return res.data;
     }
   } catch (ex) {
@@ -36,7 +44,11 @@ export const getCustomerProfileById = async (userId) => {
 export const getEmployeeProfileById = async (userId) => {
   try {
     const url = `${config.serverURL}/user/employeeprofile/${userId}`;
-    const res = await axios.get(url);
+    const res = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log("Profile data: ", res);
     if (res.status == 200) {
       return res.data;
@@ -49,7 +61,11 @@ export const getEmployeeProfileById = async (userId) => {
 export const getAdminProfileById = async (userId) => {
   try {
     const url = `${config.serverURL}/user/adminprofile/${userId}`;
-    const res = await axios.get(url);
+    const res = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log("Profile data: ", res);
     if (res.status == 200) {
       return res.data;
@@ -62,7 +78,12 @@ export const getAdminProfileById = async (userId) => {
 export const createLoanQuery = async (body) => {
   try {
     const url = `${config.serverURL}/user/loanquery`;
-    const res = await axios.post(url, body);
+    const res = await axios.post(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body,
+    });
     console.log("Query data: ", res);
     if (res.status == 200) {
       return res;
@@ -75,7 +96,11 @@ export const createLoanQuery = async (body) => {
 export const getAllLoanById = async (userId) => {
   try {
     const url = `${config.serverURL}/user/loanquery/${userId}`;
-    const res = await axios.get(url);
+    const res = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log("Query data: ", res);
     if (res.status == 200) {
       return res;
@@ -88,7 +113,11 @@ export const getAllLoanById = async (userId) => {
 export const getAllLoanByEmpId = async (empId) => {
   try {
     const url = `${config.serverURL}/employee/loanquery/${empId}`;
-    const res = await axios.get(url);
+    const res = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log("Query data: ", res);
     if (res.status == 200) {
       return res;
@@ -104,7 +133,12 @@ export const sendResponseLoanById = async (queryid, message) => {
       response: message,
     };
     const url = `${config.serverURL}/employee/loanquery/${queryid}`;
-    const res = await axios.put(url, body);
+    const res = await axios.put(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body,
+    });
     console.log("Query data: ", res);
     if (res.status == 200) {
       return res;
@@ -117,7 +151,12 @@ export const sendResponseLoanById = async (queryid, message) => {
 export const updateCustomerProfileById = async (userId, userData) => {
   try {
     const url = `${config.serverURL}/user/profile/${userId}`;
-    const res = await axios.put(url, userData);
+    const res = await axios.put(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      userData,
+    });
     console.log("response data: ", res);
     if (res.status == 200) {
       return res;
@@ -144,6 +183,9 @@ export const loginUser = async (email, password) => {
 export async function getCustomerStatement(accountNo, filters) {
   try {
     const response = await axios.get(`${config.serverURL}/user/statements`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       params: {
         accountNo: accountNo,
         fromDate: filters.fromDate || undefined,
@@ -155,6 +197,12 @@ export async function getCustomerStatement(accountNo, filters) {
     return response.data;
   } catch (error) {
     console.error("Failed to fetch statement:", error);
+
+    // Optional: Log specific error reason
+    if (error.response?.status === 401) {
+      console.warn("Unauthorized request – invalid or expired token");
+    }
+
     return null;
   }
 }
@@ -162,7 +210,13 @@ export async function getCustomerStatement(accountNo, filters) {
 export async function LoanCard1(user) {
   try {
     const url = `${config.serverURL}/deposit/savedeposit`;
-    const response = await axios.post(url, user, {});
+    const res = await axios.post(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      user,
+    });
+    // const response = await axios.post(url, user, {});
     console.log("response: ", response);
     if (response.status === 200) {
       return response.data;
@@ -173,8 +227,8 @@ export async function LoanCard1(user) {
 }
 
 export const saveLoanByUserId = async (userId, loan) => {
-  try{
-    const url = 'http://localhost:8080/user/loans/saveloan';
+  try {
+    const url = "http://localhost:8080/user/loans/saveloan";
     const body = {
       amount: loan.amount,
       tenureMonths: loan.tenure,
@@ -182,7 +236,12 @@ export const saveLoanByUserId = async (userId, loan) => {
       totalEmis: loan.emiLeft,
       emiAmount: loan.emi,
     };
-    const res = await axios.post(url, body);
+    const res = await axios.post(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body,
+    });
     console.log("loan data: ", res);
     if (res.status == 200) {
       return res.data;
