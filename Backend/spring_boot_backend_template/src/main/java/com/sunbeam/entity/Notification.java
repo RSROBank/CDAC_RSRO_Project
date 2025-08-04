@@ -13,23 +13,31 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 @Table(name = "notification")
 public class Notification {
 	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private int id;
+	    private Long id;
 	
 		@Column(length = 100)
 	    private String email;
+		@Column
+		private long userId;
+		@Column
+		private long employeeId;
 		@Column(length = 100)
 	    private String title;
-		@Column(length = 300)
+		@Column(length = 500)
 	    private String message;
+		@Column(length = 500)
+		private String response;
 		@Column( name = "notification_type",length = 50)
 	    private String notificationType;
 		@Column(name = "expires_at")

@@ -5,6 +5,7 @@ import SearchFilterRequests from './SearchFilterRequest.jsx';
 import SearchFilterTransactions from './SearchFilterTransactions.jsx';
 import SupportMaintenanceLoans from './SupportAndMaintainence.jsx';
 import SearchFilterLoans from './SearchFiltersLoan.jsx';
+import NotificationPage from './EmployeeNotificationPage.jsx';
 
 const MainContent = ({ selected }) => {
   return (
@@ -14,7 +15,7 @@ const MainContent = ({ selected }) => {
       {selected === 'Approval of Accounts, FD, Loans' && <SearchFilterRequests />}
       {selected === 'Transaction Management' && <SearchFilterTransactions />}
       {selected === 'Loan EMI Management' && <SearchFilterLoans />}
-      {selected === 'Support and Maintenance' && <SupportMaintenanceLoans />}
+      {selected === 'Support and Maintenance' && <NotificationPage />}
     </div>
   );
 };

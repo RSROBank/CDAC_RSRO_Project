@@ -2,11 +2,15 @@ package com.sunbeam.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +21,14 @@ import com.sunbeam.custom_exceptions.ResourceNotFoundException;
 import com.sunbeam.dao.AccountDao;
 import com.sunbeam.dao.AdminDao;
 import com.sunbeam.dao.EmployeeDao;
+import com.sunbeam.dao.NotificationDao;
 import com.sunbeam.dao.UserDao;
 import com.sunbeam.dto.AdminResponseDTO;
 import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.EmployeeResponseDTO;
+import com.sunbeam.dto.LoanRequestDTO;
 import com.sunbeam.dto.LoginDTO;
+import com.sunbeam.dto.NotificationResponseDTO;
 import com.sunbeam.dto.ProfileResponseDTO;
 import com.sunbeam.dto.RegisterDTO;
 import com.sunbeam.dto.UpdateProfileRequestDTO;
@@ -30,8 +37,9 @@ import com.sunbeam.entity.AccountEntity;
 import com.sunbeam.entity.AddressEntity;
 import com.sunbeam.entity.Admin;
 import com.sunbeam.entity.EmployeeEntity;
+import com.sunbeam.entity.Notification;
 import com.sunbeam.entity.User;
-
+import com.sunbeam.exception_handler.GlobalExceptionHandler;
 import lombok.AllArgsConstructor;
 
 @Transactional
@@ -39,8 +47,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserServiceImpl  implements UserService{
 
+    private final GlobalExceptionHandler globalExceptionHandler;
+
 	private final UserDao userDao;
 	private final AccountDao accountDao;
+	private final NotificationDao notificationDao;
 	private final PasswordEncoder encoder;
 	private final EmployeeDao employeeDao;
 	private final AdminDao adminDao;
@@ -52,50 +63,78 @@ public class UserServiceImpl  implements UserService{
 		return modelMapper.map(entity, UserDTO.class);
 	}
 	
+	private String generate12DigitNumber(RegisterDTO dto) {
+		StringBuilder string = new StringBuilder();
+		string.append(dto.getFirstName().substring(0, 2)) ;
+		string.append(dto.getDateOfBirth().substring(2, 4)) ;
+		string.append(dto.getLastName().substring(0, 2));
+		string.append(dto.getDateOfBirth().substring(8, 10));
+		
+		if(dto.getGender().equals("male"))
+		{
+			string.append("1M");
+		} 
+		else
+		{
+			string.append("0M");
+		}
+		string.append(dto.getPhoneNumber().substring(7, 9));
+		string.append(dto.getEmail().substring(3, 6));
+		string.append(dto.getPhoneNumber().substring(2, 5));
+		return string.toString();
+	}
+	
 	private String generate12DigitNumber() {
+		
 	    return String.valueOf(100000000000L + new Random().nextLong() % 900000000000L).substring(0, 12);
 	}
 
 	@Override
-	public ApiResponse signUp(RegisterDTO dto, MultipartFile img) {
+	public ApiResponse signUp(RegisterDTO dto, MultipartFile img) throws Exception {
 	    // Create a new User manually
+
 		User user = new User();
 
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
 
-        // Convert String → LocalDate
+        
         user.setDateOfBirth(LocalDate.parse(dto.getDateOfBirth()));
 
         user.setGender(dto.getGender());
         user.setNationality(dto.getNationality());
         user.setPhotoId(dto.getPhotoId());
         
-        // Convert String → Long
+       
         user.setPhoneNumber(Long.parseLong(dto.getPhoneNumber()));
 
         user.setEmail(dto.getEmail());
         user.setPassword(encoder.encode(dto.getPassword()));
 
-        // Set address (already as AddressEntity)
+        
         user.setAddress(dto.getAddress());
-        if (img != null && !img.isEmpty()) {
-            try {
-				user.setPhoto(img.getBytes());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        } else {
-            return new ApiResponse("Photo is missing or empty.");
-        }
+
+//        if (img != null && !img.isEmpty()) {
+//            try {
+//				user.setPhoto(img.getBytes());
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//        } else {
+//            return new ApiResponse("Photo is missing or empty.");
+//        }
+        
+        user.setPhoto(img.getBytes());
 	    userDao.save(user);
 	    AccountEntity account = new AccountEntity();
-	    account.setCustomer(user); // link the saved user
-	    account.setAccountNumber(generate12DigitNumber());
+	    account.setCustomer(user); 
+	    account.setAccountNumber(generate12DigitNumber(dto));
 	    account.setUpiId(generate12DigitNumber());
 	    account.setBalance(0.0);
 	    accountDao.save(account);
+	    System.out.println("Date : "+ dto.getDateOfBirth());
+	    System.out.println("Date : "+ dto.getGender());
 
 	    return new ApiResponse("Successfully saved.");
 	}
@@ -111,8 +150,10 @@ public class UserServiceImpl  implements UserService{
         dto.setCountry(user.getAddress().getCountry());
         dto.setState(user.getAddress().getState());
         dto.setPincode(user.getAddress().getPinCode());
-        String base64Image = Base64.getEncoder().encodeToString(user.getPhoto());
-        dto.setPhoto("data:image/jpeg;base64," + base64Image);
+//        String base64Image = Base64.getEncoder().encodeToString(user.getPhoto());
+        
+//        dto.setPhoto("data:image/jpeg;base64," + base64Image);
+        dto.setPhoto(user.getPhoto());
         return dto;
     }
 
@@ -142,6 +183,26 @@ public class UserServiceImpl  implements UserService{
         AdminResponseDTO dto = modelMapper.map(user, AdminResponseDTO.class);
         return dto;
 	}
+
+
+	
+	public ApiResponse saveQuery(LoanRequestDTO dto) {
+		Notification notification = modelMapper.map(dto, Notification.class);
+		notification.setExpiresAt(LocalDateTime.now().plusDays(1));
+		notification.setEmployeeId(1);
+		notificationDao.save(notification);
+		return new ApiResponse("query saved successfully");
+	}
+
+	@Override
+	public List<NotificationResponseDTO> getAllLoanQuery(Long userId) {
+		List<Notification> notificationList = notificationDao.findByUserId(userId);
+		List<NotificationResponseDTO> notificationDtos = notificationList.stream()
+			    .map((Notification notification) -> modelMapper.map(notification, NotificationResponseDTO.class))
+			    .collect(Collectors.toList());
+		return notificationDtos;
+	}
+
 
 	
 }

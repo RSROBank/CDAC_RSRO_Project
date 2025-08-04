@@ -2,15 +2,20 @@ package com.sunbeam.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.sunbeam.dto.EmployeeResponseDTO;
+
+
+import com.sunbeam.dao.NotificationDao;
+import com.sunbeam.dto.NotificationResolveRequestDTO;
 import com.sunbeam.service.EmployeeService;
 
 import lombok.AllArgsConstructor;
@@ -24,6 +29,7 @@ public class EmployeeController
 {
 	
 	private final EmployeeService employeeService;
+
 	
 	@PostMapping("/employeeCreate")
 	ResponseEntity<?> createEmployee(@RequestBody EmployeeResponseDTO dto)
@@ -63,5 +69,16 @@ public class EmployeeController
 		System.out.println("delete employee");
 		return ResponseEntity.ok(employeeService.deleteEmployee(id));       
 	}
+
+	@GetMapping("/loanquery/{employeeId}")
+	public ResponseEntity<?> getAllQuery(@PathVariable Long employeeId){
+		
+		return ResponseEntity.ok(employeeService.getAllQuery(employeeId));
+	}
 	
+	@PutMapping("/loanquery/{queryId}")
+	public ResponseEntity<?> resolveQuery(@PathVariable Long queryId, @RequestBody NotificationResolveRequestDTO dto){
+		
+		return ResponseEntity.ok(employeeService.resolveQuery(queryId, dto));
+  }
 }

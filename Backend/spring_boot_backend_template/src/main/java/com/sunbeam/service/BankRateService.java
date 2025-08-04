@@ -15,17 +15,18 @@ import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunbeam.pojo.BankRates;
 
+import lombok.AllArgsConstructor;
+
 
 
 @Service
+@AllArgsConstructor
 public class BankRateService {
 
 	private final ObjectMapper objectMapper;
     private final Path filePath = Paths.get("src/main/resources/data/rates.json");
 
-    public BankRateService() {
-        this.objectMapper = new ObjectMapper();
-    }
+  
 
     public BankRates getRates() throws IOException, StreamReadException, DatabindException {
         try (InputStream is = Files.newInputStream(filePath)) {

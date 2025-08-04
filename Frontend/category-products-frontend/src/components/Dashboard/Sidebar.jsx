@@ -5,10 +5,11 @@ const options = [
   "Dashboard",
   "Statements",
   "Send Money",
-  "Apply for Loan/FD",
+  "Apply for FD/Loan",
   "Loan",
+  "Fixed Deposit",
   "Manage Cards",
-  "Deposit",
+  "Notification"
 ];
 
 const Sidebar = ({ selected, setSelected }) => {
