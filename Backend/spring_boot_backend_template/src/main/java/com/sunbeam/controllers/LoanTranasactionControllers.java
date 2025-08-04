@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/user/transactions")
 @AllArgsConstructor
+@CrossOrigin
 public class LoanTranasactionControllers {
     @Autowired
     private LoanTransactionService transactionService;

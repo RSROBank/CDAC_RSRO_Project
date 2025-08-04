@@ -5,7 +5,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sunbeam.custom_exceptions.IOException;
 import com.sunbeam.dto.AdminResponseDTO;
-import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +22,7 @@ public interface UserService {
 
 	UserDTO signIn(LoginDTO dto);
 	
-	ApiResponse signUp(RegisterDTO dto, MultipartFile img) throws IOException;
+	ApiResponse signUp(RegisterDTO dto, MultipartFile img) throws IOException, java.io.IOException;
 	ProfileResponseDTO getProfileByUserId(Long userId);
 
 	ApiResponse updateProfileByUserId(Long userId, UpdateProfileRequestDTO dto);
