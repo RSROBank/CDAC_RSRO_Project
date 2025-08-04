@@ -3,6 +3,8 @@ package com.sunbeam.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +14,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
-import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,7 +43,6 @@ public class EmployeeEntity {
 	    @Column(name = "phone_no", length = 15)
 	    private String phoneNo;
 
-
 	    private LocalDate dob;
 
 	    @Column(length = 10)
@@ -57,19 +57,20 @@ public class EmployeeEntity {
 	    @Column(length = 100)
 	    private String password;
 
+	    @CreationTimestamp
 	    @Column(name = "created_at")
 	    private LocalDateTime createdAt;
 
+	    @UpdateTimestamp
 	    @Column(name = "modified_at")
 	    private LocalDateTime modifiedAt;
 
 	    @Column(length = 20)
 	    private String status;
 
-	    
 		public EmployeeEntity(String email, String firstName, String lastName, String phoneNo, LocalDate dob,
-				String gender, String govtId, String photoId, String password,
-				LocalDateTime createdAt, LocalDateTime modifiedAt, String status) {
+				String gender, String govtId, String photoId, String password, LocalDateTime createdAt,
+				LocalDateTime modifiedAt, String status) {
 			super();
 			this.email = email;
 			this.firstName = firstName;
@@ -80,7 +81,6 @@ public class EmployeeEntity {
 			this.govtId = govtId;
 			this.photoId = photoId;
 			this.password = password;
-			
 			this.createdAt = createdAt;
 			this.modifiedAt = modifiedAt;
 			this.status = status;

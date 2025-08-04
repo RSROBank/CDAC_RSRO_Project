@@ -4,7 +4,6 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -12,16 +11,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class EmployeeResponseDTO {
-
-    private Long id;
-
+	
+    
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
     private String email;
-
-    @NotBlank(message = "First name is required")
-    private String fullName;
-
+    
+    @NotNull(message = "firstname is required")
+    private String firstName;
+    
     @NotBlank(message = "Phone number is required")
     @Pattern(regexp = "^[0-9]{10,15}$", message = "Invalid phone number format")
     private String phoneNo;
@@ -36,6 +34,12 @@ public class EmployeeResponseDTO {
 
     @NotBlank(message = "Government ID is required")
     private String govtId;
+    
+    @NotNull(message = "lastname is required")
+  	private String lastName;
+    
+    @NotNull(message = "password is required")
+    private String password;
 
     @Size(max = 50, message = "Photo ID must be less than 50 characters")
     private String photoId;
