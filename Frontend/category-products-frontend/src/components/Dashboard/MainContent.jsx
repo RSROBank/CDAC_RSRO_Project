@@ -18,9 +18,9 @@ const MainContent = ({ selected }) => {
       {selected === 'Statements' && <Statements />}
       {selected === 'Send Money' && <MoneyTransfer />}
       {selected === 'Loan' && <LoanSearch />}
-      {selected === 'Apply for FD' && <FDLoanSearchComponent />}
+      {selected === 'Apply for FD/Loan' && <FDLoanSearchComponent />}
       {selected === 'Manage Cards' && <CardComponent />}
-      {selected === 'Deposit' && <FDSearchFilterComponent />}
+      {selected === 'Fixed Deposit' && <FDSearchFilterComponent />}
       {selected === 'Notification' && <NotificationPage />}
     </div>
   );

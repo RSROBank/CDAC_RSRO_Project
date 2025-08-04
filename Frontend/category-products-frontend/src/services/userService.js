@@ -176,7 +176,7 @@ export async function LoanCard1(user) {
 
 export const saveLoanByUserId = async (userId, loan) => {
   try{
-    const url = 'http://localhost:8080/api/loans/saveloan';
+    const url = 'http://localhost:8080/user/loans/saveloan';
     const body = {
         amount : loan.amount,
         tenureMonths : loan.tenure,

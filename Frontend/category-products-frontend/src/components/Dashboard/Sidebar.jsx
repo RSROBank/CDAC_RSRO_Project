@@ -5,10 +5,10 @@ const options = [
   "Dashboard",
   "Statements",
   "Send Money",
-  "Apply for FD",
+  "Apply for FD/Loan",
   "Loan",
+  "Fixed Deposit",
   "Manage Cards",
-  "Deposit",
   "Notification"
 ];
 
