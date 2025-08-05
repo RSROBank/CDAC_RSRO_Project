@@ -63,6 +63,10 @@ function App() {
 
               <Route path="/admindashboard" element={<AdminDashboard />} />
               <Route
+                path="/employeedashboard"
+                element={<EmployeeDashboard />}
+              />
+              <Route
                 path="/customereditprofile"
                 element={<UpdateCustomerProfile />}
               />
@@ -82,7 +86,7 @@ function App() {
                   )
                 }
               />
-              <Route
+              {/* <Route
                 path="/employeedashboard"
                 element={
                   user === "employee" ? (
@@ -91,7 +95,7 @@ function App() {
                     <Navigate to="/" />
                   )
                 }
-              />
+              /> */}
               {/* <Route
                 path="/admindashboard"
                 element={

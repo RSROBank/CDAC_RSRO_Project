@@ -12,6 +12,8 @@ import com.sunbeam.dao.LoanInfoDAO;
 import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.LoanInfoDTO;
 import com.sunbeam.entity.LoanInfo;
+import com.sunbeam.entity.Status;
+
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
@@ -49,12 +51,19 @@ public class LoanInfoServiceImpl implements LoanInfoService {
     }
 
 	@Override
+
+	public List<LoanInfoDTO> getPendingLoan() {
+		
+		return loanInfoDAO.findByStatus(Status.PENDING).stream().map(loanInfo -> modelMapper.map(loanInfo, LoanInfoDTO.class))
+                .collect(Collectors.toList());
+
 	public List<LoanInfoDTO> getLoanByuserId(Long id) {
 		List<LoanInfoDTO> loanInfo = loanInfoDAO.findByUserId(id).stream()
 				.map(loan -> modelMapper.map(loan, LoanInfoDTO.class))
 				.collect(Collectors.toList());
 		
         return loanInfo;
+
 	}
 }
     

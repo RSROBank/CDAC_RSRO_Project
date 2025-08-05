@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Herosection from "./Herosection";
 import axios from "axios";
+import Chatbot from "./UI/Chatbot";
 
 const HomePage = () => {
   const [loanRates, setLoanRates] = useState([]);
@@ -23,7 +24,6 @@ const HomePage = () => {
       <div className="min-h-screen bg-gray-50 text-gray-800">
         {/* Hero Section */}
         <Herosection />
-
         {/* About the Bank */}
         <section className="px-6 py-12 bg-white shadow-sm">
           <h2 className="text-3xl font-bold text-[#0B2E53] mb-4">
@@ -38,7 +38,6 @@ const HomePage = () => {
             services.
           </p>
         </section>
-
         {/* Loan and FD Rates */}
         <section className="px-6 py-12 bg-[#F9F7F2]">
           <h2 className="text-2xl font-semibold text-blue-900 mb-6">
@@ -71,7 +70,6 @@ const HomePage = () => {
             </div>
           </div>
         </section>
-
         {/* Services Offered */}
         <section className="px-6 py-12 bg-white shadow-sm">
           <h2 className="text-2xl font-semibold text-blue-800 mb-6">
@@ -110,7 +108,7 @@ const HomePage = () => {
             </div>
           </div>
         </section>
-
+        <Chatbot />
         {/* Contact Info */}
         <section className="px-6 py-12 bg-[#F9F7F2] text-blue-900">
           <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
