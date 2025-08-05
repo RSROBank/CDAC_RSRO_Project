@@ -29,7 +29,8 @@ public class LoanInfoServiceImpl implements LoanInfoService {
         loanInfo.setStatus(dto.getStatus());
         loanInfo.setCreatedAt(LocalDateTime.now());
         loanInfo.setModifiedAt(LocalDateTime.now());
-       loanInfoDAO.save(loanInfo);
+        loanInfoDAO.save(loanInfo);
+        System.out.println(loanInfo);
         return new ApiResponse("loan is saved");
     }
     
@@ -46,5 +47,14 @@ public class LoanInfoServiceImpl implements LoanInfoService {
     	LoanInfo loanInfo = loanInfoDAO.findById(Id).orElseThrow(() -> new InvalidInputException("Invalid loan by Id!!") );
         return modelMapper.map(loanInfo, LoanInfoDTO.class);
     }
+
+	@Override
+	public List<LoanInfoDTO> getLoanByuserId(Long id) {
+		List<LoanInfoDTO> loanInfo = loanInfoDAO.findByUserId(id).stream()
+				.map(loan -> modelMapper.map(loan, LoanInfoDTO.class))
+				.collect(Collectors.toList());
+		
+        return loanInfo;
+	}
 }
     

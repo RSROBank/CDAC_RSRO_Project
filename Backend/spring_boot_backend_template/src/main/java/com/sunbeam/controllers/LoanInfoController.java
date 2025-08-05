@@ -35,5 +35,11 @@ public class LoanInfoController {
         System.out.println("get loan by id: " + id);
         return ResponseEntity.ok(loanInfoService.getLoanById(id));
     }
+    
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getLoanByuserId(@PathVariable Long id) {
+        System.out.println("get loan by id: " + id);
+        return ResponseEntity.ok(loanInfoService.getLoanByuserId(id));
+    }
 }
 
