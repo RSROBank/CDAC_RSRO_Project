@@ -46,6 +46,9 @@ public class LoanInfo {
 	    @Column(name = "total_emis")
 	    private int totalEmis;
 	    
+	    @Column(name = "interest_rate")
+	    private int interestRate;
+	    
 	    @Column(name = "emi_amount")
 	    private BigDecimal emiAmount;
 	    
