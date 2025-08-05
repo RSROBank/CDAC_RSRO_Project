@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/user/deposit")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @AllArgsConstructor
 public class DepositController {
 

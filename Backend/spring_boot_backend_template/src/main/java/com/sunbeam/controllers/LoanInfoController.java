@@ -8,11 +8,14 @@ import com.sunbeam.service.LoanInfoService;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/user/loans")
 @AllArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class LoanInfoController {
 
     private final LoanInfoService loanInfoService;
@@ -35,5 +38,11 @@ public class LoanInfoController {
         System.out.println("get loan by id: " + id);
         return ResponseEntity.ok(loanInfoService.getLoanById(id));
     }
+    
+    @GetMapping("/pending")
+    public ResponseEntity<?> getMethodName() {
+        return ResponseEntity.ok(loanInfoService.getPendingLoan());
+    }
+    
 }
 
