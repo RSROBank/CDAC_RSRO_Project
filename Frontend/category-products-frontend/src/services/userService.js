@@ -180,20 +180,15 @@ export const loginUser = async (email, password) => {
   return data;
 };
 
-export async function getCustomerStatement(accountNo, filters) {
+export async function getCustomerStatement(userId) {
   try {
-    const response = await axios.get(`${config.serverURL}/user/statements`, {
+    const response = await axios.get(`${config.serverURL}/transactions/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
-      },
-      params: {
-        accountNo: accountNo,
-        fromDate: filters.fromDate || undefined,
-        toDate: filters.toDate || undefined,
-        type: filters.transactionType || undefined,
-      },
+      }
     });
 
+    console.log(response)
     return response.data;
   } catch (error) {
     console.error("Failed to fetch statement:", error);
@@ -210,7 +205,7 @@ export async function getCustomerStatement(accountNo, filters) {
 export async function LoanCard1(user) {
   try {
     const url = `${config.serverURL}/deposit/savedeposit`;
-    const res = await axios.post(url, {
+    const response = await axios.post(url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -235,12 +230,14 @@ export const saveLoanByUserId = async (userId, loan) => {
       userId: userId,
       totalEmis: loan.emiLeft,
       emiAmount: loan.emi,
+      interestRate: loan.interestRate,
+      status: "PENDING"
     };
-    const res = await axios.post(url, {
+    console.log(body)
+    const res = await axios.post(url, body, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body,
     });
     console.log("loan data: ", res);
     if (res.status == 200) {
@@ -261,3 +258,35 @@ export const verifyOtp = async (email, otp) => {
   console.log(response);
   return response.data;
 };
+
+export const getCustomerDashBoardDetailByUserId = async (userId) => {
+  try {
+    const url = `${config.serverURL}/transactions/dashboard/${userId}`;
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response);
+    return response.data;
+  } catch (ex) {
+    console.log("error while fetching dashboard data : ", ex);
+  }
+}
+
+export const updateCardDetailByUserId = async (userId, body) => {
+  try {
+    console.log(body);
+    const url = `${config.serverURL}/transactions/cardupdate/${userId}`;
+    const response = await axios.put(url, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(response);
+    return response.data;
+  } catch (ex) {
+    console.log("error while fetching dashboard data : ", ex);
+  }
+}

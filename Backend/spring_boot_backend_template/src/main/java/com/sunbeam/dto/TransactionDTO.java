@@ -56,9 +56,9 @@ public class TransactionDTO {
 	
 	@NotNull
 	private LocalDateTime createdAt;
-	
-	@NotNull
-	private LocalDateTime modifiedAt;
+//	
+//	@NotNull
+//	private LocalDateTime modifiedAt;
 	
 	
 	

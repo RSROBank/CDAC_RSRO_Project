@@ -37,7 +37,8 @@ public interface UserService {
 
 	ApiResponse saveQuery(LoanRequestDTO dto);
 
-	List<NotificationResponseDTO> getAllLoanQuery(Long userId);
+	List<NotificationResponseDTO> getAllLoanQuery(Long id);
+
 
 
 

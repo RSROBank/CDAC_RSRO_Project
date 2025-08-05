@@ -5,9 +5,9 @@ import Statements from './Statements';
 import MoneyTransfer from '../SendMoney/MoneyTransfer';
 import LoanSearch from '../SendMoney/Loan';
 import FDLoanSearchComponent from '../FD/FDsearchAndApply';
-import CardComponent from '../Cardcomponant/carddetails';
 import FDSearchFilterComponent from '../CardDeposit/fdsearchfiltercomponent.jsx';
 import NotificationPage from './NotificationPage.jsx';
+import CardComponent from '../Cardcomponant/carddetails.jsx';
 
 const MainContent = ({ selected }) => {
   return (
