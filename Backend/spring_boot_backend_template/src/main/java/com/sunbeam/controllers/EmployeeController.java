@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.sunbeam.dao.NotificationDao;
+import com.sunbeam.dto.EmployeeResponseDTO;
 import com.sunbeam.dto.NotificationResolveRequestDTO;
 import com.sunbeam.service.EmployeeService;
 
