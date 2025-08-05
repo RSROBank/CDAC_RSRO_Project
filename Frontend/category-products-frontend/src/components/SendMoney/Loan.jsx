@@ -14,63 +14,48 @@ const LoanSearchComponent = () => {
 
   // Dummy Loan Data
   useEffect(() => {
-    const dummyLoans = [
-      {
-        id: "L001",
-        tenure: "12",
-        amount: 50000,
-        emi: 4167,
-        emiLeft: 10,
-        createdDate: "2025-06-01",
-        interestRate: "8%",
-      },
-      {
-        id: "L002",
-        tenure: "24",
-        amount: 100000,
-        emi: 4167,
-        emiLeft: 24,
-        createdDate: "2025-07-01",
-        interestRate: "7.5%",
-      },
-      {
-        id: "L003",
-        tenure: "6",
-        amount: 30000,
-        emi: 5200,
-        emiLeft: 6,
-        createdDate: "2025-05-15",
-        interestRate: "9%",
-      },
-    ];
+  const loadLoans = async () => {
+    const dummyLoans = await fetchLoan(userId);
     setLoans(dummyLoans);
-  }, []);
+  };
+  loadLoans();
+}, [userId]);
 
   // Filter Logic
   const filteredLoans = loans.filter((loan) => {
     return (
-      (filter.id === "" ||
-        loan.id.toLowerCase().includes(filter.id.toLowerCase())) &&
+      // (filter.id === "" ||
+      //   loan.id.toLowerCase().includes(filter.id.toLowerCase())) &&
       (filter.status === "" ||
         loan.status.toLowerCase().includes(filter.status.toLowerCase())) &&
       (filter.amount === "" || loan.amount.toString().includes(filter.amount))
     );
   });
 
-  const handleLoan = async (loan) => {
-    console.log("new loan created", loan);
+  const fetchLoan = async (userId) => {
+    const token = sessionStorage.getItem("jwt");
     try {
-      const response = await saveLoanByUserId(userId, loan);
-      console.log(response)
-      if (response.success) {
-        console.log("save successful:", response);
-        // Navigate to dashboard or store token here
-      } else {
-        toast.success("Message : " + response.message);
+      const response = await fetch(
+        `http://localhost:8080/user/loans/user/${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+             Authorization: `Bearer ${token}`
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch loan");
       }
+
+      const result = await response.json();
+      console.log("Fetched loan data:", result);
+      return result;
     } catch (error) {
-      console.error("save error:", error);
-      toast.error("An error occurred while saving in.");
+      console.error("Error fetching loans:", error);
+      return [];
     }
   };
 
@@ -133,24 +118,26 @@ const LoanSearchComponent = () => {
                 className="bg-white rounded-2xl shadow-md p-5 border border-[#0B2E53]/10 hover:shadow-lg hover:scale-[1.02] transition-all duration-200 flex flex-col justify-between"
               >
                 <div className="text-[#0B2E53] text-sm space-y-2">
-                  <h4 className="text-lg font-semibold text-[#0B2E53] mb-2">
+                  <h5 className="text-sm text-[#0B2E53] mb-2">
                     Loan #{loan.id}
-                  </h4>
+                  </h5>
 
                   <p><strong>Status:</strong> {loan.status}</p>
-                  <p><strong>Tenure:</strong> {loan.tenure} months</p>
+                  <p><strong>Tenure:</strong> {loan.tenureMonths} months</p>
                   <p><strong>Amount:</strong> ₹{loan.amount}</p>
-                  <p><strong>EMI:</strong> ₹{loan.emi}</p>
-                  <p><strong>EMIs Left:</strong> {loan.emiLeft}</p>
-                  <p><strong>Start Date:</strong> {loan.createdDate}</p>
+                  <p><strong>EMI:</strong> ₹{loan.emiAmount}</p>
+                  <p><strong>EMIs Left:</strong> {loan.totalEmis}</p>
+                  {loan.status == "VERIFIED" && (
+                    <p><strong>Start Date:</strong> {loan.createdDate}</p>
+                  )}
                   <p><strong>Interest Rate:</strong> {loan.interestRate}</p>
                 </div>
 
                 <button
                   className="mt-4 bg-[#0B2E53] text-white py-2 rounded-lg hover:bg-[#C89D2A] transition-all"
-                  onClick={() => handleLoan(loan)}
+                  onClick={() => setShowQueryBox(true)}
                 >
-                  Apply For Loan
+                  Request
                 </button>
               </div>
             ))

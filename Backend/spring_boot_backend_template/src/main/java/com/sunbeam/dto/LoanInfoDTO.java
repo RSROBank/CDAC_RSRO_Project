@@ -11,14 +11,17 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class LoanInfoDTO {
     
+	@NotNull
+	private Long id;
 	@NotNull
     private BigDecimal amount;
 	@NotNull
@@ -33,4 +36,6 @@ public class LoanInfoDTO {
     private int totalEmis;
 	@NotNull
     private BigDecimal emiAmount;
+	@NotNull
+	private float interestRate;
 }

@@ -186,7 +186,7 @@ public class UserServiceImpl  implements UserService{
 	}
 
 
-	
+	@Override
 	public ApiResponse saveQuery(LoanRequestDTO dto) {
 		Notification notification = modelMapper.map(dto, Notification.class);
 		notification.setExpiresAt(LocalDateTime.now().plusDays(1));
