@@ -26,8 +26,11 @@ import lombok.AllArgsConstructor;
 @CrossOrigin(origins = "http://localhost:3000")
 public class TransactionController {
 
+    private final HomeController homeController;
+
 	
 	private final TransactionService transactionService;
+
 	
 
     @PostMapping("/pay")
@@ -46,6 +49,7 @@ public class TransactionController {
 
     @GetMapping("/dashboard/{userId}")
     public ResponseEntity<?> getUserDetailAndStatementByUserId(@PathVariable String userId) {
+    	System.out.println("in Mehtod");
         CustomerDashboardResponseDTO transactions = transactionService.findUserDetailAndStatementByUserId(userId);
         return ResponseEntity.ok(transactions);
     }

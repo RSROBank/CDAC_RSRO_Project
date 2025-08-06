@@ -2,7 +2,6 @@ package com.sunbeam.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -64,6 +63,7 @@ public class TransactionServiceImpl implements TransactionService{
 
 	@Override
 	public CustomerDashboardResponseDTO findUserDetailAndStatementByUserId(String userId) {
+		System.out.println("in service method");
 		User user = userDao.findById(Long.parseLong(userId)).orElseThrow(()-> new ResourceNotFoundException("User not found"));
 		CardDetails card = cardDetailDao.findByUserId(Long.parseLong(userId)).orElseThrow(()-> new ResourceNotFoundException("Card Not found"));
 		CardDetailResponseDTO carddto = modelMapper.map(card, CardDetailResponseDTO.class);
