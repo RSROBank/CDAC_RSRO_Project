@@ -53,7 +53,6 @@ public class UserController {
 	private final JwtUtils jwtUtils;
 	private final OtpService otpService;
 	private final EmailService emailService;
-	private final ModelMapper modelMapper;
 	private final CustomUserDetailsServiceImpl customUserDetailsService;
 	
 	@PostMapping("/login")
@@ -130,7 +129,25 @@ public class UserController {
 	
 		    return ResponseEntity.ok().body(new AuthResp("Successful login!", jwtUtils.generateJwtToken(auth)));
 	}
+	
+	  @GetMapping("/email/{email}")
+	    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+		  System.out.println("Email is valid");
+	        return ResponseEntity.ok(
+	        		userService.getUserByEmail(email));
+	    }
 
-
-
+	    @GetMapping("/account/{accountNumber}")
+	    public ResponseEntity<?> getUserByAccountNumber(@PathVariable String accountNumber) {
+	        return ResponseEntity.ok(
+	        		userService.getUserByAccountNumber(accountNumber));
+	    }
+	    
+	    @GetMapping("/verified")
+	    public ResponseEntity<?> getVerifiedUsers() {
+	    	System.out.println("Customer is verified");
+	        return ResponseEntity.ok(
+	        		userService.getFindByStatusVerified());
+	    }
+	    
 }

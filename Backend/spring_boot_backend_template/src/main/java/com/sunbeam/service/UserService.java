@@ -19,6 +19,7 @@ import com.sunbeam.dto.ProfileResponseDTO;
 import com.sunbeam.dto.RegisterDTO;
 import com.sunbeam.dto.UpdateProfileRequestDTO;
 import com.sunbeam.dto.UserDTO;
+import com.sunbeam.dto.UserResponseDTO;
 
 public interface UserService {
 
@@ -38,6 +39,11 @@ public interface UserService {
 	ApiResponse saveQuery(LoanRequestDTO dto);
 
 	List<NotificationResponseDTO> getAllLoanQuery(Long userId);
+	
+	UserDTO getUserByEmail(String email);
+	
+    UserDTO getUserByAccountNumber(String accountNumber);
+    List<UserResponseDTO> getFindByStatusVerified();
 
 
 
