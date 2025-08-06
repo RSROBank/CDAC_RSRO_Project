@@ -49,7 +49,7 @@ public class TransactionServiceImpl implements TransactionService{
 	
 	
 	@Override
-    public List<TransactionDTO> findByUserId(String userId) {
+    public List<TransactionDTO> findByUserId(Long userId) {
         
         return transactionDao.findByUserId(userId)
         		.stream()
@@ -59,10 +59,10 @@ public class TransactionServiceImpl implements TransactionService{
 
 
 	@Override
-	public CustomerDashboardResponseDTO findUserDetailAndStatementByUserId(String userId) {
+	public CustomerDashboardResponseDTO findUserDetailAndStatementByUserId(Long userId) {
 		System.out.println("in service method");
-		User user = userDao.findById(Long.parseLong(userId)).orElseThrow(()-> new ResourceNotFoundException("User not found"));
-		CardDetails card = cardDetailDao.findByUserId(Long.parseLong(userId));
+		User user = userDao.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User not found"));
+		CardDetails card = cardDetailDao.findByUserId(userId);
 		
 		List<TransactionDTO> trnasdto = transactionDao.findTop5ByUserIdOrderByCreatedAtDesc(userId).stream()
 				.map(transaction -> modelMapper.map(transaction, TransactionDTO.class))
@@ -84,8 +84,8 @@ public class TransactionServiceImpl implements TransactionService{
 	}
 
 
-	public ApiResponse updateCardExpirayByUserId(String userId, CardRequestDTO dto) {
-		CardDetails card = cardDetailDao.findByUserId(Long.parseLong(userId));
+	public ApiResponse updateCardExpirayByUserId(Long userId, CardRequestDTO dto) {
+		CardDetails card = cardDetailDao.findByUserId(userId);
 		System.out.println(dto.getExpiry());
 		if(card != null) {
 			card.setExpiry(dto.getExpiry());

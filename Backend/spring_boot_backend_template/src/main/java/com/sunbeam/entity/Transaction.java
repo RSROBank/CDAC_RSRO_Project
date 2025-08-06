@@ -30,7 +30,7 @@ public class Transaction {
 	private Long id;
 	
 	@Column(name = "user_id")
-	private String userId;
+	private Long userId;
 	
 	@Column(name = "to_account",length = 50)
 	private Long toAccount;
@@ -70,7 +70,7 @@ public class Transaction {
 	@Column(name="loan_id")
 	private Long loanId;
 
-	public Transaction(String userId, Long toAccount, Float amount, Status status, String description,
+	public Transaction(Long userId, Long toAccount, Float amount, Status status, String description,
 			TransactionMode transactionMode, TransactionType transactionType, LocalDateTime createdAt, LocalDateTime modifiedAt, Long fdId,
 			Long loanId) {
 //		super();

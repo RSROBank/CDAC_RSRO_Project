@@ -1,6 +1,5 @@
 package com.sunbeam.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class LoanTranasactionControllers {
-    @Autowired
+	
     private LoanTransactionService transactionService;
 
     @PostMapping("/savedtransaction")
