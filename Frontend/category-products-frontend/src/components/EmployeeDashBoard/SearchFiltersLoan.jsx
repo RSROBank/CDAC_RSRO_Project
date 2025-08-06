@@ -1,26 +1,61 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const token = localStorage.getItem("jwt"); // or from Redux/context
+const authHeader = {
+  headers: {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  },
+};
+
 const LoanFilterComponent = () => {
   const [filter, setFilter] = useState({ userId: "", status: "" });
-  const [loanData, setLoanData] = useState([]); // must be an array
+  const [loanData, setLoanData] = useState([]);
   const [selectedLoan, setSelectedLoan] = useState(null);
   const [extendMessage, setExtendMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Helper to normalize backend response into an array
   const normalizeLoans = (data) => {
     if (!data) return [];
     if (Array.isArray(data)) return data;
-    // common wrappers
     if (Array.isArray(data.content)) return data.content;
     if (Array.isArray(data.data)) return data.data;
-    // sometimes paged object: { items: [...] }
     if (Array.isArray(data.items)) return data.items;
-    // if it's a single object representing one loan
     if (typeof data === "object") return [data];
     return [];
+  };
+
+  const handleStatusUpdate = async (newStatus) => {
+    if (!selectedLoan || !selectedLoan.id) {
+      alert("No loan selected for status update.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await axios.put(
+        `/loan/status/${selectedLoan.id}`,
+        newStatus,
+        authHeader
+      );
+
+      alert(response.data.message || "Status updated successfully");
+
+      const refreshed = await axios.get("/user/loans/pending", authHeader);
+      const normalized = normalizeLoans(refreshed.data);
+      setLoanData(normalized);
+
+      setSelectedLoan(null);
+      setExtendMessage("");
+    } catch (err) {
+      console.error("Status update failed:", err);
+      setError("Failed to update status.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -28,9 +63,7 @@ const LoanFilterComponent = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get("/user/loans/pending"); // adjust endpoint
-        // Inspect response in console while developing:
-        // console.log("raw response.data:", response.data);
+        const response = await axios.get("/user/loans/pending", authHeader);
         const normalized = normalizeLoans(response.data);
         setLoanData(normalized);
       } catch (err) {
@@ -44,11 +77,9 @@ const LoanFilterComponent = () => {
     fetchLoans();
   }, []);
 
-  // Defensive filtering so `.filter` never runs on non-arrays
   const loansArray = Array.isArray(loanData) ? loanData : [];
 
   const filteredLoans = loansArray.filter((loan) => {
-    // adjust property names depending on your backend (userId vs user_id etc)
     const loanUserId = loan.userId ?? loan.user_id ?? "";
     const loanStatus = (loan.status ?? "").toString();
 
@@ -168,12 +199,21 @@ const LoanFilterComponent = () => {
               </li>
               <li>Status: {selectedLoan.status}</li>
             </ul>
+
             <button
-              className="mt-4 bg-[#C89D2A] text-white px-5 py-2 rounded hover:bg-[#A77E20]"
+              className="mt-4 ml-3 bg-[#0B2E53] text-white px-5 py-2 rounded hover:bg-[#08213D]"
+              onClick={() => handleStatusUpdate("ACTIVE")}
+            >
+              Mark as Active
+            </button>
+
+            <button
+              className="mt-4 ml-3 bg-[#C89D2A] text-white px-5 py-2 rounded hover:bg-[#A77E20]"
               onClick={handleExtendLoan}
             >
               Request Loan Extension
             </button>
+
             {extendMessage && (
               <p className="mt-3 text-green-700 font-semibold">
                 {extendMessage}

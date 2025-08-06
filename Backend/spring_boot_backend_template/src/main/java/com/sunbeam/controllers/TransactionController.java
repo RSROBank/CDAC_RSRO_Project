@@ -2,9 +2,7 @@ package com.sunbeam.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sunbeam.dto.CardRequestDTO;
 import com.sunbeam.dto.CustomerDashboardResponseDTO;
-import com.sunbeam.dto.StatementRequestDTO;
 import com.sunbeam.dto.TransactionDTO;
-import com.sunbeam.entity.Transaction;
-import com.sunbeam.service.StatementService;
 import com.sunbeam.service.TransactionService;
 
 import lombok.AllArgsConstructor;
@@ -27,8 +22,6 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/transactions")
-
-
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class TransactionController {
