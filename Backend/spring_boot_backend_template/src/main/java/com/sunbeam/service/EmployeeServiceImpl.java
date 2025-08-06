@@ -39,7 +39,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeDao employeeDao;
 	private final ModelMapper modelMapper;
-  private final NotificationDao notificationDao;
 
 	 @Override
 	    public EmployeeResponseDTO createEmployee(EmployeeResponseDTO employeeResponseDTO) {
