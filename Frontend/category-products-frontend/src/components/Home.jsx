@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Herosection from "./Herosection";
 import axios from "axios";
 import Chatbot from "./UI/Chatbot";
+import { AuthContext } from "../AuthContext/auth.context";
 
 const HomePage = () => {
   const [loanRates, setLoanRates] = useState([]);
   const [fdRates, setFdRates] = useState([]);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     axios
@@ -23,7 +25,9 @@ const HomePage = () => {
     <>
       <div className="min-h-screen bg-gray-50 text-gray-800">
         {/* Hero Section */}
-        <Herosection />
+        {!user && (
+          <Herosection />
+        )}
         {/* About the Bank */}
         <section className="px-6 py-12 bg-white shadow-sm">
           <h2 className="text-3xl font-bold text-[#0B2E53] mb-4">

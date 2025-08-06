@@ -30,23 +30,31 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="space-x-4 text-sm">
-        <a href="/login" className="hover:underline text-white">
-          Login
-        </a>
-        <a href="/signup" className="hover:underline text-white">
-          Sign Up
-        </a>
-        <a href="/dashboard" className="hover:underline text-white">
-          Dashboard
-        </a>
+        {!user && (
+          <a href="/login" className="hover:underline text-white">
+            Login
+          </a>
+        )}
+        {!user && (
+          <a href="/signup" className="hover:underline text-white">
+            Sign Up
+          </a>
+        )}
+        {user && (
+          <a href="/dashboard" className="hover:underline text-white">
+            Dashboard
+          </a>
+        )
 
-        <a href="/employeedashboard" className="hover:underline text-white">
+        }
+
+        {/* <a href="/employeedashboard" className="hover:underline text-white">
           Employee Dashboard
         </a>
         <a href="/admindashboard" className="hover:underline text-white">
           Admin Dashboard
-        </a>
-        {user && !shouldHideDropdown && <ProfileDropdown />}
+        </a> */}
+        {user &&  <ProfileDropdown />}
       </div>
     </nav>
   );
