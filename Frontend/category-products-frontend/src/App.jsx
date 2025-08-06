@@ -20,7 +20,7 @@ import EmployeeProfile from "./components/Profilepages/EmployeeProfile";
 import AdminProfile from "./components/Profilepages/AdminProfile";
 
 function App() {
-  const [user, setUser] = useState("customer");
+  const [user, setUser] = useState("customer")
   return (
     <>
       {/* Container fills the full height and uses flex layout */}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCustomerStatement } from "../../services/userService"; // your API
+import { getCustomerStatement } from "../../services/userService";
 
 const Statements = () => {
   const [filters, setFilters] = useState({
@@ -10,12 +10,11 @@ const Statements = () => {
 
   const [showAll, setShowAll] = useState(false);
   const [statement, setStatement] = useState([]); 
-  const [filteredTransactions, setFilteredTransactions] = useState([]);
+  const [filteredTransactions, setFilteredTransactions] = useState(null); // Initialize as null
   const [userId] = useState(1); 
 
   useEffect(() => {
     getCustomerStatement(userId).then((data) => {
-      console.log(data)
       if (data) setStatement(data);
     });
   }, [userId]);
@@ -25,12 +24,10 @@ const Statements = () => {
   };
 
   const handleApplyFilter = () => {
-    if (!statement.lenght) return;
-
     const filtered = statement.filter((txn) => {
-      // const txnDate = txn.date?.substring(0, 10);
-      // const isAfterFromDate = filters.fromDate ? txnDate >= filters.fromDate : true;
-      // const isBeforeToDate = filters.toDate ? txnDate <= filters.toDate : true;
+      const txnDate = new Date(txn.createdAt).toISOString().split('T')[0];
+      const isAfterFromDate = filters.fromDate ? txnDate >= filters.fromDate : true;
+      const isBeforeToDate = filters.toDate ? txnDate <= filters.toDate : true;
       const matchesType = filters.transactionType
         ? txn.transactionType?.toLowerCase() === filters.transactionType.toLowerCase()
         : true;
@@ -39,9 +36,13 @@ const Statements = () => {
     });
 
     setFilteredTransactions(filtered);
-    console.log(filteredTransactions)
-    setShowAll(false); // Reset pagination
+    setShowAll(false);
   };
+
+  // Determine which transactions to display
+  const displayTransactions = showAll 
+    ? filteredTransactions || [] 
+    : (filteredTransactions || []).slice(0, 10);
 
   return (
     <div className="space-y-6 text-[#0B2E53] bg-[#FDFCF9] p-4 min-h-screen">
@@ -98,9 +99,13 @@ const Statements = () => {
       <div className="bg-white p-4 shadow-md rounded border border-[#0B2E53]/10">
         <h2 className="text-lg font-semibold mb-4">Transactions</h2>
 
-        {statement.length === 0 ? (
+        {filteredTransactions === null ? (
           <p className="text-sm text-gray-500 text-center">
-            No transactions found. Please apply a filter.
+            Please apply filters to view transactions
+          </p>
+        ) : displayTransactions.length === 0 ? (
+          <p className="text-sm text-gray-500 text-center">
+            No transactions found for the selected filters
           </p>
         ) : (
           <div className="overflow-x-auto">
@@ -114,7 +119,7 @@ const Statements = () => {
                 </tr>
               </thead>
               <tbody>
-                {(statement.slice(0, 10)).map((txn, idx) => (
+                {displayTransactions.map((txn, idx) => (
                   <tr
                     key={idx}
                     className="odd:bg-white even:bg-blue-50 text-[#0B2E53]"
@@ -132,7 +137,7 @@ const Statements = () => {
           </div>
         )}
 
-        {filteredTransactions.length > 10 && !showAll && (
+        {filteredTransactions && filteredTransactions.length > 10 && !showAll && (
           <div className="text-right mt-4">
             <button
               onClick={() => setShowAll(true)}
@@ -145,11 +150,13 @@ const Statements = () => {
       </div>
 
       {/* Future Download */}
-      <div className="text-right">
-        <button className="bg-[#C89D2A] text-white px-4 py-2 rounded opacity-60 cursor-not-allowed">
-          Download PDF (Coming Soon)
-        </button>
-      </div>
+      {filteredTransactions && (
+        <div className="text-right">
+          <button className="bg-[#C89D2A] text-white px-4 py-2 rounded opacity-60 cursor-not-allowed">
+            Download PDF (Coming Soon)
+          </button>
+        </div>
+      )}
     </div>
   );
 };
