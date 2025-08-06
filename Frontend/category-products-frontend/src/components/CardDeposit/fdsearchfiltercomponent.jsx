@@ -49,10 +49,10 @@ const FDSearchFilterComponent = () => {
     return matchesAmount && matchesDate && matchesStatus;
   });
 
-  const fetchDeposits = async (userId) => {
+  const fetchDeposits = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/user/deposit/getAllDepositByUserId/${userId}`,
+        `http://localhost:8080/user/deposit/getAllDepositByUserId`,
         {
           method: "GET",
           headers: {
@@ -76,7 +76,7 @@ const FDSearchFilterComponent = () => {
 
   useEffect(()=>{
     const loadData = async () => {
-    const data = await fetchDeposits(userId);
+    const data = await fetchDeposits();
     const enrichedData = data.map(calculateMaturityDetails);
     setFdDataSample(enrichedData);
   };

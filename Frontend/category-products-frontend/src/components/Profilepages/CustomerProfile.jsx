@@ -8,7 +8,7 @@ const CustomerProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const data = await getCustomerProfileById(1);
+        const data = await getCustomerProfileById();
         console.log("Fetched profile data:", data);
 
         setProfile({

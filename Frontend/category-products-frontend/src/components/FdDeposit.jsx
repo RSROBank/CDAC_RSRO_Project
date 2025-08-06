@@ -41,9 +41,9 @@ function LoanCard({ item }) {
     }
   };
 
-  const fetchDeposits = async (userId) => {
+  const fetchDeposits = async () => {
   try {
-    const response = await fetch(`http://localhost:8080/user/deposit/getdeposit/${userId}`, {
+    const response = await fetch(`http://localhost:8080/user/deposit/getdeposit`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +64,7 @@ function LoanCard({ item }) {
 };
 
 useEffect(()=>{
-  fetchDeposits(userId);
+  fetchDeposits();
 }, [])
 
  return (

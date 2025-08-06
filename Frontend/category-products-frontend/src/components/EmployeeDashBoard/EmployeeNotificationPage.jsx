@@ -11,7 +11,7 @@ const NotificationPage = () => {
 
     const fetchNotifications = async () => {
         try {
-            const response = await getAllLoanByEmpId(empId);
+            const response = await getAllLoanByEmpId();
             console.log("response", response);
             if (response.status == 200) {
                 toast.success('Fetch successfully!');

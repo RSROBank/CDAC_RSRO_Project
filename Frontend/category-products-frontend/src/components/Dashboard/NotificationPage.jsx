@@ -11,7 +11,7 @@ const NotificationPage = () => {
     useEffect(() => {
         const fetchNotifications = async () => {
             try {
-                const response = await getAllLoanById(userId);
+                const response = await getAllLoanById();
                 console.log("response", response);
                 if (response.status == 200) {
                     toast.success('Query submitted successfully!');

@@ -14,10 +14,10 @@ const Statements = () => {
   const [userId] = useState(1); 
 
   useEffect(() => {
-    getCustomerStatement(userId).then((data) => {
+    getCustomerStatement().then((data) => {
       if (data) setStatement(data);
     });
-  }, [userId]);
+  }, []);
 
   const handleChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });

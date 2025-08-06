@@ -8,7 +8,7 @@ const AdminProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const data = await getAdminProfileById(1);
+        const data = await getAdminProfileById();
         console.log("Fetched profile data:", data);
 
         setProfile({
