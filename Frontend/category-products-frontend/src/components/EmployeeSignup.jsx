@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { addNewUser } from "../services/userService";
+import { addNewUser  } from "../services/userService";
 
-function AddEmployee() {
+function EmployeeSignup() {
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -21,8 +21,8 @@ function AddEmployee() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
     }));
   };
@@ -83,10 +83,10 @@ function AddEmployee() {
       };
 
       try {
-        const result = await addNewUser(userObj);
+        const result = await addNewUser (userObj);
         if (result && result.message === "Successfully saved.") {
-          toast.success("User registered successfully");
-          navigate("/login");
+          toast.success("User  registered successfully");
+          navigate("/admindashboard");
         } else {
           toast.error("Registration failed");
         }
@@ -212,4 +212,4 @@ function AddEmployee() {
   );
 }
 
-export default AddEmployee;
+export default EmployeeSignup;

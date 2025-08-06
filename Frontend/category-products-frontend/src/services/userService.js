@@ -305,3 +305,19 @@ export const getAllTransactions = async () => {
     console.log("error while fetching dashboard data : ", ex);
   }
 }
+
+
+export const getAddEmployeee = async () => {
+  try{
+    const url = `${config.serverURL}/employeeCreate`;
+    const response = await axois.get(url, {
+      headers: {
+        Autorization:`Bearer: ${token}`,
+      },
+    })
+    console.log(response);
+    return response.data;
+  } catch (ex) {
+    consoel.log("error while fetching employee details :", ex);
+  }
+}

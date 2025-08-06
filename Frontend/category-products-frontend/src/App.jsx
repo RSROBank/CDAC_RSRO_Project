@@ -10,6 +10,7 @@ import Signup from "./components/Signup";
 import CustomerDashboard from "./components/Dashboard/Dashbord";
 import EmployeeDashboard from "./components/EmployeeDashBoard/Dashbord";
 import AdminDashboard from "./components/AdminDashboard/Dashbord";
+import EmployeeSignup from "./components/EmployeeSignup";
 import CustomerProfile from "./components/Profilepages/CustomerProfile";
 import UpdateCustomerProfile from "./components/Profilepages/CustomerEditProfile";
 import { AuthContext } from "./AuthContext/auth.context";
@@ -85,6 +86,10 @@ function App() {
                     <Navigate to="/" />
                   )
                 }
+              />
+              <Route
+                path="/employeesignup"
+                element={<EmployeeSignup/>}
               />
               {/* <Route
                 path="/employeedashboard"

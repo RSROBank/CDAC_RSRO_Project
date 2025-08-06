@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const EmployeeManagement = () => {
   const [searchName, setSearchName] = useState("");
@@ -35,7 +37,11 @@ const EmployeeManagement = () => {
   const handleUpdate = (emp) => {
     alert(`Update profile for ${emp.name}`);
   };
+  const navigate = useNavigate()
 
+  const handleAddEmployee = () => {
+    navigate("/employeeSignup");
+  };
   return (
     <div className="bg-[#FDFCF9] min-h-screen p-6 font-sans">
       <div className="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-lg">
@@ -45,10 +51,9 @@ const EmployeeManagement = () => {
 
   {/* Centered Button */}
     <div className="flex justify-center items-center my-6">
-      <button
-        onClick={() => console.log("Add Employee clicked")}
-        className="bg-[#0B2E53] text-white px-6 py-2 rounded hover:bg-[#08213D]"
-      >
+      
+      <button  className="bg-[#0B2E53] text-white px-6 py-2 rounded hover:bg-[#08213D]"
+      onClick={handleAddEmployee}>
         Add Employee
       </button>
       </div>
@@ -155,5 +160,4 @@ const EmployeeManagement = () => {
 
   );
 };
-
 export default EmployeeManagement;
