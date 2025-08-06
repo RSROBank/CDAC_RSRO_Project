@@ -10,10 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sunbeam.custom_exceptions.ResourceNotFoundException;
 import com.sunbeam.dao.CustomerDao;
 import com.sunbeam.dao.NotificationDao;
+import com.sunbeam.dao.TransactionDao;
 import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.NotificationResolveRequestDTO;
 import com.sunbeam.dto.NotificationResponseDTO;
+import com.sunbeam.dto.TransactionDTO;
 import com.sunbeam.entity.Notification;
+import com.sunbeam.entity.Transaction;
 
 import lombok.AllArgsConstructor;
 
@@ -23,6 +26,7 @@ import lombok.AllArgsConstructor;
 public class EmployeeServiceImpl implements EmployeeService {
 
 	private final NotificationDao notificationDao;
+	private final TransactionDao transactiondao;
 	private final ModelMapper modelMapper;
 
 	@Override
@@ -42,5 +46,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 		notification.setResponse(dto.getResponse());
 		notification.setRead(true);
 		return new ApiResponse("Query resolved");
+	}
+
+	@Override
+	public List<TransactionDTO> getAllTransaction() {
+		List<Transaction> transaction = transactiondao.findAll();
+		List<TransactionDTO> transactionList = transaction.stream()
+				.map(tx-> modelMapper.map(tx, TransactionDTO.class))
+				.collect(Collectors.toList());
+		return transactionList;
 	}
 }
