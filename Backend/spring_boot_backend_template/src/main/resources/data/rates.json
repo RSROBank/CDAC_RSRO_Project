@@ -1,7 +1,7 @@
 {
   "loanRates" : [ {
     "type" : "Home Loan",
-    "rate" : "8.25% p.a."
+    "rate" : "8.15% p.a."
   }, {
     "type" : "Car Loan",
     "rate" : "9.75% p.a."

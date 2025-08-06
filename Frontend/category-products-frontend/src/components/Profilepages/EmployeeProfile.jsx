@@ -8,7 +8,7 @@ const EmployeeProfile = () => {
   useEffect(() => {
       const fetchProfile = async () => {
         try {
-          const data = await getEmployeeProfileById(1);
+          const data = await getEmployeeProfileById();
           console.log("Fetched profile data:", data);
   
           setProfile({

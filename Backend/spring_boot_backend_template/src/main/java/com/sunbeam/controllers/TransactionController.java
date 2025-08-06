@@ -3,9 +3,9 @@ package com.sunbeam.controllers;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sunbeam.dto.CardRequestDTO;
 import com.sunbeam.dto.CustomerDashboardResponseDTO;
 import com.sunbeam.dto.TransactionDTO;
+import com.sunbeam.entity.UserEntity;
 import com.sunbeam.service.TransactionService;
 
 import lombok.AllArgsConstructor;
@@ -28,6 +29,7 @@ public class TransactionController {
 
 	
 	private final TransactionService transactionService;
+
 	
 
     @PostMapping("/pay")
@@ -38,21 +40,22 @@ public class TransactionController {
     }
     
     
-    @GetMapping("/{userId}")
-    public ResponseEntity<?> getTransactionsByUserId(@PathVariable String userId) {
-        List<TransactionDTO> transactions = transactionService.findByUserId(userId);
+    @GetMapping("/")
+    public ResponseEntity<?> getTransactionsByUserId(@AuthenticationPrincipal UserEntity userDetails) {
+        List<TransactionDTO> transactions = transactionService.findByUserId(userDetails.getId());
         return ResponseEntity.ok(transactions);
     }
 
-    @GetMapping("/dashboard/{userId}")
-    public ResponseEntity<?> getUserDetailAndStatementByUserId(@PathVariable String userId) {
-        CustomerDashboardResponseDTO transactions = transactionService.findUserDetailAndStatementByUserId(userId);
+    @GetMapping("/dashboard")
+    public ResponseEntity<?> getUserDetailAndStatementByUserId(@AuthenticationPrincipal UserEntity userDetails) {
+    	System.out.println("in Mehtod");
+        CustomerDashboardResponseDTO transactions = transactionService.findUserDetailAndStatementByUserId(userDetails.getId());
         return ResponseEntity.ok(transactions);
     }
     
-    @PutMapping("/cardupdate/{userId}")
-    public ResponseEntity<?> updateCardExpirayByUserId(@PathVariable String userId, @RequestBody CardRequestDTO dto) {
-        return ResponseEntity.ok(transactionService.updateCardExpirayByUserId(userId, dto));
+    @PutMapping("/cardupdate")
+    public ResponseEntity<?> updateCardExpirayByUserId(@AuthenticationPrincipal UserEntity userDetails, @RequestBody CardRequestDTO dto) {
+        return ResponseEntity.ok(transactionService.updateCardExpirayByUserId(userDetails.getId(), dto));
     }
 	    
 	

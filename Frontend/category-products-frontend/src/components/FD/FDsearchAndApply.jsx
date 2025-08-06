@@ -99,7 +99,7 @@ const FDLoanSearchComponent = () => {
         console.log("FD Applied:", result);
         setStatus("FD Application submitted successfully!");
       } else {
-        const response = await saveLoanByUserId(userId, item);
+        const response = await saveLoanByUserId( item);
         console.log("Loan Applied:", response);
         toast.success("Loan application submitted successfully!");
         setStatus("Loan Application submitted successfully!");

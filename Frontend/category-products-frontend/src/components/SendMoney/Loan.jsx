@@ -15,11 +15,11 @@ const LoanSearchComponent = () => {
   // Dummy Loan Data
   useEffect(() => {
   const loadLoans = async () => {
-    const dummyLoans = await fetchLoan(userId);
+    const dummyLoans = await fetchLoan();
     setLoans(dummyLoans);
   };
   loadLoans();
-}, [userId]);
+}, []);
 
   // Filter Logic
   const filteredLoans = loans.filter((loan) => {
@@ -32,11 +32,11 @@ const LoanSearchComponent = () => {
     );
   });
 
-  const fetchLoan = async (userId) => {
+  const fetchLoan = async () => {
     const token = sessionStorage.getItem("jwt");
     try {
       const response = await fetch(
-        `http://localhost:8080/user/loans/user/${userId}`,
+        `http://localhost:8080/user/loans/user`,
         {
           method: "GET",
           headers: {

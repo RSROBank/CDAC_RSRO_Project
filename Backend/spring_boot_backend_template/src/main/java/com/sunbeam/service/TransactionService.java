@@ -11,10 +11,10 @@ public interface TransactionService {
 
 	ApiResponse saveTransaction(TransactionDTO dto);
 
-	List<TransactionDTO> findByUserId(String userId);
+	List<TransactionDTO> findByUserId(Long userId);
 
-	CustomerDashboardResponseDTO findUserDetailAndStatementByUserId(String userId);
+	CustomerDashboardResponseDTO findUserDetailAndStatementByUserId(Long userId);
 
-	ApiResponse updateCardExpirayByUserId(String userId, CardRequestDTO dto);
+	ApiResponse updateCardExpirayByUserId(Long userId, CardRequestDTO dto);
 
 }

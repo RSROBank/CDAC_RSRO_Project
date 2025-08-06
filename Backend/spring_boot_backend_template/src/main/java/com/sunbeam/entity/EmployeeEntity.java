@@ -8,12 +8,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,17 +45,18 @@ public class EmployeeEntity {
 	    private String phoneNo;
 
 	    private LocalDate dob;
-
+ 
 	    @Column(length = 10)
 	    private String gender;
+
+	    @Column(name = "govt_id_type")
+	    @Enumerated(EnumType.STRING)
+	    private IdType govtIdType;
 
 	    @Column(name = "govt_id", length = 50)
 	    private String govtId;
 
-	    @Column(name = "photo_id", length = 50)
-	    private String photoId;
-
-	    @Column(length = 100)
+	    @Column(length = 200)
 	    private String password;
 
 	    @CreationTimestamp
@@ -66,11 +68,11 @@ public class EmployeeEntity {
 	    private LocalDateTime modifiedAt;
 
 	    @Column(length = 20)
-	    private String status;
+	    private Status status;
 
 		public EmployeeEntity(String email, String firstName, String lastName, String phoneNo, LocalDate dob,
-				String gender, String govtId, String photoId, String password, LocalDateTime createdAt,
-				LocalDateTime modifiedAt, String status) {
+				String gender, IdType govtIdType, String govtId, String password, LocalDateTime createdAt,
+				LocalDateTime modifiedAt, Status status) {
 			super();
 			this.email = email;
 			this.firstName = firstName;
@@ -78,12 +80,15 @@ public class EmployeeEntity {
 			this.phoneNo = phoneNo;
 			this.dob = dob;
 			this.gender = gender;
+			this.govtIdType = govtIdType;
 			this.govtId = govtId;
-			this.photoId = photoId;
 			this.password = password;
 			this.createdAt = createdAt;
 			this.modifiedAt = modifiedAt;
 			this.status = status;
 		}
+	    
+	    
+		
 	    
 }

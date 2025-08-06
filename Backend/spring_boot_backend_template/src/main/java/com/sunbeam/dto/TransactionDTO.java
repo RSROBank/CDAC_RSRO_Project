@@ -29,8 +29,8 @@ public class TransactionDTO {
 //	@NotNull
 //	private long id;
 //	
-	@NotBlank
-	private String userId;
+	@NotNull
+	private Long userId;
 	
 	@NotNull
 	private Long toAccount;

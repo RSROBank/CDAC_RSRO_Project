@@ -1,19 +1,17 @@
 package com.sunbeam.controllers;
 
 import java.util.Map;
-import jakarta.servlet.http.HttpSession;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,14 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunbeam.dto.AuthResp;
-import com.sunbeam.dto.LoanRequestDTO;
 import com.sunbeam.dto.LoginDTO;
-import com.sunbeam.dto.NotificationResolveRequestDTO;
 import com.sunbeam.dto.OtpRequest;
 import com.sunbeam.dto.RegisterDTO;
 import com.sunbeam.dto.UpdateProfileRequestDTO;
-import com.sunbeam.dto.UserDTO;
-import com.sunbeam.entity.User;
 import com.sunbeam.entity.UserEntity;
 import com.sunbeam.security.CustomUserDetailsServiceImpl;
 import com.sunbeam.security.JwtUtils;
@@ -40,8 +34,8 @@ import com.sunbeam.service.EmailService;
 import com.sunbeam.service.OtpService;
 import com.sunbeam.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @RestController
 @RequestMapping("/user")
@@ -84,25 +78,25 @@ public class UserController {
 		return ResponseEntity.ok(userService.signUp(dto1, img));
 	}
 
-	@GetMapping("/profile/{userId}")
-	public ResponseEntity<?> getCustomerProfile(@PathVariable Long userId) {
-		return ResponseEntity.ok(userService.getProfileByUserId(userId));
+	@GetMapping("/profile")
+	public ResponseEntity<?> getCustomerProfile(@AuthenticationPrincipal UserEntity userDetails) {
+		return ResponseEntity.ok(userService.getProfileByUserId(userDetails.getId()));
 	}
 	
-	@GetMapping("/employeeprofile/{userId}")
-	public ResponseEntity<?> getEmployeeProfile(@PathVariable Long userId) {
-		return ResponseEntity.ok(userService.getEmployeeProfileByUserId(userId));
+	@GetMapping("/employeeprofile")
+	public ResponseEntity<?> getEmployeeProfile(@AuthenticationPrincipal UserEntity userDetails) {
+		return ResponseEntity.ok(userService.getEmployeeProfileByUserId(userDetails.getId()));
 	}
 	
-	@GetMapping("/adminprofile/{userId}")
-	public ResponseEntity<?> getAdminProfile(@PathVariable Long userId) {
-		return ResponseEntity.ok(userService.getAdminProfileByUserId(userId));
+	@GetMapping("/adminprofile")
+	public ResponseEntity<?> getAdminProfile(@AuthenticationPrincipal UserEntity userDetails) {
+		return ResponseEntity.ok(userService.getAdminProfileByUserId(userDetails.getId()));
 	}
 	
-	@PutMapping("/profile/{userId}")
-	public ResponseEntity<?> updateCustomerProfile(@PathVariable Long userId, @RequestBody UpdateProfileRequestDTO dto) {
+	@PutMapping("/profile")
+	public ResponseEntity<?> updateCustomerProfile(@AuthenticationPrincipal UserEntity userDetails, @RequestBody UpdateProfileRequestDTO dto) {
 		System.out.println(dto.toString());
-		return ResponseEntity.ok(userService.updateProfileByUserId(userId, dto));
+		return ResponseEntity.ok(userService.updateProfileByUserId(userDetails.getId(), dto));
 	}
 	
 
@@ -151,9 +145,9 @@ public class UserController {
 	        		userService.getFindByStatusVerified());
 	    }
 	    
-	@GetMapping("/loanquery/{id}")
-	public ResponseEntity<?> resolveQuery(@PathVariable Long id){
+	@GetMapping("/loanquery")
+	public ResponseEntity<?> resolveQuery(@AuthenticationPrincipal UserEntity userDetails){
 		
-		return ResponseEntity.ok(userService.getAllLoanQuery(id));
+		return ResponseEntity.ok(userService.getAllLoanQuery(userDetails.getId()));
 	}
 }

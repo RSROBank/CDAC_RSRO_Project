@@ -1,22 +1,20 @@
 package com.sunbeam.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import com.sunbeam.dao.NotificationDao;
 import com.sunbeam.dto.EmployeeResponseDTO;
 import com.sunbeam.dto.NotificationResolveRequestDTO;
+import com.sunbeam.entity.UserEntity;
 import com.sunbeam.service.EmployeeService;
 
 import lombok.AllArgsConstructor;
@@ -40,12 +38,12 @@ public class EmployeeController
 				employeeService.createEmployee(dto));
 	}
 	
-	@GetMapping("/{id}")
-	ResponseEntity<?> getEmployeeById(@PathVariable Long id)
+	@GetMapping("/")
+	ResponseEntity<?> getEmployeeById(@AuthenticationPrincipal UserEntity userDetails)
 	{
-		System.out.println("get Employee" + id);
+//		System.out.println("get Employee" + id);
 		return ResponseEntity.ok(
-				employeeService.getEmployeeById(id));
+				employeeService.getEmployeeById(userDetails.getId()));
 	}
 	
 	@GetMapping
@@ -56,25 +54,25 @@ public class EmployeeController
 				employeeService.getAllEmployees());
 	}
 	
-	@PutMapping("/{id}")
-    ResponseEntity<?> updateEmployee(@PathVariable Long id, @RequestBody EmployeeResponseDTO dto)
+	@PutMapping("/")
+    ResponseEntity<?> updateEmployee(@AuthenticationPrincipal UserEntity userDetails, @RequestBody EmployeeResponseDTO dto)
 	{
 		System.out.println("update employee");
         return ResponseEntity.ok(
-        		employeeService.updateEmployee(id, dto));
+        		employeeService.updateEmployee(userDetails.getId(), dto));
     }
 	
-	@DeleteMapping("/{id}")
-	ResponseEntity<?> deleteEmployee(@PathVariable Long id)
+	@DeleteMapping("/")
+	ResponseEntity<?> deleteEmployee(@AuthenticationPrincipal UserEntity userDetails)
 	{
 		System.out.println("delete employee");
-		return ResponseEntity.ok(employeeService.deleteEmployee(id));       
+		return ResponseEntity.ok(employeeService.deleteEmployee(userDetails.getId()));       
 	}
 
-	@GetMapping("/loanquery/{employeeId}")
-	public ResponseEntity<?> getAllQuery(@PathVariable Long employeeId){
+	@GetMapping("/loanquery")
+	public ResponseEntity<?> getAllQuery(@AuthenticationPrincipal UserEntity userDetails){
 		
-		return ResponseEntity.ok(employeeService.getAllQuery(employeeId));
+		return ResponseEntity.ok(employeeService.getAllQuery(userDetails.getId()));
 	}
 	
 	@PutMapping("/loanquery/{queryId}")
