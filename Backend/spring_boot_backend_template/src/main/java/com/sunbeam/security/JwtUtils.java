@@ -60,8 +60,9 @@ public class JwtUtils {
 		log.info("generate jwt token " + authentication);// contains verified user details
 		UserEntity userPrincipal = 
 				(UserEntity) authentication.getPrincipal();
+		System.out.println(userPrincipal.getUsername());
 		
-		return Jwts.builder().subject(userPrincipal.getFullName())
+		return Jwts.builder().subject(userPrincipal.getUsername())
 				.issuedAt(new Date()).expiration(new Date((new Date()).getTime()+jwtExpirationMs))
 				.claim("authorities", getAuthoritiesInString(userPrincipal.getAuthorities()))
 				.claim("id", userPrincipal.getId())
@@ -79,7 +80,9 @@ public class JwtUtils {
 		    throw new RuntimeException("JWT is missing");
 		}
 		Claims payloadClaims = validateJwtToken(jwt);
+		System.out.println(payloadClaims);
 		String email = getUserNameFromJwtToken(payloadClaims);
+		System.out.println(email);
 		User user = userDao.findByEmail(email).orElseThrow(() -> new InvalidInputException("Account Number Invalid"));
 		UserEntity userEntity = modelMapper.map(user, UserEntity.class);
 		List<GrantedAuthority> authorities = getAuthoritiesFromClaims(payloadClaims);

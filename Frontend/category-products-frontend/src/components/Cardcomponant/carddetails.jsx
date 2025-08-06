@@ -107,7 +107,7 @@ const CardComponent = () => {
               <p className="text-sm">RSRO Bank</p>
             </div>
             <div className="text-2xl font-mono tracking-widest">{cardData?.card ? (
-              <p>{userData.card.cardNumber}</p>
+              <p>{cardData.card.cardNumber}</p>
             ) : (
               <p>---- ----</p>
             )}</div>

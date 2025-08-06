@@ -127,7 +127,7 @@ public class UserServiceImpl  implements UserService{
 	    userDao.save(user);
 	    AccountEntity account = new AccountEntity();
 	    account.setCustomer(user); 
-	    account.setAccountNumber(generate12DigitNumber(dto));
+	    account.setAccountNumber(generate12DigitNumber());
 	    account.setUpiId(generate12DigitNumber());
 	    account.setBalance(0.0);
 	    accountDao.save(account);
