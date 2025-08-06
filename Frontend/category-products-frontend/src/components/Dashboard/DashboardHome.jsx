@@ -10,9 +10,9 @@ const DashboardHome = () => {
 
   useEffect(() => {
     const result = async () => {
-      if (userId) {
+      if (1) {
         try {
-          const res = await getCustomerDashBoardDetailByUserId(userId);
+          const res = await getCustomerDashBoardDetailByUserId();
           if (res) {
             setUserData(res);
             toast.success("Fetched user data successfully");

@@ -8,9 +8,9 @@ const CardComponent = () => {
 
   useEffect(() => {
     const result = async () => {
-      if (userId) {
+      if (1) {
         try {
-          const res = await getCustomerDashBoardDetailByUserId(userId);
+          const res = await getCustomerDashBoardDetailByUserId();
           if (res) {
             setCardData(res);
             toast.success("Fetched user data successfully");
@@ -77,7 +77,7 @@ const CardComponent = () => {
 
     // API call
     try {
-      const res = await updateCardDetailByUserId(userId, { expiry: converted });
+      const res = await updateCardDetailByUserId( { expiry: converted });
 
       console.log(res);
       setCardData({ ...cardData, expiry: newExpiry });

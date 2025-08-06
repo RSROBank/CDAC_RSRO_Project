@@ -22,9 +22,9 @@ export async function addNewUser(user) {
   }
 }
 
-export const getCustomerProfileById = async (userId) => {
+export const getCustomerProfileById = async () => {
   try {
-    const url = `${config.serverURL}/user/profile/${userId}`;
+    const url = `${config.serverURL}/user/profile`;
     const res = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -41,9 +41,9 @@ export const getCustomerProfileById = async (userId) => {
   }
 };
 
-export const getEmployeeProfileById = async (userId) => {
+export const getEmployeeProfileById = async () => {
   try {
-    const url = `${config.serverURL}/user/employeeprofile/${userId}`;
+    const url = `${config.serverURL}/user/employeeprofile`;
     const res = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -58,9 +58,9 @@ export const getEmployeeProfileById = async (userId) => {
   }
 };
 
-export const getAdminProfileById = async (userId) => {
+export const getAdminProfileById = async () => {
   try {
-    const url = `${config.serverURL}/user/adminprofile/${userId}`;
+    const url = `${config.serverURL}/user/adminprofile`;
     const res = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -93,9 +93,9 @@ export const createLoanQuery = async (body) => {
   }
 };
 
-export const getAllLoanById = async (userId) => {
+export const getAllLoanById = async () => {
   try {
-    const url = `${config.serverURL}/user/loanquery/${userId}`;
+    const url = `${config.serverURL}/user/loanquery`;
     const res = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -110,9 +110,9 @@ export const getAllLoanById = async (userId) => {
   }
 };
 
-export const getAllLoanByEmpId = async (empId) => {
+export const getAllLoanByEmpId = async () => {
   try {
-    const url = `${config.serverURL}/employee/loanquery/${empId}`;
+    const url = `${config.serverURL}/employee/loanquery`;
     const res = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -148,9 +148,9 @@ export const sendResponseLoanById = async (queryid, message) => {
   }
 };
 
-export const updateCustomerProfileById = async (userId, userData) => {
+export const updateCustomerProfileById = async (userData) => {
   try {
-    const url = `${config.serverURL}/user/profile/${userId}`;
+    const url = `${config.serverURL}/user/profile`;
     const res = await axios.put(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -180,9 +180,9 @@ export const loginUser = async (email, password) => {
   return data;
 };
 
-export async function getCustomerStatement(userId) {
+export async function getCustomerStatement() {
   try {
-    const response = await axios.get(`${config.serverURL}/transactions/${userId}`, {
+    const response = await axios.get(`${config.serverURL}/transactions`, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
@@ -221,13 +221,13 @@ export async function LoanCard1(user) {
   }
 }
 
-export const saveLoanByUserId = async (userId, loan) => {
+export const saveLoanByUserId = async (loan) => {
   try {
     const url = "http://localhost:8080/user/loans/saveloan";
     const body = {
       amount: loan.amount,
       tenureMonths: loan.tenure,
-      userId: userId,
+      
       totalEmis: loan.emiLeft,
       emiAmount: loan.emi,
       interestRate: loan.interestRate,
@@ -259,9 +259,9 @@ export const verifyOtp = async (email, otp) => {
   return response.data;
 };
 
-export const getCustomerDashBoardDetailByUserId = async (userId) => {
+export const getCustomerDashBoardDetailByUserId = async () => {
   try {
-    const url = `${config.serverURL}/transactions/dashboard/${userId}`;
+    const url = `${config.serverURL}/transactions/dashboard`;
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -274,10 +274,10 @@ export const getCustomerDashBoardDetailByUserId = async (userId) => {
   }
 }
 
-export const updateCardDetailByUserId = async (userId, body) => {
+export const updateCardDetailByUserId = async (body) => {
   try {
     console.log(body);
-    const url = `${config.serverURL}/transactions/cardupdate/${userId}`;
+    const url = `${config.serverURL}/transactions/cardupdate`;
     const response = await axios.put(url, body, {
       headers: {
         Authorization: `Bearer ${token}`,
