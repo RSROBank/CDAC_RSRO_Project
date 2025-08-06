@@ -43,10 +43,7 @@ public class TransactionServiceImpl implements TransactionService{
 		transaction.setCreatedAt(LocalDateTime.now());
 		transaction.setModifiedAt(LocalDateTime.now());
 		
-		
 		transactionDao.save(transaction);
-		
-		
 		return new ApiResponse("Transaction Successful.");
 	} 
 	
@@ -65,19 +62,22 @@ public class TransactionServiceImpl implements TransactionService{
 	public CustomerDashboardResponseDTO findUserDetailAndStatementByUserId(String userId) {
 		System.out.println("in service method");
 		User user = userDao.findById(Long.parseLong(userId)).orElseThrow(()-> new ResourceNotFoundException("User not found"));
-		CardDetails card = cardDetailDao.findByUserId(Long.parseLong(userId)).orElseThrow(()-> new ResourceNotFoundException("Card Not found"));
-		CardDetailResponseDTO carddto = modelMapper.map(card, CardDetailResponseDTO.class);
+		CardDetails card = cardDetailDao.findByUserId(Long.parseLong(userId));
 		
 		List<TransactionDTO> trnasdto = transactionDao.findTop5ByUserIdOrderByCreatedAtDesc(userId).stream()
 				.map(transaction -> modelMapper.map(transaction, TransactionDTO.class))
 				.collect(Collectors.toList());
-		
 		CustomerDashboardResponseDTO dto = new CustomerDashboardResponseDTO();
 		dto.setFullName(user.getFirstName()+" "+ user.getLastName());
 		dto.setEmail(user.getEmail());
 		dto.setMobile(user.getPhoneNumber());
 		dto.setAccountNo(user.getAccount().getAccountNumber());
-		dto.setCard(carddto);
+		if(card != null) {
+			CardDetailResponseDTO carddto = modelMapper.map(card, CardDetailResponseDTO.class);
+			dto.setCard(carddto);
+		}else {
+			dto.setCard(null);
+		}
 		dto.setTransaction(trnasdto);
 		
 		return dto;
@@ -85,10 +85,15 @@ public class TransactionServiceImpl implements TransactionService{
 
 
 	public ApiResponse updateCardExpirayByUserId(String userId, CardRequestDTO dto) {
-		CardDetails card = cardDetailDao.findByUserId(Long.parseLong(userId)).orElseThrow(()-> new ResourceNotFoundException("card not found"));
+		CardDetails card = cardDetailDao.findByUserId(Long.parseLong(userId));
 		System.out.println(dto.getExpiry());
-		card.setExpiry(dto.getExpiry());
-		return new ApiResponse("card expiray detail updated successfully");
+		if(card != null) {
+			card.setExpiry(dto.getExpiry());
+			return new ApiResponse("card expiray detail updated successfully");
+		}else {
+			return new ApiResponse("card not found");
+		}
+		
 	}
 	
 	

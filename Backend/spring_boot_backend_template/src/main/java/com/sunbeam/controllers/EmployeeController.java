@@ -81,5 +81,10 @@ public class EmployeeController
 	public ResponseEntity<?> resolveQuery(@PathVariable Long queryId, @RequestBody NotificationResolveRequestDTO dto){
 		
 		return ResponseEntity.ok(employeeService.resolveQuery(queryId, dto));
-  }
+	}
+	
+	@GetMapping("/alltransactions")
+	public ResponseEntity<?> getAllTransaction(){
+		return ResponseEntity.ok(employeeService.getAllTransaction());
+	}
 }

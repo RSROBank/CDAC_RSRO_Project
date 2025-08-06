@@ -290,3 +290,18 @@ export const updateCardDetailByUserId = async (userId, body) => {
     console.log("error while fetching dashboard data : ", ex);
   }
 }
+
+export const getAllTransactions = async () => {
+  try {
+    const url = `${config.serverURL}/employee/alltransactions`;
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response);
+    return response.data;
+  } catch (ex) {
+    console.log("error while fetching dashboard data : ", ex);
+  }
+}
