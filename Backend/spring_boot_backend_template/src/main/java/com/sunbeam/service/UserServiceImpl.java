@@ -60,6 +60,7 @@ public class UserServiceImpl  implements UserService{
 		return modelMapper.map(entity, UserDTO.class);
 	}
 	
+	
 	private String generate12DigitNumber(RegisterDTO dto) {
 		StringBuilder string = new StringBuilder();
 		string.append(dto.getFirstName().substring(0, 2)) ;
