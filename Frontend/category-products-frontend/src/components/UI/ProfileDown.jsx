@@ -22,6 +22,7 @@ const ProfileDropdown = () => {
     alert("You have been logged out");
     handleScrollToTop();
     setUser(null)
+    sessionStorage.removeItem("jwt");
     navigate("/"); // Redirect to the home page after logout
   };
 

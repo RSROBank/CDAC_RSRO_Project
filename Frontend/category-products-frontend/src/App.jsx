@@ -21,7 +21,8 @@ import EmployeeProfile from "./components/Profilepages/EmployeeProfile";
 import AdminProfile from "./components/Profilepages/AdminProfile";
 
 function App() {
-  const [user, setUser] = useState("customer")
+  const users = sessionStorage.getItem("jwt");
+  const [user, setUser] = useState(users);
   return (
     <>
       {/* Container fills the full height and uses flex layout */}
@@ -38,11 +39,7 @@ function App() {
               <Route
                 path="/customerprofile"
                 element={
-                  user === "customer" ? (
                     <CustomerProfile />
-                  ) : (
-                    <Navigate to="/" />
-                  )
                 }
               />
               <Route
@@ -80,11 +77,7 @@ function App() {
               <Route
                 path="/dashboard"
                 element={
-                  user === "customer" ? (
                     <CustomerDashboard />
-                  ) : (
-                    <Navigate to="/" />
-                  )
                 }
               />
               <Route
