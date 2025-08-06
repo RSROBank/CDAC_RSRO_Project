@@ -35,7 +35,7 @@ public class CardDetails {
 	    private LocalDate expiry;
 	    
 	    private Integer cvv;
-	    private String type;
+	    private String type = "DEBIT";
 	    @Column(name = "user_id")
 	    private Long userId;
 	    @CreationTimestamp

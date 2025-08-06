@@ -20,45 +20,94 @@ import EmployeeProfile from "./components/Profilepages/EmployeeProfile";
 import AdminProfile from "./components/Profilepages/AdminProfile";
 
 function App() {
-  const [user, setUser] = useState("customer")
+  const [user, setUser] = useState("customer");
   return (
     <>
       {/* Container fills the full height and uses flex layout */}
-      <AuthContext value={{user, setUser}}>
-      <div className="flex flex-col min-h-screen">
-        {/* Fixed Navbar at the top */}
-        <Navbar />
+      <AuthContext value={{ user, setUser }}>
+        <div className="flex flex-col min-h-screen">
+          {/* Fixed Navbar at the top */}
+          <Navbar />
 
-        {/* Scrollable content area */}
-        <div className="flex-1 bg-richblack-900">
-          <Routes>
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/customerprofile" element={user === "customer" ? <CustomerProfile /> : <Navigate to="/" />} />
-            <Route path="/employeeprofile" element={user === "employee" ? <EmployeeProfile /> : <Navigate to="/" />} />
-            <Route path="/adminprofile" element={user === "admin" ? <AdminProfile /> : <Navigate to="/" />} />
-            <Route
-              path="/customereditprofile"
-              element={<UpdateCustomerProfile />}
-            />
-            <Route
-              path="/employeeeditprofile"
-              element={<EmployeeEditProfile />}
-            />
-            <Route
-              path="/admineditprofile"
-              element={<AdminEditProfile />}
-            />
-            <Route path="/" element={<HomePage />} />
-            <Route path="/dashboard" element={user === "customer" ? <CustomerDashboard /> : <Navigate to="/" />} />
-            <Route path="/employeedashboard" element={user === "employee" ?<EmployeeDashboard />  : <Navigate to="/" />} />
-            <Route path="/admindashboard" element={user === "admin" ?<AdminDashboard />  : <Navigate to="/" />} />
-          </Routes>
+          {/* Scrollable content area */}
+          <div className="flex-1 bg-richblack-900">
+            <Routes>
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route
+                path="/customerprofile"
+                element={
+                  user === "customer" ? (
+                    <CustomerProfile />
+                  ) : (
+                    <Navigate to="/" />
+                  )
+                }
+              />
+              <Route
+                path="/employeeprofile"
+                element={
+                  user === "employee" ? (
+                    <EmployeeProfile />
+                  ) : (
+                    <Navigate to="/" />
+                  )
+                }
+              />
+              <Route
+                path="/adminprofile"
+                element={
+                  user === "admin" ? <AdminProfile /> : <Navigate to="/" />
+                }
+              />
+
+              <Route path="/admindashboard" element={<AdminDashboard />} />
+              <Route
+                path="/employeedashboard"
+                element={<EmployeeDashboard />}
+              />
+              <Route
+                path="/customereditprofile"
+                element={<UpdateCustomerProfile />}
+              />
+              <Route
+                path="/employeeeditprofile"
+                element={<EmployeeEditProfile />}
+              />
+              <Route path="/admineditprofile" element={<AdminEditProfile />} />
+              <Route path="/" element={<HomePage />} />
+              <Route
+                path="/dashboard"
+                element={
+                  user === "customer" ? (
+                    <CustomerDashboard />
+                  ) : (
+                    <Navigate to="/" />
+                  )
+                }
+              />
+              {/* <Route
+                path="/employeedashboard"
+                element={
+                  user === "employee" ? (
+                    <EmployeeDashboard />
+                  ) : (
+                    <Navigate to="/" />
+                  )
+                }
+              /> */}
+              {/* <Route
+                path="/admindashboard"
+                element={
+                  user === "admin" ? <AdminDashboard /> : <Navigate to="/" />
+                }
+              /> */}
+            </Routes>
+          </div>
+
+          {/* Fixed Footer at the bottom */}
+          <Footer />
         </div>
-
-        {/* Fixed Footer at the bottom */}
-        <Footer />
-      </div>
       </AuthContext>
 
       <ToastContainer />

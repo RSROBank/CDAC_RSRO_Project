@@ -5,11 +5,11 @@ const options = [
   "Dashboard",
   "Statements",
   "Send Money",
-  "Apply for FD/Loan",
-  "Loan",
+  "Apply for Fixed Deposit",
+  "Apply for Loan",
   "Fixed Deposit",
   "Manage Cards",
-  "Notification"
+  "Notification",
 ];
 
 const Sidebar = ({ selected, setSelected }) => {
@@ -23,10 +23,8 @@ const Sidebar = ({ selected, setSelected }) => {
           key={option}
           className={`w-full py-2 px-3 text-left border text-[#0B2E53] shadow-md rounded mt-4 border-[#0B2E53]
               ${
-              selected === option
-                ? "bg-[#0B2E53] text-white shadow-md"
-                : ""
-            }`}
+                selected === option ? "bg-[#0B2E53] text-white shadow-md" : ""
+              }`}
           onClick={() => setSelected(option)}
         >
           {option}

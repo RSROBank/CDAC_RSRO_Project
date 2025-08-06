@@ -4,7 +4,8 @@ import SearchFilterTransactions from "../EmployeeDashBoard/SearchFilterTransacti
 import CustomersManagement from "./AdminCustomerManagement";
 import EmployeeManagement from "./AdminEmployeeManagement";
 import TransactionManagement from "./AdminTransactionManagement";
-import UserDataManagement from "./AdminDataManagement";
+// import UserDataManagement from "./AdminDataManagement";
+import RatesManagement from "./AdminDataManagement";
 
 const MainContent = ({ selected }) => {
   return (
@@ -16,9 +17,7 @@ const MainContent = ({ selected }) => {
       {selected === "Customer Management" && <CustomersManagement />}
       {selected === "Transaction Management" && <SearchFilterTransactions />}
       {selected === "Employee Management" && <EmployeeManagement />}
-      {selected === "Data Updation and Maintenance" && (
-        <UserDataManagement />
-      )}
+      {selected === "Data Updation and Maintenance" && <RatesManagement />}
     </div>
   );
 };

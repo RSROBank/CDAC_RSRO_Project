@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunbeam.dto.AuthResp;
 import com.sunbeam.dto.LoanRequestDTO;
 import com.sunbeam.dto.LoginDTO;
+import com.sunbeam.dto.NotificationResolveRequestDTO;
 import com.sunbeam.dto.OtpRequest;
 import com.sunbeam.dto.RegisterDTO;
 import com.sunbeam.dto.UpdateProfileRequestDTO;
@@ -63,7 +64,7 @@ public class UserController {
         Authentication validAuth = authenticationManager.authenticate(authToken);
 		
 		String otp = otpService.generateOtp(dto.getEmail());
-		
+		System.out.println(otp);
 		emailService.sendOtpEmail(dto.getEmail(), otp);
 		
 		session.setAttribute("email", dto.getEmail());
@@ -150,4 +151,9 @@ public class UserController {
 	        		userService.getFindByStatusVerified());
 	    }
 	    
+	@GetMapping("/loanquery/{id}")
+	public ResponseEntity<?> resolveQuery(@PathVariable Long id){
+		
+		return ResponseEntity.ok(userService.getAllLoanQuery(id));
+	}
 }

@@ -12,6 +12,8 @@ import com.sunbeam.dao.LoanInfoDAO;
 import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.LoanInfoDTO;
 import com.sunbeam.entity.LoanInfo;
+import com.sunbeam.entity.Status;
+
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
@@ -29,7 +31,8 @@ public class LoanInfoServiceImpl implements LoanInfoService {
         loanInfo.setStatus(dto.getStatus());
         loanInfo.setCreatedAt(LocalDateTime.now());
         loanInfo.setModifiedAt(LocalDateTime.now());
-       loanInfoDAO.save(loanInfo);
+        loanInfoDAO.save(loanInfo);
+        System.out.println(loanInfo);
         return new ApiResponse("loan is saved");
     }
     
@@ -42,9 +45,38 @@ public class LoanInfoServiceImpl implements LoanInfoService {
     }
     
     @Override
-    public LoanInfoDTO getLoanById(Long Id) {
-    	LoanInfo loanInfo = loanInfoDAO.findById(Id).orElseThrow(() -> new InvalidInputException("Invalid loan by Id!!") );
+    public LoanInfoDTO getLoanById(Long id) {
+    	LoanInfo loanInfo = loanInfoDAO.findById(id).orElseThrow(() -> new InvalidInputException("Invalid loan by Id!!") );
         return modelMapper.map(loanInfo, LoanInfoDTO.class);
     }
+
+	@Override
+	public List<LoanInfoDTO> getPendingLoan() {
+		
+		return loanInfoDAO.findByStatus(Status.PENDING).stream().map(loanInfo -> modelMapper.map(loanInfo, LoanInfoDTO.class))
+                .collect(Collectors.toList());
+	}
+
+	@Override
+	public List<LoanInfoDTO> getLoanByuserId(Long id) {
+		List<LoanInfoDTO> loanInfo = loanInfoDAO.findByUserId(id).stream()
+				.map(loan -> modelMapper.map(loan, LoanInfoDTO.class))
+				.collect(Collectors.toList());
+		
+        return loanInfo;
+
+	}
+	
+
+	@Override
+	public ApiResponse statusChange(Long id, Status status) {
+		if (status == null) {
+		    throw new InvalidInputException("Status cannot be null");
+		}
+		LoanInfo loanInfo = loanInfoDAO.findById(id).orElseThrow(() -> new InvalidInputException("Invalid loan by Id!!") );
+		loanInfo.setStatus(status);
+		loanInfoDAO.save(loanInfo);
+		return new ApiResponse("Status Updated successfully");
+	}
 }
     

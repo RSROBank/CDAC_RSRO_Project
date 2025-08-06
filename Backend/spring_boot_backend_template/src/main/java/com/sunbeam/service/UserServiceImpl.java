@@ -167,8 +167,8 @@ public class UserServiceImpl  implements UserService{
 	public EmployeeResponseDTO getEmployeeProfileByUserId(Long userId) {
 		EmployeeEntity user = employeeDao.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User not found"));
         EmployeeResponseDTO dto = modelMapper.map(user, EmployeeResponseDTO.class);
-        //dto.setFullName(user.getFirstName()+" "+user.getLastName());
-        dto.setFirstName(user.getFirstName()+" "+user.getLastName());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getFirstName());
         return dto;
 	}
 
@@ -180,7 +180,7 @@ public class UserServiceImpl  implements UserService{
 	}
 
 
-	
+	@Override
 	public ApiResponse saveQuery(LoanRequestDTO dto) {
 		Notification notification = modelMapper.map(dto, Notification.class);
 		notification.setExpiresAt(LocalDateTime.now().plusDays(1));

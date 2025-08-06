@@ -1,7 +1,5 @@
 package com.sunbeam.security;
 
-import java.lang.System.Logger;
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -16,15 +14,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-
-import com.sunbeam.entity.User;
 import com.sunbeam.entity.UserEntity;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Component
@@ -67,6 +62,9 @@ public class JwtUtils {
 	
 	public Authentication populateAuthenticationTokenFromJWT(String jwt)
 	{
+		if (jwt == null || jwt.isBlank()) {
+		    throw new RuntimeException("JWT is missing");
+		}
 		Claims payloadClaims = validateJwtToken(jwt);
 		String email = getUserNameFromJwtToken(payloadClaims);
 		List<GrantedAuthority> authorities = getAuthoritiesFromClaims(payloadClaims);

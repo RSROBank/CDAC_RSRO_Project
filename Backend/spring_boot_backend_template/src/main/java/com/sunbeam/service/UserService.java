@@ -26,7 +26,7 @@ public interface UserService {
 	UserDTO signIn(LoginDTO dto);
 	
 
-	ApiResponse signUp(RegisterDTO dto, MultipartFile img) throws IOException, java.io.IOException, Exception;
+	ApiResponse signUp(RegisterDTO dto, MultipartFile img) throws Exception;
 
 	ProfileResponseDTO getProfileByUserId(Long userId);
 

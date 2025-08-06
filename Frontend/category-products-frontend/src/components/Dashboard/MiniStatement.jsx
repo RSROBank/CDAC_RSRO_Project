@@ -1,37 +1,51 @@
 // src/components/Dashboard/MiniStatement.js
 import React from 'react';
 
-const transactions = [
-  { date: '2025-07-21', desc: 'ATM Withdrawal', amount: '-₹500' },
-  { date: '2025-07-20', desc: 'Electricity Bill', amount: '-₹1200' },
-  { date: '2025-07-19', desc: 'Salary Credit', amount: '+₹40,000' },
-  { date: '2025-07-18', desc: 'Grocery Store', amount: '-₹900' },
-  { date: '2025-07-17', desc: 'UPI to John', amount: '-₹300' },
-];
+// const transactions = [
+//   { date: '2025-07-21', desc: 'ATM Withdrawal', amount: '-₹500' },
+//   { date: '2025-07-20', desc: 'Electricity Bill', amount: '-₹1200' },
+//   { date: '2025-07-19', desc: 'Salary Credit', amount: '+₹40,000' },
+//   { date: '2025-07-18', desc: 'Grocery Store', amount: '-₹900' },
+//   { date: '2025-07-17', desc: 'UPI to John', amount: '-₹300' },
+// ];
 
-const MiniStatement = () => {
+const MiniStatement = ({ transactions }) => {
   return (
-    <div className="bg-[#FDFCF9] p-4 shadow-md rounded">
+    <div className="bg-[#FDFCF9] p-4 shadow-md rounded border border-[#0B2E53]/10">
       <h2 className="text-lg font-semibold mb-4">Mini Statement</h2>
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b">
-            <th className="text-left p-2">Date</th>
-            <th className="text-left p-2">Description</th>
-            <th className="text-right p-2">Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((txn, idx) => (
-            <tr key={idx} className="border-b hover:bg-gray-100">
-              <td className="p-2">{txn.date}</td>
-              <td className="p-2">{txn.desc}</td>
-              <td className="p-2 text-right">{txn.amount}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+      {transactions.length === 0 ? (
+        <p className="text-center text-gray-500">No transactions available.</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full table-auto border-collapse border border-[#0B2E53] text-sm">
+            <thead>
+              <tr className="bg-[#0B2E53] text-white">
+                <th className="border border-[#0B2E53] px-4 py-2 text-left">Date</th>
+                <th className="border border-[#0B2E53] px-4 py-2 text-left">Recipient AccountNo</th>
+                <th className="border border-[#0B2E53] px-4 py-2 text-left">Description</th>
+                <th className="border border-[#0B2E53] px-4 py-2 text-left">Type</th>
+                <th className="border border-[#0B2E53] px-4 py-2 text-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {transactions.map((txn, idx) => (
+                <tr key={idx} className="odd:bg-white even:bg-blue-50 text-[#0B2E53]">
+                  <td className="border border-[#0B2E53] px-4 py-2">{txn.createdAt?.substring(0, 10)}</td>
+                  <td className="border border-[#0B2E53] px-4 py-2">{txn.toAccount}</td>
+                  <td className="border border-[#0B2E53] px-4 py-2">{txn.description || txn.desc}</td>
+                  <td className="border border-[#0B2E53] px-4 py-2">{txn.transactionType}</td>
+                  <td className="border border-[#0B2E53] px-4 py-2 text-right">
+                    {(txn.transactionType === "CREDIT" ? "+" : "-") + " ₹" + txn.amount}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
+
   );
 };
 
