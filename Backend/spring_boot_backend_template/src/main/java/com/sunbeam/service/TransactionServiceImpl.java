@@ -44,10 +44,7 @@ public class TransactionServiceImpl implements TransactionService{
 		transaction.setCreatedAt(LocalDateTime.now());
 		transaction.setModifiedAt(LocalDateTime.now());
 		
-		
 		transactionDao.save(transaction);
-		
-		
 		return new ApiResponse("Transaction Successful.");
 	} 
 	
