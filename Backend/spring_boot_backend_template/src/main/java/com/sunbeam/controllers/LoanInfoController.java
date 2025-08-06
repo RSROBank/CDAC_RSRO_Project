@@ -45,17 +45,23 @@ public class LoanInfoController {
         return ResponseEntity.ok(loanInfoService.getLoanById(id));
     }
     
+
     @GetMapping("/pending")
     public ResponseEntity<?> getPendingLoan() {
         return ResponseEntity.ok(loanInfoService.getPendingLoan());
     }
     
     @PutMapping("/change/{id}")
-    public ResponseEntity<?> changeStatusVerified(@PathVariable Long name,@RequestBody Status status) {
+    public ResponseEntity<?> changeStatusVerified(@PathVariable Long id,@RequestBody Status status) {
         
-        return ResponseEntity.ok(loanInfoService.statusChange(name, status));
+        return ResponseEntity.ok(loanInfoService.statusChange(id, status));
     }
     
-    
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getLoanByuserId(@PathVariable Long id) {
+        System.out.println("get loan by id: " + id);
+        return ResponseEntity.ok(loanInfoService.getLoanByuserId(id));
+    }
 }
 

@@ -31,7 +31,8 @@ public class LoanInfoServiceImpl implements LoanInfoService {
         loanInfo.setStatus(dto.getStatus());
         loanInfo.setCreatedAt(LocalDateTime.now());
         loanInfo.setModifiedAt(LocalDateTime.now());
-       loanInfoDAO.save(loanInfo);
+        loanInfoDAO.save(loanInfo);
+        System.out.println(loanInfo);
         return new ApiResponse("loan is saved");
     }
     
@@ -50,12 +51,22 @@ public class LoanInfoServiceImpl implements LoanInfoService {
     }
 
 	@Override
-	
 	public List<LoanInfoDTO> getPendingLoan() {
 		
 		return loanInfoDAO.findByStatus(Status.PENDING).stream().map(loanInfo -> modelMapper.map(loanInfo, LoanInfoDTO.class))
                 .collect(Collectors.toList());
 	}
+
+	@Override
+	public List<LoanInfoDTO> getLoanByuserId(Long id) {
+		List<LoanInfoDTO> loanInfo = loanInfoDAO.findByUserId(id).stream()
+				.map(loan -> modelMapper.map(loan, LoanInfoDTO.class))
+				.collect(Collectors.toList());
+		
+        return loanInfo;
+
+	}
+	
 
 	@Override
 	public ApiResponse statusChange(Long id, Status status) {

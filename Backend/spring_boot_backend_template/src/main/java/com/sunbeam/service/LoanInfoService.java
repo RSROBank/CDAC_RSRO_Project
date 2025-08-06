@@ -10,8 +10,11 @@ public interface LoanInfoService {
     ApiResponse saveLoanInfo(LoanInfoDTO dto);
     List<LoanInfoDTO> getAllLoans();
     LoanInfoDTO getLoanById(Long id);
+
 	List<LoanInfoDTO> getPendingLoan();
 	ApiResponse statusChange(Long name, Status status);
-	
-	
+
+
+	List<LoanInfoDTO> getLoanByuserId(Long id);
+
 }

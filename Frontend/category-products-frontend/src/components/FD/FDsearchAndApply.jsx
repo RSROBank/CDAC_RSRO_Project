@@ -42,8 +42,7 @@ const FDLoanSearchComponent = () => {
         emi: 4167,
         emiLeft: 10,
         createdDate: "2025-06-01",
-        interestRate: "8%",
-        status: "Open"
+        interestRate: 8,
       },
       {
         id: "L002",
@@ -52,8 +51,7 @@ const FDLoanSearchComponent = () => {
         emi: 4167,
         emiLeft: 24,
         createdDate: "2025-07-01",
-        interestRate: "7.5%",
-        status: "Available"
+        interestRate: 7.5,
       },
     ]);
   }, []);
@@ -194,9 +192,8 @@ const FDLoanSearchComponent = () => {
                     <p><strong>Tenure:</strong> {item.tenure} months</p>
                     <p><strong>EMI:</strong> ₹{item.emi}</p>
                     <p><strong>EMIs Left:</strong> {item.emiLeft}</p>
-                    <p><strong>Interest Rate:</strong> {item.interestRate}</p>
+                    <p><strong>Interest Rate:</strong> {item.interestRate}%</p>
                     <p><strong>Start Date:</strong> {item.createdDate}</p>
-                    <p><strong>Status:</strong> {item.status}</p>
                   </>
                 )}
               </div>

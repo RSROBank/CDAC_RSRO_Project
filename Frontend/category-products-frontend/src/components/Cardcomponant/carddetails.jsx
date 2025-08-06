@@ -1,140 +1,163 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { getCustomerDashBoardDetailByUserId, updateCardDetailByUserId } from "../../services/userService";
 
 const CardComponent = () => {
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiry, setExpiry] = useState("");
-  const [cvv, setCvv] = useState("");
+  const [cardData, setCardData] = useState({});
+  const [userId, setUserID] = useState(1);
 
-  const [cardError, setCardError] = useState("");
-  const [expiryError, setExpiryError] = useState("");
-  const [cvvError, setCvvError] = useState("");
-  const [statusMessage, setStatusMessage] = useState("");
-
-  const luhnCheck = (number) => {
-    let sum = 0;
-    let alt = false;
-    number = number.replace(/\D/g, "");
-    for (let i = number.length - 1; i >= 0; i--) {
-      let n = parseInt(number[i]);
-      if (alt) {
-        n *= 2;
-        if (n > 9) n -= 9;
+  useEffect(() => {
+    const result = async () => {
+      if (userId) {
+        try {
+          const res = await getCustomerDashBoardDetailByUserId(userId);
+          if (res) {
+            setCardData(res);
+            toast.success("Fetched user data successfully");
+          } else {
+            toast.error("Error while loading data");
+          }
+        } catch (err) {
+          toast.error("Error fetching data");
+          console.error(err);
+        }
       }
-      sum += n;
-      alt = !alt;
-    }
-    return sum % 10 === 0;
+    };
+    result();
+  }, []);
+
+  const [newExpiry, setNewExpiry] = useState("");
+  const [message, setMessage] = useState("");
+
+  const convertExpiryToISO = (expiryInput) => {
+    const [mm, yy] = expiryInput.split("/");
+
+    if (!mm || !yy || mm.length !== 2 || yy.length !== 2) return null;
+
+    // Convert to full year: '30' → '2030'
+    const fullYear = `20${yy}`;
+    return `${fullYear}-${mm}-05`; // or use '01' for the day
   };
 
-  const validateExpiry = (expiry) => {
-    const [month, year] = expiry.split("/");
-    if (!month || !year || month.length !== 2 || year.length !== 2)
-      return false;
-    const now = new Date();
-    const inputDate = new Date(`20${year}`, month - 1);
-    return inputDate >= new Date(now.getFullYear(), now.getMonth());
-  };
-
-  const handleCardNumberChange = (e) => {
-    const value = e.target.value;
-    setCardNumber(value);
-
-    const clean = value.replace(/\D/g, "");
-    if (clean.length >= 13 && clean.length <= 19 && luhnCheck(clean)) {
-      setCardError("");
-    } else {
-      setCardError("Invalid card number");
-    }
-  };
-
-  const handleExpiryChange = (e) => {
-    const value = e.target.value;
-    setExpiry(value);
-    setExpiryError(validateExpiry(value) ? "" : "Invalid or expired date");
-  };
-
-  const handleCvvChange = (e) => {
-    const value = e.target.value;
-    setCvv(value);
-    setCvvError(/^\d{3,4}$/.test(value) ? "" : "Invalid CVV");
-  };
-
-  const handleSubmit = (e) => {
+  const handleExtendExpiry = async (e) => {
     e.preventDefault();
-    if (!cardError && !expiryError && !cvvError) {
-      setStatusMessage("Payment submitted successfully.");
-    } else {
-      setStatusMessage("Please fix the errors before submitting.");
+
+    // Validate MM/YY format
+    if (!/^\d{2}\/\d{2}$/.test(newExpiry)) {
+      setMessage("Enter expiry in MM/YY format.");
+      return;
+    }
+
+    // Parse new expiry input
+    const [newMonth, newYearShort] = newExpiry.split("/");
+    const newFullYear = parseInt("20" + newYearShort);
+    const newDate = new Date(newFullYear, parseInt(newMonth) - 1);
+
+    // Parse current expiry from cardData (MM/YY format)
+    const [currYearShort,currMonth, date] = cardData.card.expiry.split("-");
+    const currFullYear = parseInt(currYearShort);
+    const currDate = new Date(currFullYear, parseInt(currMonth) - 1);
+
+    // Calculate 2 years ahead from current expiry
+    const maxAllowedDate = new Date(currDate);
+    maxAllowedDate.setFullYear(currDate.getFullYear() + 2);
+
+    console.log(newDate, " ", currDate)
+    // Logical checks
+    if (newDate <= currDate) {
+      setMessage("New expiry must be after the current expiry.");
+      return;
+    } else if (newDate > maxAllowedDate) {
+      setMessage("You can only extend up to 2 years from current expiry.");
+      return;
+    }
+
+    // Convert MM/YY to ISO format (YYYY-MM-DD)
+    const converted = `${newFullYear}-${newMonth.padStart(2, "0")}-05`;
+
+    // API call
+    try {
+      const res = await updateCardDetailByUserId(userId, { expiry: converted });
+
+      console.log(res);
+      setCardData({ ...cardData, expiry: newExpiry });
+      setMessage(res.message);
+      console.log(res)
+      setNewExpiry("");
+    } catch (err) {
+      console.error(err);
+      setMessage("Error updating expiry");
     }
   };
+
+
 
   return (
-    <div className="min-h-screen bg-[#FDFCF9] flex justify-center items-start py-10 px-4">
-      <div className="bg-white shadow-lg rounded-xl p-5 w-full max-w-md font-sans">
-        <h2 className="text-xl font-semibold mb-5 text-center text-[#0B2E53]">
-          Card Payment
-        </h2>
+    <div className="min-h-screen bg-[#FDFCF9] flex flex-col items-center py-10 px-4 space-y-10">
+      <h1 className="text-2xl font-semibold text-[#0B2E53]">Your Debit Card</h1>
 
-        <form onSubmit={handleSubmit} noValidate className="space-y-4">
-          <div>
-            <label className="block font-medium text-[#0B2E53]">Card Number</label>
-            <input
-              type="text"
-              maxLength="19"
-              placeholder="1234 5678 9012 3456"
-              value={cardNumber}
-              onChange={handleCardNumberChange}
-              className="w-full border border-[#0B2E53] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
-            />
-            {cardError && (
-              <div className="text-red-600 text-sm mt-1">{cardError}</div>
-            )}
+      {/* Card */}
+      <div className="relative group w-[350px] h-[220px] [perspective:1000px]">
+        {cardData?.card ? (
+          <div className="absolute inset-0 transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+            {/* Front */}
+
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-800 to-blue-600 rounded-2xl text-white p-6 [backface-visibility:hidden] flex flex-col justify-between">
+              <div className="text-sm">Debit Card</div>
+              <div className="text-2xl font-mono tracking-widest">{cardData.card.cardNumber}</div>
+              <div className="flex justify-between text-sm mt-4">
+                <div>
+                  <div className="text-xs opacity-70">Card Holder</div>
+                  <div className="font-semibold">{cardData.fullName || "Loading..."}</div>
+                </div>
+                <div>
+                  <div className="text-xs opacity-70">Valid Thru</div>
+                  <div className="font-semibold">{cardData.card.expiry}</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-800 to-blue-600 rounded-2xl text-white p-6 [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col justify-center items-center">
+              <div className="bg-black w-full h-6 mb-4"></div>
+              <div className="w-full">
+                <div className="text-xs opacity-70">CVV</div>
+                <div className="bg-white text-black text-center py-2 rounded font-semibold text-lg tracking-widest">
+                  {cardData.card.cvv}
+                </div>
+              </div>
+            </div>
+
           </div>
+        ) : (
+          <p>No card assigned yet</p>
+        )}
+      </div>
 
-          <div>
-            <label className="block font-medium text-[#0B2E53]">Expiry (MM/YY)</label>
-            <input
-              type="text"
-              maxLength="5"
-              placeholder="MM/YY"
-              value={expiry}
-              onChange={handleExpiryChange}
-              className="w-full border border-[#0B2E53] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
-            />
-            {expiryError && (
-              <div className="text-red-600 text-sm mt-1">{expiryError}</div>
-            )}
-          </div>
-
-          <div>
-            <label className="block font-medium text-[#0B2E53]">CVV</label>
-            <input
-              type="text"
-              maxLength="4"
-              placeholder="123"
-              value={cvv}
-              onChange={handleCvvChange}
-              className="w-full border border-[#0B2E53] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
-            />
-            {cvvError && (
-              <div className="text-red-600 text-sm mt-1">{cvvError}</div>
-            )}
-          </div>
-
+      {/* Extend Expiry */}
+      {cardData?.card ? (
+        <form
+          onSubmit={handleExtendExpiry}
+          className="bg-white shadow-md rounded-lg p-3 w-1/2 max-w-sm space-y-4"
+        >
+          <h2 className="text-lg font-medium text-[#0B2E53]">Extend Expiry</h2>
+          <input
+            type="text"
+            placeholder="New Expiry (MM/YY)"
+            value={newExpiry}
+            onChange={(e) => setNewExpiry(e.target.value)}
+            className="w-full border border-[#0B2E53] px-3 py-2 mt-3 rounded focus:outline-none focus:ring-2 focus:ring-[#C89D2A]"
+          />
           <button
             type="submit"
-            className="w-full bg-[#0B2E53] text-white py-2 rounded-lg hover:bg-[#C89D2A] transition duration-200"
+            className="w-full bg-[#0B2E53] text-white py-2 mt-4 rounded hover:bg-[#C89D2A]"
           >
-            Pay
+            Update Expiry
           </button>
-
-          {statusMessage && (
-            <div className="text-center mt-3 text-green-700 font-medium">
-              {statusMessage}
-            </div>
-          )}
+          {message && <p className="text-center text-sm text-green-600">{message}</p>}
         </form>
-      </div>
+      ) : (
+        <p className="text-center">No card assigned yet</p>
+      )}
     </div>
   );
 };
