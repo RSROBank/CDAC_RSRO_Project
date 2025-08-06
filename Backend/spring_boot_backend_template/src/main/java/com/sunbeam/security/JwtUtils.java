@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.crypto.SecretKey;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import com.sunbeam.custom_exceptions.InvalidInputException;
+import com.sunbeam.dao.UserDao;
+import com.sunbeam.entity.User;
 import com.sunbeam.entity.UserEntity;
 
 import io.jsonwebtoken.Claims;
@@ -31,6 +35,15 @@ public class JwtUtils {
 	
 	@Value("${jwt.expiration.time}")
 	private int jwtExpirationMs;
+	
+	private final UserDao userDao;
+	
+	private final ModelMapper modelMapper;
+	
+	 public JwtUtils(UserDao userDao, ModelMapper modelMapper) {
+	        this.userDao = userDao;
+	        this.modelMapper = modelMapper;
+	    }
 
 	private SecretKey key;
 	
@@ -67,8 +80,10 @@ public class JwtUtils {
 		}
 		Claims payloadClaims = validateJwtToken(jwt);
 		String email = getUserNameFromJwtToken(payloadClaims);
+		User user = userDao.findByEmail(email).orElseThrow(() -> new InvalidInputException("Account Number Invalid"));
+		UserEntity userEntity = modelMapper.map(user, UserEntity.class);
 		List<GrantedAuthority> authorities = getAuthoritiesFromClaims(payloadClaims);
-		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, null, authorities);
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userEntity, null, authorities);
 		return token;
 	}
 	
