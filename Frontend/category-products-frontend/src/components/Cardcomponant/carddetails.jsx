@@ -54,7 +54,7 @@ const CardComponent = () => {
     const newDate = new Date(newFullYear, parseInt(newMonth) - 1);
 
     // Parse current expiry from cardData (MM/YY format)
-    const [currYearShort,currMonth, date] = cardData.card.expiry.split("-");
+    const [currYearShort, currMonth, date] = cardData.card.expiry.split("-");
     const currFullYear = parseInt(currYearShort);
     const currDate = new Date(currFullYear, parseInt(currMonth) - 1);
 
@@ -98,39 +98,49 @@ const CardComponent = () => {
 
       {/* Card */}
       <div className="relative group w-[350px] h-[220px] [perspective:1000px]">
-        {cardData?.card ? (
-          <div className="absolute inset-0 transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-            {/* Front */}
+        <div className="absolute inset-0 transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          {/* Front */}
 
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-800 to-blue-600 rounded-2xl text-white p-6 [backface-visibility:hidden] flex flex-col justify-between">
-              <div className="text-sm">Debit Card</div>
-              <div className="text-2xl font-mono tracking-widest">{cardData.card.cardNumber}</div>
-              <div className="flex justify-between text-sm mt-4">
-                <div>
-                  <div className="text-xs opacity-70">Card Holder</div>
-                  <div className="font-semibold">{cardData.fullName || "Loading..."}</div>
-                </div>
-                <div>
-                  <div className="text-xs opacity-70">Valid Thru</div>
-                  <div className="font-semibold">{cardData.card.expiry}</div>
-                </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-800 to-blue-600 rounded-2xl text-white p-6 [backface-visibility:hidden] flex flex-col justify-between">
+            <div className="flex justify-between">
+              <p className="text-sm">Debit Card</p>
+              <p className="text-sm">RSRO Bank</p>
+            </div>
+            <div className="text-2xl font-mono tracking-widest">{cardData?.card ? (
+              <p>{userData.card.cardNumber}</p>
+            ) : (
+              <p>---- ----</p>
+            )}</div>
+            <div className="flex justify-between text-sm mt-4">
+              <div>
+                <div className="text-xs opacity-70">Card Holder</div>
+                <div className="font-semibold">{cardData?.card ? (<p>{cardData.card.fullName}</p>) : (<p>-------</p>)}</div>
+              </div>
+              <div>
+                <div className="text-xs opacity-70">Valid Thru</div>
+                <div className="font-semibold">{cardData?.card ? (
+                  <p>{cardData.card.expiry}</p>
+                ) : (
+                  <p>---- ----</p>
+                )}</div>
               </div>
             </div>
-
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-800 to-blue-600 rounded-2xl text-white p-6 [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col justify-center items-center">
-              <div className="bg-black w-full h-6 mb-4"></div>
-              <div className="w-full">
-                <div className="text-xs opacity-70">CVV</div>
-                <div className="bg-white text-black text-center py-2 rounded font-semibold text-lg tracking-widest">
-                  {cardData.card.cvv}
-                </div>
-              </div>
-            </div>
-
           </div>
-        ) : (
-          <p>No card assigned yet</p>
-        )}
+
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-800 to-blue-600 rounded-2xl text-white p-6 [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col items-start justify-between">
+            <div className="flex justify-between w-full">
+              <p className="text-sm">Debit Card</p>
+              <p className="text-sm">RSRO Bank</p>
+            </div>
+
+            <div className="w-full mt-4">
+              <div className="text-xs opacity-70">CVV</div>
+              <p className="text-white">{cardData?.card?.cvv || '----'}</p>
+            </div>
+          </div>
+
+
+        </div>
       </div>
 
       {/* Extend Expiry */}

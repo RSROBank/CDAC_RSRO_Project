@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.sunbeam.entity.CardDetails;
 
 public interface CardDetailDAO extends JpaRepository<CardDetails, Long> {
-	Optional<CardDetails> findByUserId(Long userId);
+	CardDetails findByUserId(Long userId);
 }
