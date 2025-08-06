@@ -40,7 +40,7 @@ public class TransactionController {
     }
     
     
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<?> getTransactionsByUserId(@AuthenticationPrincipal UserEntity userDetails) {
         List<TransactionDTO> transactions = transactionService.findByUserId(userDetails.getId());
         return ResponseEntity.ok(transactions);
