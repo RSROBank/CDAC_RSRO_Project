@@ -23,7 +23,6 @@ public class AdminController {
 
 	private final BankRateService bankRateService;
 	
-	
 	 @GetMapping("/rates")
 	    public ResponseEntity<BankRates> getRates() throws IOException {
 	        return ResponseEntity.ok(bankRateService.getRates());
