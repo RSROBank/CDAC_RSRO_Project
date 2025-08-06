@@ -44,16 +44,28 @@ public class LoanInfoServiceImpl implements LoanInfoService {
     }
     
     @Override
-    public LoanInfoDTO getLoanById(Long Id) {
-    	LoanInfo loanInfo = loanInfoDAO.findById(Id).orElseThrow(() -> new InvalidInputException("Invalid loan by Id!!") );
+    public LoanInfoDTO getLoanById(Long id) {
+    	LoanInfo loanInfo = loanInfoDAO.findById(id).orElseThrow(() -> new InvalidInputException("Invalid loan by Id!!") );
         return modelMapper.map(loanInfo, LoanInfoDTO.class);
     }
 
 	@Override
+	
 	public List<LoanInfoDTO> getPendingLoan() {
 		
 		return loanInfoDAO.findByStatus(Status.PENDING).stream().map(loanInfo -> modelMapper.map(loanInfo, LoanInfoDTO.class))
                 .collect(Collectors.toList());
+	}
+
+	@Override
+	public ApiResponse statusChange(Long id, Status status) {
+		if (status == null) {
+		    throw new InvalidInputException("Status cannot be null");
+		}
+		LoanInfo loanInfo = loanInfoDAO.findById(id).orElseThrow(() -> new InvalidInputException("Invalid loan by Id!!") );
+		loanInfo.setStatus(status);
+		loanInfoDAO.save(loanInfo);
+		return new ApiResponse("Status Updated successfully");
 	}
 }
     
